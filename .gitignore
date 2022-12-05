@@ -1,0 +1,7 @@
+/ServerREST/src/main/resources/config/config.yaml
+.idea
+
+# Project exclude paths
+/ClientJavaFX/target/
+/ServerREST/target/
+/Utils/target/

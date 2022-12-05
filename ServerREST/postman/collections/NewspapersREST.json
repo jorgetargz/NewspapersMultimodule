@@ -1,0 +1,1356 @@
+{
+  "info": {
+    "_postman_id": "5608fd00-4861-4077-b8d3-dad968ac6dc1",
+    "name": "NewspapersREST",
+    "description": "Newspapers REST API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_uid": "23368492-5608fd00-4861-4077-b8d3-dad968ac6dc1"
+  },
+  "item": [
+    {
+      "name": "Newspapers",
+      "item": [
+        {
+          "name": "Get all newspapers",
+          "id": "a27b77d3-f2bf-4b0e-9d04-87db94bb8476",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/newspapers/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "newspapers",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get one newspaper by id",
+          "id": "a3af7e77-77ae-462e-acd4-2a58025883ef",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/newspapers/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "newspapers",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add a newspaper",
+          "id": "a00fbc71-b245-48ba-b42a-832101283915",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nameNewspaper\": \"Newspaper 6\",\r\n    \"releaseDate\": \"2016-11-11\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/newspapers/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "newspapers",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update a newspaper",
+          "id": "e0bba2c5-af56-4e0c-a2cb-0c575fde68dc",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nameNewspaper\": \"Newspaper 6\",\r\n    \"releaseDate\": \"2016-11-11\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/newspapers/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "newspapers",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete one newspaper by id",
+          "id": "8e26ed66-85c4-4a7f-9427-b2a8f632842f",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/newspapers/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "newspapers",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "fb076ce6-603c-4c94-887d-a46d94391221"
+    },
+    {
+      "name": "Articles",
+      "item": [
+        {
+          "name": "Article types",
+          "item": [
+            {
+              "name": "Get all articles types",
+              "id": "c5a8352f-46b5-4eec-82d3-55aa5c9ea5e2",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/articles/articleTypes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "articles",
+                    "articleTypes"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get one article type by id",
+              "id": "d2d081be-53eb-428b-a8ed-f77234831d4c",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/articles/articleTypes/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "articles",
+                    "articleTypes",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "2"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Add an article type",
+              "id": "412a7bd0-1416-4214-9119-269e95f53043",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"description\": \"Type postman\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/articles/articleTypes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "articles",
+                    "articleTypes"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update an a article type",
+              "id": "85127c27-c61d-4996-979c-8e3225559e72",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"id\": 3,\r\n    \"description\": \"Type postman edit\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/articles/articleTypes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "articles",
+                    "articleTypes"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete an article type by id",
+              "id": "2b5c1a85-98e3-4815-b5e1-f3a016b0379d",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/articles/articleTypes/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "articles",
+                    "articleTypes",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "3"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "id": "0efaf05f-0dd2-4f38-b076-59f68a7c62ff"
+        },
+        {
+          "name": "Get all articles",
+          "id": "45e169b7-3613-45f1-a55e-9f2bbe34e19d",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/articles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "articles"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get one article by id",
+          "id": "c98532fc-1eb8-4e15-acf2-97d717b91ed1",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/articles/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "articles",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "3"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get articles available for a reder",
+          "id": "496bb82d-15f3-4ce0-a67d-64e7f8780a34",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/articles/reader/:readerId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "articles",
+                "reader",
+                ":readerId"
+              ],
+              "variable": [
+                {
+                  "key": "readerId",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get articles of a newspaper",
+          "id": "47382404-a2d2-46f9-ac04-3535f9dd134d",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/articles/newspaper/:newspaperId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "articles",
+                "newspaper",
+                ":newspaperId"
+              ],
+              "variable": [
+                {
+                  "key": "newspaperId",
+                  "value": "3"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get articles of a newspaper with bad ratings",
+          "id": "458b27fa-0410-4731-9fb7-56ae71455f11",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/articles/newspaper/:newspaperId/badRatings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "articles",
+                "newspaper",
+                ":newspaperId",
+                "badRatings"
+              ],
+              "variable": [
+                {
+                  "key": "newspaperId",
+                  "value": "3"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get articles by type",
+          "id": "dfab5666-5606-472d-a9c7-b67b545a0ec4",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/articles/type/:articleTypeId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "articles",
+                "type",
+                ":articleTypeId"
+              ],
+              "variable": [
+                {
+                  "key": "articleTypeId",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get articles by type with newspaper name",
+          "id": "3f56eb64-a344-4721-9f9c-39157c6a57e9",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/articles/type/:articleTypeId/newspaper",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "articles",
+                "type",
+                ":articleTypeId",
+                "newspaper"
+              ],
+              "variable": [
+                {
+                  "key": "articleTypeId",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add an article",
+          "id": "3df48ceb-24f0-4b3e-a888-4f535b330a3e",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Article postman\",\r\n    \"articleType\": {\r\n        \"id\": 1\r\n    },\r\n    \"newspaperId\": 3\r\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/articles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "articles"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update an article",
+          "id": "89f63dc8-02d2-4ef1-885e-9c4e09c9423f",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"id\": 8,\r\n    \"name\": \"Article postman editado\",\r\n    \"articleType\": {\r\n        \"id\": 2\r\n    },\r\n    \"newspaperId\": 3\r\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/articles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "articles"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete an article by id",
+          "id": "5e906098-2ff4-49aa-a45f-0498021d119c",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/articles/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "articles",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "3"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "674fa391-a117-4859-a84d-14a3da830ec4"
+    },
+    {
+      "name": "Readers",
+      "item": [
+        {
+          "name": "Get all readers",
+          "id": "c020c115-6d38-4668-abbb-a423f0fdc4b1",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/readers/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "readers",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get readers by newspaper id",
+          "id": "711955ce-78f1-415f-9980-a795dbea94fd",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/readers/newspaper/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "readers",
+                "newspaper",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "3"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get readers by article type id",
+          "id": "519e5187-e4d0-41a4-8b7c-04c87b2a7e08",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/readers/articleType/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "readers",
+                "articleType",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get one reader by id",
+          "id": "13e59a84-0ed1-4232-88b2-e8905535770c",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/readers/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "readers",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add a reader",
+          "id": "9fd4bd29-e59a-4b55-94ba-8672eed3bc4a",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"postman reader\",\r\n    \"dateOfBirth\": \"2000-11-11\",\r\n    \"login\": {\r\n        \"username\": \"postman\",\r\n        \"password\": \"postman\"\r\n    }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/readers/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "readers",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update a reader",
+          "id": "5de63b74-2edf-4d28-9fad-7355dd8a9241",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"id\": 7,\r\n    \"name\": \"postman reader edit\",\r\n    \"dateOfBirth\": \"1999-11-11\",\r\n    \"login\": {\r\n        \"username\": \"postman\",\r\n        \"password\": \"newPass\"\r\n    }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/readers/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "readers",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete a reader by id",
+          "id": "3d10918d-896d-43ce-8f0a-abd4b7c2f74e",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/readers/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "readers",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "7"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "73cb243e-4086-4067-aec7-9e44b2d4532f"
+    },
+    {
+      "name": "Ratings",
+      "item": [
+        {
+          "name": "Get all ratings",
+          "id": "1693326f-9267-4107-901c-ac8d72800c9c",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ratings/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ratings",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get one rating",
+          "id": "0cde8e3e-5c27-4838-a8b0-3ab50b4103d0",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ratings/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ratings",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "9"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add a rating",
+          "id": "db419f8f-396a-4e6e-adb7-458237cb5ac3",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"articleId\": 4,\r\n    \"rating\": 8,\r\n    \"readerId\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ratings/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ratings",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update a rating",
+          "id": "bc4559fb-fc59-47a4-9f2c-f5709866850e",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"articleId\": 3,\r\n    \"id\": 9,\r\n    \"rating\": 2,\r\n    \"readerId\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ratings/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ratings",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete a rating",
+          "id": "69288ada-c2fb-44b0-8246-c7d5f5addf3f",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ratings/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ratings",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "18"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete ratings by newspaper",
+          "id": "06fda3ec-e0b0-4745-b718-f5d14a4e986c",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ratings/newspaper/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ratings",
+                "newspaper",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "10b05d1e-41ae-44ae-8dcf-7bbdc2a42143"
+    },
+    {
+      "name": "Subscriptions",
+      "item": [
+        {
+          "name": "Get all subscriptions",
+          "id": "bf190ace-469b-4809-9e64-2c91c2a045fb",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/subscriptions/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "subscriptions",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get subscriptions by reader",
+          "id": "a4fafbf6-1fa2-42c2-8d57-8c431d791726",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/subscriptions/reader/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "subscriptions",
+                "reader",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get subscriptions by newspaper",
+          "id": "157ef7f2-cf08-4d26-8257-61e25458e8c3",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/subscriptions/newspaper/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "subscriptions",
+                "newspaper",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "3"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get  10 oldest subscriptions by newspaper",
+          "id": "09332d5f-2592-4b4f-9069-c83e3acc09b1",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/subscriptions/newspaper/:id/oldest",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "subscriptions",
+                "newspaper",
+                ":id",
+                "oldest"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "3"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get one subscription",
+          "id": "0b6c1ba9-9cb6-48c6-b27e-25fb11d111e4",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/subscriptions/id?idReader=2&idNewspaper=3",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "subscriptions",
+                "id"
+              ],
+              "query": [
+                {
+                  "key": "idReader",
+                  "value": "2"
+                },
+                {
+                  "key": "idNewspaper",
+                  "value": "3"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add a subscription",
+          "id": "e5a12091-7f56-4f52-bf09-4dba4f582d24",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"newspaperId\": 5,\r\n    \"readerId\": 2,\r\n    \"signingDate\": \"2022-11-01\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/subscriptions/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "subscriptions",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel a subscription",
+          "id": "264c9eb9-7278-4b81-b556-cf649a78de6a",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"newspaperId\": 5,\r\n    \"readerId\": 2,\r\n    \"signingDate\": \"2022-11-01\",\r\n    \"cancellationDate\": \"2023-11-01\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/subscriptions/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "subscriptions",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete a subscription",
+          "id": "a70e1aff-424a-4d0b-a1bb-f6c07231729f",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/subscriptions/id?idReader=2&idNewspaper=5",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "subscriptions",
+                "id"
+              ],
+              "query": [
+                {
+                  "key": "idReader",
+                  "value": "2"
+                },
+                {
+                  "key": "idNewspaper",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "8eeabd0d-635f-495f-a8c7-3a8defbe4d15"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "11681c38-dc13-418a-8b99-98f0d080b656",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "951afa6f-3a38-4a71-a733-f9089dd8d90a",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "id": "be171f83-9a25-4e52-a4ad-05dfc3128885",
+      "key": "baseUrl",
+      "value": "127.0.0.1:8080/NewspapersREST/api",
+      "type": "string"
+    }
+  ]
+}

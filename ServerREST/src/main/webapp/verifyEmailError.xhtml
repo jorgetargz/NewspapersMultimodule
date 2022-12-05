@@ -1,0 +1,20 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Newspapers API</title>
+    <h:outputStylesheet name="styles.css" library="css"/>
+</h:head>
+
+<h:body>
+    <h1><h:outputText value="Verify email"/></h1>
+    <h:graphicImage name="logo.gif" library="images"/>
+    <h3><h:outputText value="#{verifyEmailBean.verifyEmailError}"/></h3>
+    <h:form>
+        <p:commandButton value="Resend email" action="#{verifyEmailBean.sendVerificationMail()}"/>
+    </h:form>
+    <ui:include src="resources/layout/footer.xhtml"></ui:include>
+</h:body>
+</html>
