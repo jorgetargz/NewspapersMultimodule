@@ -39,12 +39,13 @@ public class ReadersAddViewModel {
                 });
     }
 
-    public void addReader(String inputName, LocalDate inputBirthday, String inputUsername, String inputPassword) {
+    public void addReader(String inputName, LocalDate inputBirthday, String inputUsername, String inputPassword, String inputEmail) {
         if (inputName != null && !inputName.isEmpty()
                 && inputBirthday != null
                 && inputUsername != null && !inputUsername.isEmpty()
-                && inputPassword != null && !inputPassword.isEmpty()) {
-            Reader reader = new Reader(inputName, inputBirthday, new Login(inputUsername, inputPassword));
+                && inputPassword != null && !inputPassword.isEmpty()
+                && inputEmail != null && !inputEmail.isEmpty()) {
+            Reader reader = new Reader(inputName, inputBirthday, new Login(inputUsername, inputPassword, inputEmail));
             servicesReaders.saveReader(reader)
                     .subscribeOn(Schedulers.single())
                     .subscribe(either -> {

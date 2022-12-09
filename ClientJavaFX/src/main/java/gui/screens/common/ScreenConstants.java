@@ -30,7 +30,6 @@ public class ScreenConstants {
     public static final String MENU_ITEM_UPDATE_NEWSPAPERS = "menuItemUpdateNewspapers";
     public static final String MENU_ITEM_DELETE_NEWSPAPER = "menuItemDeleteNewspapers";
 
-    public static final String EXIT = "Exit";
     public static final String ABOUT = "About";
     public static final String ERROR = "Error";
     public static final String INFORMATION = "Information";
@@ -50,7 +49,6 @@ public class ScreenConstants {
     public static final String NEWSPAPERS_DELETE_CONTROL_PANEL = "Delete Newspapers Control Panel";
 
     public static final String WELCOME_MESSAGE = "Newspaers REST API Client\nWelcome ";
-    public static final String SURE_EXIT = "Are you sure that you want to exit?";
     public static final String OPERATION_DONE = "Action completed successfully";
     public static final String FILL_ALL_THE_INPUTS = "Fill all the inputs";
     public static final String CHOOSE_READER = "You need to choose a reader from the list";
@@ -63,7 +61,7 @@ public class ScreenConstants {
     public static final String EMPTY_STRING = "";
     public static final String NAME_NEWSPAPER = "nameNewspaper";
     public static final String RELEASE_DATE = "releaseDate";
-    public static final String VERIFY_EMAIL = "Click Ok to verify your email";
+    public static final String VERIFY_EMAIL = "Verification email send";
     public static final String LOGOUT = "Logout";
     public static final String LOGOUT_SUCCESS = "Logout success";
     public static final String GUEST = "Guest";

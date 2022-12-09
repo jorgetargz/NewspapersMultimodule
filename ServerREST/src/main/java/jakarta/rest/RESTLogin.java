@@ -3,6 +3,7 @@ package jakarta.rest;
 import common.ConstantesAPI;
 import domain.services.ServicesLogin;
 import domain.services.ServicesReaders;
+import jakarta.beans.VerifyEmailBean;
 import jakarta.common.Constantes;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,20 +20,28 @@ public class RESTLogin {
 
     private final ServicesLogin servicesLogin;
     private final ServicesReaders servicesReaders;
+    private final VerifyEmailBean verifyEmailBean;
 
     @Context
     private HttpServletRequest httpRequest;
 
     @Inject
-    public RESTLogin(ServicesLogin servicesLogin, ServicesReaders servicesReaders) {
+    public RESTLogin(ServicesLogin servicesLogin, ServicesReaders servicesReaders, VerifyEmailBean verifyEmailBean) {
         this.servicesLogin = servicesLogin;
         this.servicesReaders = servicesReaders;
+        this.verifyEmailBean = verifyEmailBean;
     }
 
     @POST
     public Response register(Reader reader) {
+        String password = reader.getLogin().getPassword();
+        Reader newReader = servicesReaders.saveReader(reader);
+        verifyEmailBean.setEmail(reader.getLogin().getEmail());
+        verifyEmailBean.setUsername(reader.getLogin().getUsername());
+        verifyEmailBean.setPassword(password);
+        verifyEmailBean.sendVerificationMail();
         return Response.status(Response.Status.CREATED)
-                .entity(servicesReaders.saveReader(reader))
+                .entity(newReader)
                 .build();
     }
 

@@ -168,6 +168,7 @@ public class ReadersDaoImpl implements ReadersDao {
             LocalDate birthReader;
             String passwordReader;
             String usernameReader;
+            String emailReader;
 
             Reader dbReader = get(inputReader.getId());
             if (dbReader == null) {
@@ -177,6 +178,7 @@ public class ReadersDaoImpl implements ReadersDao {
                 birthReader = dbReader.getDateOfBirth();
                 passwordReader = dbReader.getLogin().getPassword();
                 usernameReader = dbReader.getLogin().getUsername();
+                emailReader = dbReader.getLogin().getEmail();
 
                 String inputNameReader = inputReader.getName();
                 if (inputNameReader != null && !inputNameReader.isEmpty()) {
@@ -204,7 +206,8 @@ public class ReadersDaoImpl implements ReadersDao {
             preparedStatementUpdateCredentials.executeUpdate();
 
             con.commit();
-            return new Reader(inputReader.getId(), nameReader, birthReader, new Login(usernameReader, passwordReader, inputReader.getId()));
+            Login login = new Login(usernameReader, passwordReader, emailReader, inputReader.getId());
+            return new Reader(inputReader.getId(), nameReader, birthReader, login);
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
             throw new DatabaseException(ex.getMessage());

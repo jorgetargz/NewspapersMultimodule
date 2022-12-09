@@ -7,7 +7,6 @@ import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import jakarta.inject.Inject;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -30,6 +29,8 @@ public class ReadersAddController extends BaseScreenController {
     private MFXPasswordField passwordTxt;
     @FXML
     private MFXTextField usernameTxt;
+    @FXML
+    private MFXTextField emailTxt;
     @FXML
     private Label title;
     @FXML
@@ -81,7 +82,7 @@ public class ReadersAddController extends BaseScreenController {
     }
 
     @FXML
-    private void addReader(ActionEvent actionEvent) {
-        readersAddViewModel.addReader(nameTxt.getText(), datePicker.getValue(), usernameTxt.getText(), passwordTxt.getText());
+    private void addReader() {
+        readersAddViewModel.addReader(nameTxt.getText(), datePicker.getValue(), usernameTxt.getText(), passwordTxt.getText(), emailTxt.getText());
     }
 }

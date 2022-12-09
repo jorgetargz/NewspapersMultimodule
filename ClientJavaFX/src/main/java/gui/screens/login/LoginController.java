@@ -31,6 +31,8 @@ public class LoginController extends BaseScreenController {
     @FXML
     private MFXPasswordField passwordTxt;
     @FXML
+    private MFXTextField emailTxt1;
+    @FXML
     private MFXTextField usernameTxt;
     @FXML
     private MFXTextField txtUsername;
@@ -66,23 +68,29 @@ public class LoginController extends BaseScreenController {
             }
             if (newState.readerRegistered()) {
                 Platform.runLater(() -> {
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle(ScreenConstants.USER_REGISTERED);
-                    alert.setHeaderText(ScreenConstants.USER_REGISTERED);
-                    alert.setContentText(ScreenConstants.VERIFY_EMAIL);
-                    alert.getButtonTypes().clear();
-                    alert.getButtonTypes().add(ButtonType.OK);
-                    alert.showAndWait().ifPresent(buttonType -> {
-                        if (buttonType == ButtonType.OK) {
-                            try {
-                                Desktop.getDesktop().browse(java.net.URI.create(ScreenConstants.SEND_VERIFICATION_EMAIL_XHTML));
-                            } catch (IOException e) {
-                                log.error(e.getMessage(), e);
-                            }
-                        }
-                    });
+                    showEmailVerificationAlert();
                     loginViewModel.clenState();
                 });
+            }
+        });
+    }
+
+    private static void showEmailVerificationAlert() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(ScreenConstants.USER_REGISTERED);
+        alert.setHeaderText(ScreenConstants.USER_REGISTERED);
+        alert.setContentText(ScreenConstants.VERIFY_EMAIL);
+        alert.getButtonTypes().clear();
+        ButtonType buttonResend = new ButtonType("Resend email");
+        alert.getButtonTypes().add(buttonResend);
+        alert.getButtonTypes().add(ButtonType.OK);
+        alert.showAndWait().ifPresent(buttonType -> {
+            if (buttonType == buttonResend) {
+                try {
+                    Desktop.getDesktop().browse(java.net.URI.create(ScreenConstants.SEND_VERIFICATION_EMAIL_XHTML));
+                } catch (IOException e) {
+                    log.error(e.getMessage(), e);
+                }
             }
         });
     }
@@ -96,7 +104,7 @@ public class LoginController extends BaseScreenController {
 
     @FXML
     private void doRegister() {
-        loginViewModel.doRegister(nameTxt.getText(), datePicker.getValue(), usernameTxt.getText(), passwordTxt.getText());
+        loginViewModel.doRegister(nameTxt.getText(), datePicker.getValue(), emailTxt1.getText(), usernameTxt.getText(), passwordTxt.getText());
     }
 
     @FXML

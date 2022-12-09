@@ -39,12 +39,13 @@ public class LoginViewModel {
                 });
     }
 
-    public void doRegister(String inputName, LocalDate inputBirthday, String inputUsername, String inputPassword) {
+    public void doRegister(String inputName, LocalDate inputBirthday, String email, String inputUsername, String inputPassword) {
         if (inputName != null && !inputName.isEmpty()
                 && inputBirthday != null
+                && email != null && !email.isEmpty()
                 && inputUsername != null && !inputUsername.isEmpty()
                 && inputPassword != null && !inputPassword.isEmpty()) {
-            Reader reader = new Reader(inputName, inputBirthday, new Login(inputUsername, inputPassword));
+            Reader reader = new Reader(inputName, inputBirthday, new Login(inputUsername, inputPassword, email));
             loginServices.registerReader(reader)
                     .subscribeOn(Schedulers.single())
                     .subscribe(either -> {

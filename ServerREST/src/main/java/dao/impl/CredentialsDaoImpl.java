@@ -95,7 +95,8 @@ public class CredentialsDaoImpl implements CredentialsDao {
             int idReader = rs.getInt(Constantes.ID_READER);
             String username = rs.getString(Constantes.USERNAME);
             String pass = rs.getString(Constantes.PASSWORD);
-            return new Login(username, pass, idReader);
+            String email = rs.getString(Constantes.MAIL);
+            return new Login(username, pass, email, idReader);
         }
         return null;
     }

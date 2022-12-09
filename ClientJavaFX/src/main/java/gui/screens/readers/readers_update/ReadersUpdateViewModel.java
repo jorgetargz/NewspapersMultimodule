@@ -42,7 +42,7 @@ public class ReadersUpdateViewModel {
     public void updateRedaer(Reader dbReader, String inputName, LocalDate inputBirthday, String inputPassword) {
         if (dbReader != null) {
             Reader reader = new Reader(dbReader.getId(), inputName, inputBirthday,
-                    new Login(dbReader.getLogin().getUsername(), inputPassword, dbReader.getId()));
+                    new Login(dbReader.getLogin().getUsername(), inputPassword, dbReader.getLogin().getEmail(), dbReader.getId()));
             servicesReaders.updateReader(reader)
                     .subscribeOn(Schedulers.single())
                     .subscribe(either -> {

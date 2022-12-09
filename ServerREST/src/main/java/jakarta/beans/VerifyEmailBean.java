@@ -28,15 +28,18 @@ public class VerifyEmailBean implements Serializable {
 
     private String verifyEmailError;
 
-    private final MailSender mailSender;
-    private final VerificationCode verificationCode;
-    private final ServicesLogin servicesLogin;
+    private MailSender mailSender;
+    private VerificationCode verificationCode;
+    private ServicesLogin servicesLogin;
 
     @Inject
     public VerifyEmailBean(MailSender mailSender, VerificationCode verificationCode, ServicesLogin servicesLogin) {
         this.mailSender = mailSender;
         this.verificationCode = verificationCode;
         this.servicesLogin = servicesLogin;
+    }
+
+    public VerifyEmailBean() {
     }
 
     public String getEmail() {
