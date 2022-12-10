@@ -64,6 +64,10 @@ public class Constantes {
     public static final String SUBSCRIPTION_NOT_FOUND = "There is no subscription of this newspaper and reader in the database";
     public static final String VERIFY_YOUR_EMAIL_FIRST = "You must verify your email first";
     public static final String WRONG_PASSWORD = "Wrong password";
+    public static final String SECRET_NOT_FOUND = "Secret not found";
+    public static final String CODE = "code";
+    public static final String CODE_EXPIRATION_DATE = "expiration_date";
+    public static final String EMAIL = "mail";
 
 
     private Constantes() {

@@ -5,6 +5,7 @@ import dao.LoginDao;
 import domain.services.ServicesLogin;
 import jakarta.inject.Inject;
 import modelo.Reader;
+import modelo.Secret;
 
 import java.io.Serializable;
 
@@ -38,6 +39,16 @@ public class ServicesLoginImpl implements ServicesLogin, Serializable {
     @Override
     public boolean changePassword(String newPassword, String email) {
         return daoLogin.changePassword(newPassword, email);
+    }
+
+    @Override
+    public void updateSecret(Secret secret) {
+        daoLogin.updateSecret(secret);
+    }
+
+    @Override
+    public Secret getSecret(String code) {
+        return daoLogin.getSecret(code);
     }
 
 }

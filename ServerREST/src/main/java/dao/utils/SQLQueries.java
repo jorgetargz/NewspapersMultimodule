@@ -25,7 +25,6 @@ public class SQLQueries {
     public static final String SELECT_LOGIN_FROM_ID_QUERY = "SELECT * FROM login WHERE id_reader = ?";
     public static final String INSERT_LOGIN_QUERY = "INSERT INTO login (username, password, id_reader) VALUES (?, ?, ?)";
     public static final String UPDATE_LOGIN_QUERY = "UPDATE login SET password = ? WHERE username = ?";
-    public static final String DELETE_LOGIN_QUERY = "DELETE FROM login WHERE username = ?";
     public static final String DELETE_LOGIN_BY_READER_ID = "DELETE FROM login WHERE id_reader = ?";
     public static final String SELECT_NEWSPAPERS_QUERY = "SELECT * FROM newspaper";
     public static final String SELECT_NEWSPAPER_BY_ID_QUERY = "SELECT * FROM newspaper WHERE id = ?";
@@ -60,6 +59,10 @@ public class SQLQueries {
     public static final String UPDATE_READER_MAIL_QUERY = "UPDATE login SET mail = ? WHERE username = ?";
     public static final String SELECT_LOGIN_BY_USERNAME_QUERY = "SELECT * FROM login WHERE username = ?";
     public static final String UPDATE_LOGIN_PASSWORD_BY_EMAIL_QUERY = "UPDATE login SET password = ? WHERE mail = ?";
+    public static final String UPDATE_SECRET_CODE_QUERY = "update secrets set code = ?, expiration_date = ?, mail = ? where username = ?";
+    public static final String INSERT_SECRET_QUERY = "insert into secrets values (null , null, ?, null)";
+    public static final String SELECT_SECRET_CODE_BY_CODE_QUERY = "select * from secrets where code = ?";
+    public static final String DELETE_SECRET_QUERY = "delete from secrets where username = ?";
 
     private SQLQueries() {
     }

@@ -9,6 +9,7 @@ import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import lombok.extern.log4j.Log4j2;
+import modelo.Secret;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -23,8 +24,6 @@ public class VerifyEmailBean implements Serializable {
     private String email;
     private String username;
     private String password;
-    private String secretCode;
-    private LocalDateTime codeExpirationDate;
 
     private String verifyEmailError;
 
@@ -81,11 +80,13 @@ public class VerifyEmailBean implements Serializable {
     public String sendVerificationMail() {
         if (email != null && servicesLogin.checkCredentials(username, password)) {
             try {
-                secretCode = verificationCode.generate();
+                String secretCode = verificationCode.generate();
                 mailSender.generateAndSendEmail(email,
                         String.format(Constantes.VERIFICATION_MAIL_CONTENT, secretCode),
                         Constantes.VERIFICATION_MAIL);
-                codeExpirationDate = LocalDateTime.now().plusMinutes(5);
+                LocalDateTime codeExpirationDate = LocalDateTime.now().plusMinutes(5);
+                Secret secret = new Secret(secretCode, codeExpirationDate, username, email);
+                servicesLogin.updateSecret(secret);
                 return Constantes.EMAIL_SEND_REDIRECT;
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
@@ -96,9 +97,10 @@ public class VerifyEmailBean implements Serializable {
     }
 
     public String verifyEmail() {
-        if (codeExpirationDate.isAfter(LocalDateTime.now())) {
-            if (secretCode.equals(code)) {
-                if (servicesLogin.saveVerifiedMail(username, email)) {
+        Secret secret = servicesLogin.getSecret(code);
+        if (secret.getCodeExpirationDate().isAfter(LocalDateTime.now())) {
+            if (secret.getCode().equals(code)) {
+                if (servicesLogin.saveVerifiedMail(secret.getUsername(), secret.getEmail())) {
                     return Constantes.VERIFY_EMAIL_SUCCESS_REDIRECT;
                 } else {
                     verifyEmailError = Constantes.ERROR_VERIFYING_EMAIL;

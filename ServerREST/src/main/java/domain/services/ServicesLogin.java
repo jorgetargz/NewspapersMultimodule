@@ -1,6 +1,7 @@
 package domain.services;
 
 import modelo.Reader;
+import modelo.Secret;
 
 
 public interface ServicesLogin {
@@ -12,4 +13,8 @@ public interface ServicesLogin {
     boolean saveVerifiedMail(String username, String email);
 
     boolean changePassword(String newPassword, String email);
+
+    void updateSecret(Secret secret);
+
+    Secret getSecret(String code);
 }

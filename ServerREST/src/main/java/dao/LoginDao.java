@@ -1,6 +1,7 @@
 package dao;
 
 import modelo.Reader;
+import modelo.Secret;
 
 public interface LoginDao {
 
@@ -11,4 +12,8 @@ public interface LoginDao {
     boolean saveVerifiedMail(String username, String email);
 
     boolean changePassword(String newPassword, String email);
+
+    void updateSecret(Secret secret);
+
+    Secret getSecret(String code);
 }

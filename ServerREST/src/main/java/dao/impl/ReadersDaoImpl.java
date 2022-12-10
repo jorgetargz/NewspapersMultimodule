@@ -1,6 +1,5 @@
 package dao.impl;
 
-import dao.CredentialsDao;
 import dao.DBConnection;
 import dao.ReadersDao;
 import dao.common.Constantes;
@@ -22,12 +21,10 @@ public class ReadersDaoImpl implements ReadersDao {
 
 
     private final DBConnection dbConnection;
-    private final CredentialsDao credentialsDao;
 
     @Inject
-    public ReadersDaoImpl(DBConnection dbConnection, CredentialsDao credentialsDao) {
+    public ReadersDaoImpl(DBConnection dbConnection) {
         this.dbConnection = dbConnection;
-        this.credentialsDao = credentialsDao;
     }
 
     @Override
@@ -136,7 +133,8 @@ public class ReadersDaoImpl implements ReadersDao {
 
     private Reader executeSavingReaderStatements(Reader reader, Connection con) {
         try (PreparedStatement preparedStatementInsertReader = con.prepareStatement(SQLQueries.INSERT_READER, Statement.RETURN_GENERATED_KEYS);
-             PreparedStatement preparedStatementInsertCredentials = con.prepareStatement(SQLQueries.INSERT_LOGIN_QUERY)) {
+             PreparedStatement preparedStatementInsertCredentials = con.prepareStatement(SQLQueries.INSERT_LOGIN_QUERY);
+             PreparedStatement preparedStatementInsertSecret = con.prepareStatement(SQLQueries.INSERT_SECRET_QUERY)) {
 
             preparedStatementInsertReader.setString(1, reader.getName());
             preparedStatementInsertReader.setDate(2, Date.valueOf(reader.getDateOfBirth()));
@@ -152,6 +150,9 @@ public class ReadersDaoImpl implements ReadersDao {
             preparedStatementInsertCredentials.setString(2, reader.getLogin().getPassword());
             preparedStatementInsertCredentials.setInt(3, reader.getId());
             preparedStatementInsertCredentials.executeUpdate();
+
+            preparedStatementInsertSecret.setString(1, reader.getLogin().getUsername());
+            preparedStatementInsertSecret.executeUpdate();
 
             con.commit();
         } catch (SQLException ex) {
@@ -219,6 +220,7 @@ public class ReadersDaoImpl implements ReadersDao {
         try (PreparedStatement preparedStatementDeleteReader = con.prepareStatement(SQLQueries.DELETE_READER);
              PreparedStatement preparedStatementDeleteReaderRatings = con.prepareStatement(SQLQueries.DELETE_RATINGS_BY_READER_ID_QUERY);
              PreparedStatement preparedStatementDeleteReaderSubscriptions = con.prepareStatement(SQLQueries.DELETE_SUBSCRIPTIONS_BY_READER_ID);
+             PreparedStatement preparedStatementDeleteReaderSecret = con.prepareStatement(SQLQueries.DELETE_SECRET_QUERY);
              PreparedStatement preparedStatementDeleteReaderCredentials = con.prepareStatement(SQLQueries.DELETE_LOGIN_BY_READER_ID)) {
 
             preparedStatementDeleteReaderRatings.setInt(1, reader.getId());
@@ -226,6 +228,9 @@ public class ReadersDaoImpl implements ReadersDao {
 
             preparedStatementDeleteReaderSubscriptions.setInt(1, reader.getId());
             preparedStatementDeleteReaderSubscriptions.executeUpdate();
+
+            preparedStatementDeleteReaderSecret.setString(1, reader.getLogin().getUsername());
+            preparedStatementDeleteReaderSecret.executeUpdate();
 
             preparedStatementDeleteReaderCredentials.setInt(1, reader.getId());
             preparedStatementDeleteReaderCredentials.executeUpdate();
@@ -266,7 +271,30 @@ public class ReadersDaoImpl implements ReadersDao {
         reader.setId(rs.getInt(Constantes.ID));
         reader.setName(rs.getString(Constantes.NAME_READER));
         reader.setDateOfBirth(rs.getDate(Constantes.BIRTH_READER).toLocalDate());
-        reader.setLogin(credentialsDao.get(rs.getInt(Constantes.ID)));
+        reader.setLogin(getLogin(rs.getInt(Constantes.ID)));
         return reader;
+    }
+
+    private Login getLogin(int idReader) {
+        try (Connection con = dbConnection.getConnection();
+             PreparedStatement preparedStatement = con.prepareStatement(SQLQueries.SELECT_LOGIN_FROM_ID_QUERY)) {
+            preparedStatement.setInt(1, idReader);
+            ResultSet rs = preparedStatement.executeQuery();
+            return getLoginFromRS(rs);
+        } catch (SQLException ex) {
+            log.error(ex.getMessage(), ex);
+        }
+        return null;
+    }
+
+    private Login getLoginFromRS(ResultSet rs) throws SQLException {
+        if (rs.next()) {
+            int idReader = rs.getInt(Constantes.ID_READER);
+            String username = rs.getString(Constantes.USERNAME);
+            String pass = rs.getString(Constantes.PASSWORD);
+            String email = rs.getString(Constantes.MAIL);
+            return new Login(username, pass, email, idReader);
+        }
+        return null;
     }
 }

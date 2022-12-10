@@ -81,7 +81,7 @@ public class LoginController extends BaseScreenController {
         alert.setHeaderText(ScreenConstants.USER_REGISTERED);
         alert.setContentText(ScreenConstants.VERIFY_EMAIL);
         alert.getButtonTypes().clear();
-        ButtonType buttonResend = new ButtonType("Resend email");
+        ButtonType buttonResend = new ButtonType("Go to verify email web");
         alert.getButtonTypes().add(buttonResend);
         alert.getButtonTypes().add(ButtonType.OK);
         alert.showAndWait().ifPresent(buttonType -> {
