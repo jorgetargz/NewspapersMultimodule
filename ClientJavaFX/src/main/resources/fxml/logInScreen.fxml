@@ -15,7 +15,7 @@
     <MFXTextField fx:id="txtUsername" floatMode="BORDER" layoutX="130.0" layoutY="279.0" prefHeight="2.0" prefWidth="290.0" promptText="%Username" />
     <MFXPasswordField fx:id="txtPass" layoutX="130.0" layoutY="346.0" prefHeight="53.0" prefWidth="290.0" promptText="%PasswordRequired" />
     <MFXButton layoutX="192.0" layoutY="430.0" mnemonicParsing="false" onAction="#doLogin" prefHeight="34.0" prefWidth="166.0" text="%Login" />
-    <MFXButton layoutX="609.0" layoutY="551.0" onAction="#doRegister" prefHeight="34.0" prefWidth="166.0" text="%Register" />
+    <MFXButton layoutX="639.0" layoutY="551.0" onAction="#doRegister" prefHeight="34.0" prefWidth="166.0" text="%Register" />
     <MFXTextField fx:id="nameTxt" layoutX="577.0" layoutY="204.0" prefHeight="53.0" prefWidth="290.0" promptText="%Name" />
     <MFXDatePicker fx:id="datePicker" layoutX="577.0" layoutY="279.0" prefHeight="34.0" prefWidth="290.0" promptText="%Birthday" />
     <MFXPasswordField fx:id="passwordTxt" layoutX="577.0" layoutY="471.0" prefHeight="53.0" prefWidth="290.0" promptText="%PasswordRequired" />
