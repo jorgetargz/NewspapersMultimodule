@@ -115,4 +115,12 @@ public class LoginController extends BaseScreenController {
             log.error(e.getMessage(), e);
         }
     }
+
+    public void doVerifyEmail() {
+        try {
+            Desktop.getDesktop().browse(java.net.URI.create(ScreenConstants.SEND_VERIFICATION_EMAIL_XHTML));
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+        }
+    }
 }

@@ -1,12 +1,10 @@
 package gui.screens.main;
 
 
-import domain.services.LoginServices;
 import gui.screens.common.BaseScreenController;
 import gui.screens.common.ScreenConstants;
 import gui.screens.common.Screens;
 import io.github.palexdev.materialfx.font.MFXFontIcon;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
 import javafx.application.Platform;
@@ -46,15 +44,17 @@ public class MainController {
     private MFXFontIcon minimizeIcon;
     @FXML
     private MFXFontIcon alwaysOnTopIcon;
+    @FXML
+    private MenuItem menuItemLogout;
 
     private Reader reader;
 
-    private final LoginServices loginServices;
+    private final MainViewModel mainViewModel;
 
     @Inject
-    public MainController(Instance<Object> instance, LoginServices loginServices) {
+    public MainController(Instance<Object> instance, MainViewModel mainViewModel) {
         this.instance = instance;
-        this.loginServices = loginServices;
+        this.mainViewModel = mainViewModel;
         alert = new Alert(Alert.AlertType.NONE);
     }
 
@@ -71,7 +71,29 @@ public class MainController {
     }
 
     public void initialize() {
-        closeIcon.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> Platform.exit());
+        loadWindow();
+
+        reader = new Reader();
+        reader.setName(ScreenConstants.GUEST);
+        menuItemLogout.setVisible(false);
+        cargarPantalla(Screens.LOGIN);
+
+        mainViewModel.getState().addListener((observable, oldValue, newValue) -> {
+            if (newValue.onLogout()) {
+                Platform.runLater(() -> {
+                    showAlert(Alert.AlertType.INFORMATION, ScreenConstants.INFORMATION, ScreenConstants.LOGOUT_SUCCESS);
+                    reader = new Reader();
+                    reader.setName(ScreenConstants.GUEST);
+                    menuItemLogout.setVisible(false);
+                    mainViewModel.clearState();
+                    cargarPantalla(Screens.LOGIN);
+                });
+            }
+        });
+    }
+
+    private void loadWindow() {
+        closeIcon.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> mainViewModel.doExit());
         minimizeIcon.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> ((Stage) root.getScene().getWindow()).setIconified(true));
         alwaysOnTopIcon.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             boolean newVal = !primaryStage.isAlwaysOnTop();
@@ -88,9 +110,6 @@ public class MainController {
             primaryStage.setX(event.getScreenX() + xOffset);
             primaryStage.setY(event.getScreenY() + yOffset);
         });
-        reader = new Reader();
-        reader.setName(ScreenConstants.GUEST);
-        cargarPantalla(Screens.LOGIN);
     }
 
     public double getWidth() {
@@ -166,26 +185,17 @@ public class MainController {
 
     @FXML
     private void logout() {
-        reader = new Reader();
-        reader.setName(ScreenConstants.GUEST);
-        loginServices.logout().subscribeOn(Schedulers.single())
-                .subscribe(either -> {
-                    if (either.isLeft())
-                        Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, ScreenConstants.ERROR, either.getLeft()));
-                    else {
-                        Platform.runLater(() -> showAlert(Alert.AlertType.INFORMATION, ScreenConstants.LOGOUT, ScreenConstants.LOGOUT_SUCCESS));
-                    }
-                });
-        cargarPantalla(Screens.LOGIN);
+        mainViewModel.doLogout();
     }
 
     @FXML
     private void exit() {
-        Platform.exit();
+        mainViewModel.doExit();
     }
 
     //events launched on other screens
     public void onLoginDone() {
+        menuItemLogout.setVisible(true);
         cargarPantalla(Screens.WELCOME);
     }
 
