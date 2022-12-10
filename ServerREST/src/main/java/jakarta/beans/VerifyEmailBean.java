@@ -86,7 +86,7 @@ public class VerifyEmailBean implements Serializable {
                         Constantes.VERIFICATION_MAIL);
                 LocalDateTime codeExpirationDate = LocalDateTime.now().plusMinutes(5);
                 Secret secret = new Secret(secretCode, codeExpirationDate, username, email);
-                servicesLogin.updateSecret(secret);
+                servicesLogin.updateSecretByUsername(secret);
                 return Constantes.EMAIL_SEND_REDIRECT;
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
@@ -98,7 +98,7 @@ public class VerifyEmailBean implements Serializable {
 
     public String verifyEmail() {
         Secret secret = servicesLogin.getSecret(code);
-        if (secret.getCodeExpirationDate().isAfter(LocalDateTime.now())) {
+        if (secret != null && secret.getCodeExpirationDate().isAfter(LocalDateTime.now())) {
             if (secret.getCode().equals(code)) {
                 if (servicesLogin.saveVerifiedMail(secret.getUsername(), secret.getEmail())) {
                     return Constantes.VERIFY_EMAIL_SUCCESS_REDIRECT;

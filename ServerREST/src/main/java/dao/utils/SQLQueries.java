@@ -59,10 +59,11 @@ public class SQLQueries {
     public static final String UPDATE_READER_MAIL_QUERY = "UPDATE login SET mail = ? WHERE username = ?";
     public static final String SELECT_LOGIN_BY_USERNAME_QUERY = "SELECT * FROM login WHERE username = ?";
     public static final String UPDATE_LOGIN_PASSWORD_BY_EMAIL_QUERY = "UPDATE login SET password = ? WHERE mail = ?";
-    public static final String UPDATE_SECRET_CODE_QUERY = "update secrets set code = ?, expiration_date = ?, mail = ? where username = ?";
+    public static final String UPDATE_SECRET_CODE_BY_USERNAME_QUERY = "update secrets set code = ?, expiration_date = ?, mail = ? where username = ?";
     public static final String INSERT_SECRET_QUERY = "insert into secrets values (null , null, ?, null)";
     public static final String SELECT_SECRET_CODE_BY_CODE_QUERY = "select * from secrets where code = ?";
     public static final String DELETE_SECRET_QUERY = "delete from secrets where username = ?";
+    public static final String UPDATE_SECRET_CODE_BY_MAIL_QUERY = "update secrets set code = ?, expiration_date = ? where mail = ?";
 
     private SQLQueries() {
     }

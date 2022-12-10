@@ -127,12 +127,29 @@ public class LoginDaoImpl implements LoginDao {
     }
 
     @Override
-    public void updateSecret(Secret secret) {
-        try (Connection con = dbConnection.getConnection(); PreparedStatement preparedStatement = con.prepareStatement(SQLQueries.UPDATE_SECRET_CODE_QUERY)) {
+    public void updateSecretByUsername(Secret secret) {
+        try (Connection con = dbConnection.getConnection(); PreparedStatement preparedStatement = con.prepareStatement(SQLQueries.UPDATE_SECRET_CODE_BY_USERNAME_QUERY)) {
             preparedStatement.setString(1, secret.getCode());
             preparedStatement.setString(2, secret.getCodeExpirationDate().toString());
             preparedStatement.setString(3, secret.getEmail());
             preparedStatement.setString(4, secret.getUsername());
+            int rows = preparedStatement.executeUpdate();
+            if (rows != 1) {
+                log.info(Constantes.SECRET_NOT_FOUND);
+                throw new NotFoundException(Constantes.SECRET_NOT_FOUND);
+            }
+        } catch (SQLException ex) {
+            log.error(ex.getMessage(), ex);
+            throw new DatabaseException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public void updateSecretByMail(Secret secret) {
+        try (Connection con = dbConnection.getConnection(); PreparedStatement preparedStatement = con.prepareStatement(SQLQueries.UPDATE_SECRET_CODE_BY_MAIL_QUERY)) {
+            preparedStatement.setString(1, secret.getCode());
+            preparedStatement.setString(2, secret.getCodeExpirationDate().toString());
+            preparedStatement.setString(3, secret.getEmail());
             int rows = preparedStatement.executeUpdate();
             if (rows != 1) {
                 log.info(Constantes.SECRET_NOT_FOUND);

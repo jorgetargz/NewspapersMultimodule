@@ -14,7 +14,9 @@ public interface ServicesLogin {
 
     boolean changePassword(String newPassword, String email);
 
-    void updateSecret(Secret secret);
+    void updateSecretByUsername(Secret secret);
+
+    void updateSecretByMail(Secret secret);
 
     Secret getSecret(String code);
 }

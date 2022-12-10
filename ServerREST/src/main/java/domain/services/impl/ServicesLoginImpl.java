@@ -42,8 +42,13 @@ public class ServicesLoginImpl implements ServicesLogin, Serializable {
     }
 
     @Override
-    public void updateSecret(Secret secret) {
-        daoLogin.updateSecret(secret);
+    public void updateSecretByUsername(Secret secret) {
+        daoLogin.updateSecretByUsername(secret);
+    }
+
+    @Override
+    public void updateSecretByMail(Secret secret) {
+        daoLogin.updateSecretByMail(secret);
     }
 
     @Override

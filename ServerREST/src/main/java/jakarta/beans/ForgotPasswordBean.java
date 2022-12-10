@@ -9,6 +9,7 @@ import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import lombok.extern.log4j.Log4j2;
+import modelo.Secret;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -22,8 +23,6 @@ public class ForgotPasswordBean implements Serializable {
     private String code;
 
     private String email;
-    private String secretCode;
-    private LocalDateTime codeExpirationDate;
     private String newPassword;
     private String newPasswordConfirmation;
 
@@ -77,30 +76,29 @@ public class ForgotPasswordBean implements Serializable {
     }
 
     public String sendVerificationMail() {
-        if (newPassword != null && newPasswordConfirmation != null) {
-            if (newPassword.equals(newPasswordConfirmation)) {
-                if (email != null) {
-                    try {
-                        secretCode = verificationCode.generate();
-                        mailSender.generateAndSendEmail(email,
-                                String.format(Constantes.FORGOT_PASSWORD_MAIL_CONTENT, secretCode),
-                                Constantes.FORGOT_PASSWORD);
-                        codeExpirationDate = LocalDateTime.now().plusMinutes(5);
-                        return Constantes.EMAIL_SEND_REDIRECT;
-                    } catch (Exception e) {
-                        log.error(e.getMessage(), e);
-                        return Constantes.SERVER_ERROR_REDIRECT;
-                    }
-                }
+        if (email != null) {
+            try {
+                String secretCode = verificationCode.generate();
+                mailSender.generateAndSendEmail(email,
+                        String.format(Constantes.FORGOT_PASSWORD_MAIL_CONTENT, secretCode),
+                        Constantes.FORGOT_PASSWORD);
+                LocalDateTime codeExpirationDate = LocalDateTime.now().plusMinutes(5);
+                Secret secret = new Secret(secretCode, codeExpirationDate, null, email);
+                servicesLogin.updateSecretByMail(secret);
+                return Constantes.EMAIL_SEND_REDIRECT;
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+                return Constantes.SERVER_ERROR_REDIRECT;
             }
         }
         return null;
     }
 
     public String changePassword() {
-        if (codeExpirationDate.isAfter(LocalDateTime.now())) {
-            if (secretCode.equals(code)) {
-                if (servicesLogin.changePassword(newPassword, email)) {
+        Secret secret = servicesLogin.getSecret(code);
+        if (secret != null && secret.getCodeExpirationDate().isAfter(LocalDateTime.now())) {
+            if (secret.getCode().equals(code)) {
+                if (servicesLogin.changePassword(newPassword, secret.getEmail())) {
                     return Constantes.CHANGE_PASSWORD_SUCCESS_REDIRECT;
                 } else {
                     changePasswordError = Constantes.ERROR_CHANGING_PASSWORD;
