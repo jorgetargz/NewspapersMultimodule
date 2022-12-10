@@ -2,6 +2,7 @@ package jakarta.rest;
 
 import common.ConstantesAPI;
 import domain.services.ServicesReaders;
+import jakarta.beans.VerifyEmailBean;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -16,10 +17,12 @@ import java.util.List;
 public class RESTReaders {
 
     private final ServicesReaders servicesReaders;
+    private final VerifyEmailBean verifyEmailBean;
 
     @Inject
-    public RESTReaders(ServicesReaders servicesReaders) {
+    public RESTReaders(ServicesReaders servicesReaders, VerifyEmailBean verifyEmailBean) {
         this.servicesReaders = servicesReaders;
+        this.verifyEmailBean = verifyEmailBean;
     }
 
     @GET
@@ -47,8 +50,14 @@ public class RESTReaders {
 
     @POST
     public Response saveReader(Reader reader) {
+        String password = reader.getLogin().getPassword();
+        Reader newReader = servicesReaders.saveReader(reader);
+        verifyEmailBean.setEmail(reader.getLogin().getEmail());
+        verifyEmailBean.setUsername(reader.getLogin().getUsername());
+        verifyEmailBean.setPassword(password);
+        verifyEmailBean.sendVerificationMail();
         return Response.status(Response.Status.CREATED)
-                .entity(servicesReaders.saveReader(reader))
+                .entity(newReader)
                 .build();
     }
 
