@@ -13,8 +13,15 @@
     <h:graphicImage name="logo.gif" library="images"/>
     <h3><h:outputText value="#{verifyEmailBean.verifyEmailError}"/></h3>
     <h:form>
-        <p:commandButton value="Resend email" action="#{verifyEmailBean.sendVerificationMail()}"/>
+        <p:panelGrid columns="3">
+            <p:outputLabel for="pass" value="New Password:"/>
+            <p:password type="password" id="pass" value="#{verifyEmailBean.password}" required="true" size="50"
+                        feedback="true" inline="true"/>
+            <p:message for="pass"/>
+            <p:commandButton value="Resend email" ajax="false" validateClient="true"
+                             action="#{verifyEmailBean.sendVerificationMail()}"/>
+        </p:panelGrid>
     </h:form>
-    <ui:include src="resources/layout/footer.xhtml"></ui:include>
+    <ui:include src="resources/layout/footer.xhtml"/>
 </h:body>
 </html>

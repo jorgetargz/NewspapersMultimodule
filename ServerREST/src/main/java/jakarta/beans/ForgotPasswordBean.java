@@ -76,7 +76,10 @@ public class ForgotPasswordBean implements Serializable {
     }
 
     public String sendVerificationMail() {
-        if (email != null) {
+        if (email == null) {
+            Secret secretDB = servicesLogin.getSecret(code);
+            email = secretDB.getEmail();
+        } else {
             try {
                 String secretCode = verificationCode.generate();
                 mailSender.generateAndSendEmail(email,

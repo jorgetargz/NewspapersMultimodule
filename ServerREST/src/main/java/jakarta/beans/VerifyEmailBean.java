@@ -78,19 +78,25 @@ public class VerifyEmailBean implements Serializable {
     }
 
     public String sendVerificationMail() {
-        if (email != null && servicesLogin.checkCredentials(username, password)) {
-            try {
-                String secretCode = verificationCode.generate();
-                mailSender.generateAndSendEmail(email,
-                        String.format(Constantes.VERIFICATION_MAIL_CONTENT, secretCode),
-                        Constantes.VERIFICATION_MAIL);
-                LocalDateTime codeExpirationDate = LocalDateTime.now().plusMinutes(5);
-                Secret secret = new Secret(secretCode, codeExpirationDate, username, email);
-                servicesLogin.updateSecretByUsername(secret);
-                return Constantes.EMAIL_SEND_REDIRECT;
-            } catch (Exception e) {
-                log.error(e.getMessage(), e);
-                return Constantes.SERVER_ERROR_REDIRECT;
+        if (email == null) {
+            Secret secretDB = servicesLogin.getSecret(code);
+            email = secretDB.getEmail();
+            username = secretDB.getUsername();
+        } else {
+            if (servicesLogin.checkCredentials(username, password)) {
+                try {
+                    String secretCode = verificationCode.generate();
+                    mailSender.generateAndSendEmail(email,
+                            String.format(Constantes.VERIFICATION_MAIL_CONTENT, secretCode),
+                            Constantes.VERIFICATION_MAIL);
+                    LocalDateTime codeExpirationDate = LocalDateTime.now().plusMinutes(5);
+                    Secret secret = new Secret(secretCode, codeExpirationDate, username, email);
+                    servicesLogin.updateSecretByUsername(secret);
+                    return Constantes.EMAIL_SEND_REDIRECT;
+                } catch (Exception e) {
+                    log.error(e.getMessage(), e);
+                    return Constantes.SERVER_ERROR_REDIRECT;
+                }
             }
         }
         return null;
