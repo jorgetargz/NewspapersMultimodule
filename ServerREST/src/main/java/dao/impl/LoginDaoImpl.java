@@ -39,13 +39,13 @@ public class LoginDaoImpl implements LoginDao {
             con.setAutoCommit(false);
             try (
                     PreparedStatement preparedStatementGetReader = con.prepareStatement(SQLQueries.SELECT_READER_BY_USERNAME_QUERY);
-                    PreparedStatement preparedStatementCheckMail = con.prepareStatement(SQLQueries.SELECT_LOGIN_BY_USERNAME_QUERY)
+                    PreparedStatement preparedStatementGetLogin = con.prepareStatement(SQLQueries.SELECT_LOGIN_BY_USERNAME_QUERY)
             ) {
                 preparedStatementGetReader.setString(1, username);
                 ResultSet rsReader = preparedStatementGetReader.executeQuery();
                 if (rsReader.next()) {
-                    preparedStatementCheckMail.setString(1, username);
-                    ResultSet rsLogin = preparedStatementCheckMail.executeQuery();
+                    preparedStatementGetLogin.setString(1, username);
+                    ResultSet rsLogin = preparedStatementGetLogin.executeQuery();
                     if (rsLogin.next() && rsLogin.getString(Constantes.MAIL) != null) {
                         if (passwordHash.verify(password.toCharArray(), rsLogin.getString(Constantes.PASSWORD))) {
                             con.commit();
