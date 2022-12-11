@@ -99,11 +99,15 @@ public class ForgotPasswordBean implements Serializable {
         Secret secret = servicesLogin.getSecret(code);
         if (secret != null && secret.getCodeExpirationDate().isAfter(LocalDateTime.now())) {
             if (secret.getCode().equals(code)) {
-                if (servicesLogin.changePassword(newPassword, secret.getEmail())) {
-                    return Constantes.CHANGE_PASSWORD_SUCCESS_REDIRECT;
+                if (newPassword.equals(newPasswordConfirmation)) {
+                    if (servicesLogin.changePassword(newPassword, secret.getEmail())) {
+                        return Constantes.CHANGE_PASSWORD_SUCCESS_REDIRECT;
+                    } else {
+                        changePasswordError = Constantes.ERROR_CHANGING_PASSWORD;
+                        return Constantes.CHANGE_PASSWORD_ERROR_REDIRECT;
+                    }
                 } else {
-                    changePasswordError = Constantes.ERROR_CHANGING_PASSWORD;
-                    return Constantes.CHANGE_PASSWORD_ERROR_REDIRECT;
+                    return Constantes.SERVER_ERROR_REDIRECT;
                 }
             } else {
                 changePasswordError = Constantes.INVALID_VERIFICATION_CODE;
