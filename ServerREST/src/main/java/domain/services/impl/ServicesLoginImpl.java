@@ -32,8 +32,8 @@ public class ServicesLoginImpl implements ServicesLogin, Serializable {
     }
 
     @Override
-    public boolean saveVerifiedMail(String username, String email) {
-        return daoLogin.saveVerifiedMail(username, email);
+    public void saveVerifiedMail(String username, String email) {
+       daoLogin.saveVerifiedMail(username, email);
     }
 
     @Override

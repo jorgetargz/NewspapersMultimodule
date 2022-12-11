@@ -91,14 +91,12 @@ public class LoginDaoImpl implements LoginDao {
     }
 
     @Override
-    public boolean saveVerifiedMail(String username, String email) {
+    public void saveVerifiedMail(String username, String email) {
         try (Connection con = dbConnection.getConnection(); PreparedStatement preparedStatement = con.prepareStatement(SQLQueries.UPDATE_READER_MAIL_QUERY)) {
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, username);
             int rows = preparedStatement.executeUpdate();
-            if (rows == 1) {
-                return true;
-            } else {
+            if (rows != 1) {
                 log.info(Constantes.READER_NOT_FOUND);
                 throw new NotFoundException(Constantes.READER_NOT_FOUND);
             }

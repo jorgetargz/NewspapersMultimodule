@@ -9,7 +9,7 @@ public interface LoginDao {
 
     boolean checkCredentials(String username, String password);
 
-    boolean saveVerifiedMail(String username, String email);
+    void saveVerifiedMail(String username, String email);
 
     boolean changePassword(String newPassword, String email);
 
