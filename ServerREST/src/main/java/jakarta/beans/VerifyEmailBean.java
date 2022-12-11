@@ -86,12 +86,12 @@ public class VerifyEmailBean implements Serializable {
         if (servicesLogin.checkCredentials(username, password)) {
             try {
                 String secretCode = verificationCode.generate();
-                mailSender.generateAndSendEmail(email,
-                        String.format(Constantes.VERIFICATION_MAIL_CONTENT, secretCode),
-                        Constantes.VERIFICATION_MAIL);
                 LocalDateTime codeExpirationDate = LocalDateTime.now().plusMinutes(5);
                 Secret secret = new Secret(secretCode, codeExpirationDate, username, email);
                 servicesLogin.updateSecretByUsername(secret);
+                mailSender.generateAndSendEmail(email,
+                        String.format(Constantes.VERIFICATION_MAIL_CONTENT, secretCode),
+                        Constantes.VERIFICATION_MAIL);
                 return Constantes.EMAIL_SEND_REDIRECT;
             } catch (Exception e) {
                 log.error(e.getMessage(), e);

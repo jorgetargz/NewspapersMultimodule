@@ -82,12 +82,12 @@ public class ForgotPasswordBean implements Serializable {
         }
         try {
             String secretCode = verificationCode.generate();
-            mailSender.generateAndSendEmail(email,
-                    String.format(Constantes.FORGOT_PASSWORD_MAIL_CONTENT, secretCode),
-                    Constantes.FORGOT_PASSWORD);
             LocalDateTime codeExpirationDate = LocalDateTime.now().plusMinutes(5);
             Secret secret = new Secret(secretCode, codeExpirationDate, null, email);
             servicesLogin.updateSecretByMail(secret);
+            mailSender.generateAndSendEmail(email,
+                    String.format(Constantes.FORGOT_PASSWORD_MAIL_CONTENT, secretCode),
+                    Constantes.FORGOT_PASSWORD);
             return Constantes.EMAIL_SEND_REDIRECT;
         } catch (Exception e) {
             log.error(e.getMessage(), e);
