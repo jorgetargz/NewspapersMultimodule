@@ -13,8 +13,10 @@ public class Constantes {
     public static final int TIMEOUT_MS = 5000;
     public static final int CACHE_SIZE = 250;
     public static final int CACHE_SQL_LIMIT = 2048;
+
     //Readers con id menor a este son administradores
     public static final int MIN_ID_READER = 0;
+
     //Column names for mapping tables
     public static final String ID = "id";
     public static final String ID_READER = "id_reader";
@@ -35,6 +37,11 @@ public class Constantes {
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
     public static final String MAIL = "mail";
+    public static final String CODE = "code";
+    public static final String CODE_EXPIRATION_DATE = "expiration_date";
+    public static final String EMAIL = "mail";
+    public static final String ROLE = "role";
+
     //Exceptions messages
     public static final String THERE_ARE_NO_ARTICLES = "There are no articles in the database";
     public static final String NO_ARTICLES_OF_THIS_NEWSPAPER = "There are no articles of this newspaper in the database";
@@ -65,11 +72,8 @@ public class Constantes {
     public static final String VERIFY_YOUR_EMAIL_FIRST = "You must verify your email first";
     public static final String WRONG_PASSWORD = "Wrong password";
     public static final String SECRET_NOT_FOUND = "Secret not found";
-    public static final String CODE = "code";
-    public static final String CODE_EXPIRATION_DATE = "expiration_date";
-    public static final String EMAIL = "mail";
-
 
     private Constantes() {
     }
+
 }
