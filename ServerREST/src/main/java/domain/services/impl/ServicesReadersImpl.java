@@ -69,6 +69,11 @@ public class ServicesReadersImpl implements ServicesReaders {
         }
     }
 
+    @Override
+    public Reader getReaderByUsername(String name) {
+        return daoReaders.getByUsername(name);
+    }
+
     private Reader hashPassword(Reader reader) {
         if (reader.getLogin().getPassword() != null) {
             reader.changePassword(passwordHash.generate(reader.getLogin().getPassword().toCharArray()));

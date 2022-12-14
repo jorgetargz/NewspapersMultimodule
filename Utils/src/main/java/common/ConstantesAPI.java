@@ -59,6 +59,8 @@ public class ConstantesAPI {
     public static final String ID_NEWSPAPER = "idNewspaper";
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
+    public static final String ROLE_ADMIN = "ADMIN";
+    public static final String ROLE_READER = "READER";
 
     private ConstantesAPI() {
     }

@@ -19,7 +19,7 @@ public class ServicesLoginImpl implements ServicesLogin, Serializable {
     }
 
     @Override
-    public Reader login(String username, String password) {
+    public Reader login(String username, char[] password) {
         return daoLogin.login(username, password);
     }
 

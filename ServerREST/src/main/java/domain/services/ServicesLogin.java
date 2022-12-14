@@ -6,7 +6,7 @@ import modelo.Secret;
 
 public interface ServicesLogin {
 
-    Reader login(String username, String password);
+    Reader login(String username, char[] password);
 
     boolean checkCredentials(String username, String password);
 

@@ -2,6 +2,7 @@ package jakarta.rest;
 
 import common.ConstantesAPI;
 import domain.services.ServicesReaders;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.beans.VerifyEmailBean;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -67,6 +68,7 @@ public class RESTReaders {
     }
 
     @DELETE
+    @RolesAllowed(ConstantesAPI.ROLE_ADMIN)
     @Path(ConstantesAPI.ID_PATH_PARAM)
     public Response deleteReader(@PathParam(ConstantesAPI.ID) String id) {
         servicesReaders.deleteReader(servicesReaders.getReader(id));

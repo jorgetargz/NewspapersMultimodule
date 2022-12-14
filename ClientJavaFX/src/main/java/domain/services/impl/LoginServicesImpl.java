@@ -7,6 +7,8 @@ import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import modelo.Reader;
 
+import java.util.Base64;
+
 public class LoginServicesImpl implements LoginServices {
 
     private final LoginDAO loginDAO;
@@ -18,7 +20,9 @@ public class LoginServicesImpl implements LoginServices {
 
     @Override
     public Single<Either<String, Reader>> getReaderByLogin(String username, String password) {
-        return loginDAO.getReaderByLogin(username, password);
+        String credentials = Base64.getEncoder().encodeToString((username + ":" + password).getBytes());
+        String basicAuthCredential = "BASIC " + credentials;
+        return loginDAO.getReaderByLogin(basicAuthCredential);
     }
 
     @Override

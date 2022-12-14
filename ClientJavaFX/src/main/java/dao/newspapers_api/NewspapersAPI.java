@@ -13,7 +13,7 @@ public interface NewspapersAPI {
 
     //ENDPOINTS_LOGIN
     @GET(ConstantesAPI.ENDPOINT_LOGIN)
-    Single<Reader> getReaderByLogin(@Query(ConstantesAPI.USERNAME) String username, @Query(ConstantesAPI.PASSWORD) String password);
+    Single<Reader> getReaderByLogin(@Header("Authorization") String basicAuthCredential);
 
     @GET(ConstantesAPI.ENDPOINT_LOGOUT)
     Single<Reader> logout();

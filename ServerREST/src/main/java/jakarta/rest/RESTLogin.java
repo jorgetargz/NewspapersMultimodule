@@ -1,7 +1,6 @@
 package jakarta.rest;
 
 import common.ConstantesAPI;
-import domain.services.ServicesLogin;
 import domain.services.ServicesReaders;
 import jakarta.beans.VerifyEmailBean;
 import jakarta.common.Constantes;
@@ -11,6 +10,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.SecurityContext;
 import modelo.Reader;
 
 @Path(ConstantesAPI.PATH_LOGIN)
@@ -18,16 +18,17 @@ import modelo.Reader;
 @Consumes(MediaType.APPLICATION_JSON)
 public class RESTLogin {
 
-    private final ServicesLogin servicesLogin;
     private final ServicesReaders servicesReaders;
     private final VerifyEmailBean verifyEmailBean;
 
     @Context
     private HttpServletRequest httpRequest;
 
+    @Context
+    SecurityContext securityContext;
+
     @Inject
-    public RESTLogin(ServicesLogin servicesLogin, ServicesReaders servicesReaders, VerifyEmailBean verifyEmailBean) {
-        this.servicesLogin = servicesLogin;
+    public RESTLogin(ServicesReaders servicesReaders, VerifyEmailBean verifyEmailBean) {
         this.servicesReaders = servicesReaders;
         this.verifyEmailBean = verifyEmailBean;
     }
@@ -46,10 +47,8 @@ public class RESTLogin {
     }
 
     @GET
-    public Reader login(@QueryParam(ConstantesAPI.USERNAME) String username, @QueryParam(ConstantesAPI.PASSWORD) String password) {
-        Reader reader = servicesLogin.login(username, password);
-        httpRequest.getSession().setAttribute(Constantes.LOGIN, true);
-        return reader;
+    public Reader login() {
+        return servicesReaders.getReaderByUsername(securityContext.getUserPrincipal().getName());
     }
 
     @GET

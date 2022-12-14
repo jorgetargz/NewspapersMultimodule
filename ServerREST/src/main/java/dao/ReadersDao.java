@@ -13,6 +13,8 @@ public interface ReadersDao {
 
     Reader get(int id);
 
+    Reader getByUsername(String name);
+
     Reader save(Reader reader);
 
     Reader update(Reader reader);

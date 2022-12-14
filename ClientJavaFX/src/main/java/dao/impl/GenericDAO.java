@@ -51,7 +51,7 @@ public class GenericDAO {
                     error = Either.left(apierror.getMessage());
                 } else {
                     error = Either.left(Objects.requireNonNull(httpException.response()).message());
-                    if (Objects.requireNonNull(httpException.response()).code() == 401) {
+                    if (Objects.requireNonNull(httpException.response()).code() == 401 || Objects.requireNonNull(httpException.response()).code() == 403) {
                         error = Either.left(Constantes.ERROR_DE_AUTENTICACION);
                     }
                 }

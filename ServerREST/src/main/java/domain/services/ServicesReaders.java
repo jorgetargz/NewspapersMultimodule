@@ -13,10 +13,11 @@ public interface ServicesReaders {
 
     Reader getReader(String id);
 
+    Reader getReaderByUsername(String name);
+
     Reader saveReader(Reader reader);
 
     Reader updateReader(Reader reader);
 
     void deleteReader(Reader reader);
-
 }
