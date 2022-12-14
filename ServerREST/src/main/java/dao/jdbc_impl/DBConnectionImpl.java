@@ -1,4 +1,4 @@
-package dao.impl;
+package dao.jdbc_impl;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

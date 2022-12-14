@@ -1,4 +1,4 @@
-package dao.impl;
+package dao.jdbc_impl;
 
 import dao.DBConnection;
 import dao.LoginDao;
@@ -34,7 +34,7 @@ public class LoginDaoImpl implements LoginDao {
     }
 
     @Override
-    public Reader login(String username, String password) {
+    public Reader login(String username, char[] password) {
         try (Connection con = dbConnection.getConnection()) {
             con.setAutoCommit(false);
             try (
@@ -47,7 +47,7 @@ public class LoginDaoImpl implements LoginDao {
                     preparedStatementGetLogin.setString(1, username);
                     ResultSet rsLogin = preparedStatementGetLogin.executeQuery();
                     if (rsLogin.next() && rsLogin.getString(Constantes.MAIL) != null) {
-                        if (passwordHash.verify(password.toCharArray(), rsLogin.getString(Constantes.PASSWORD))) {
+                        if (passwordHash.verify(password, rsLogin.getString(Constantes.PASSWORD))) {
                             con.commit();
                             return getReaderFromResultSets(rsReader, rsLogin);
                         } else {
@@ -195,6 +195,7 @@ public class LoginDaoImpl implements LoginDao {
         login.setPassword(loginRS.getString(Constantes.PASSWORD));
         login.setIdReader(reader.getId());
         login.setEmail(loginRS.getString(Constantes.EMAIL));
+        login.setRole(loginRS.getString(Constantes.ROLE));
         reader.setLogin(login);
         return reader;
     }

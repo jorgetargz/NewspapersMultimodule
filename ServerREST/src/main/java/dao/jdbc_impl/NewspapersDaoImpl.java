@@ -1,11 +1,11 @@
-package dao.impl;
+package dao.jdbc_impl;
 
 import dao.DBConnection;
 import dao.NewspapersDao;
 import dao.common.Constantes;
 import dao.excepciones.DatabaseException;
 import dao.excepciones.NotFoundException;
-import dao.impl.row_mapers.NewspaperRowMapper;
+import dao.jdbc_impl.row_mapers.NewspaperRowMapper;
 import dao.utils.SQLQueries;
 import jakarta.inject.Inject;
 import lombok.extern.log4j.Log4j2;

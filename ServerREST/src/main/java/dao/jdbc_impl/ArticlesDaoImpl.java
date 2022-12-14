@@ -1,13 +1,13 @@
-package dao.impl;
+package dao.jdbc_impl;
 
 import dao.ArticlesDao;
 import dao.DBConnection;
 import dao.common.Constantes;
 import dao.excepciones.DatabaseException;
 import dao.excepciones.NotFoundException;
-import dao.impl.row_mapers.ArticleQuery2RowMapper;
-import dao.impl.row_mapers.ArticleQuery3RowMapper;
-import dao.impl.row_mapers.ArticleRowMapper;
+import dao.jdbc_impl.row_mapers.ArticleQuery2RowMapper;
+import dao.jdbc_impl.row_mapers.ArticleQuery3RowMapper;
+import dao.jdbc_impl.row_mapers.ArticleRowMapper;
 import dao.utils.SQLQueries;
 import jakarta.inject.Inject;
 import lombok.extern.log4j.Log4j2;

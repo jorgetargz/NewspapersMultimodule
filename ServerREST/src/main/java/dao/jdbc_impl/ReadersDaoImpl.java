@@ -1,4 +1,4 @@
-package dao.impl;
+package dao.jdbc_impl;
 
 import dao.DBConnection;
 import dao.ReadersDao;
@@ -98,6 +98,23 @@ public class ReadersDaoImpl implements ReadersDao {
     }
 
     @Override
+    public Reader getByUsername(String name) {
+        try (Connection con = dbConnection.getConnection(); PreparedStatement preparedStatement = con.prepareStatement(SQLQueries.SELECT_READER_BY_USERNAME_QUERY)) {
+            preparedStatement.setString(1, name);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                return getReaderFromRow(rs);
+            } else {
+                log.info(Constantes.READER_NOT_FOUND);
+                throw new NotFoundException(Constantes.READER_NOT_FOUND);
+            }
+        } catch (SQLException ex) {
+            log.error(ex.getMessage(), ex);
+        }
+        return null;
+    }
+
+    @Override
     public Reader save(Reader reader) {
         try (Connection con = dbConnection.getConnection()) {
             con.setAutoCommit(false);
@@ -170,6 +187,7 @@ public class ReadersDaoImpl implements ReadersDao {
             String passwordReader;
             String usernameReader;
             String emailReader;
+            String roleReader;
 
             Reader dbReader = get(inputReader.getId());
             if (dbReader == null) {
@@ -180,6 +198,7 @@ public class ReadersDaoImpl implements ReadersDao {
                 passwordReader = dbReader.getLogin().getPassword();
                 usernameReader = dbReader.getLogin().getUsername();
                 emailReader = dbReader.getLogin().getEmail();
+                roleReader = dbReader.getLogin().getRole();
 
                 String inputNameReader = inputReader.getName();
                 if (inputNameReader != null && !inputNameReader.isEmpty()) {
@@ -207,7 +226,7 @@ public class ReadersDaoImpl implements ReadersDao {
             preparedStatementUpdateCredentials.executeUpdate();
 
             con.commit();
-            Login login = new Login(usernameReader, passwordReader, emailReader, inputReader.getId());
+            Login login = new Login(usernameReader, passwordReader, emailReader, inputReader.getId(), roleReader);
             return new Reader(inputReader.getId(), nameReader, birthReader, login);
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
@@ -293,7 +312,8 @@ public class ReadersDaoImpl implements ReadersDao {
             String username = rs.getString(Constantes.USERNAME);
             String pass = rs.getString(Constantes.PASSWORD);
             String email = rs.getString(Constantes.MAIL);
-            return new Login(username, pass, email, idReader);
+            String role = rs.getString(Constantes.ROLE);
+            return new Login(username, pass, email, idReader, role);
         }
         return null;
     }

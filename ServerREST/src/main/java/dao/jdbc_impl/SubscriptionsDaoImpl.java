@@ -1,4 +1,4 @@
-package dao.impl;
+package dao.jdbc_impl;
 
 import dao.DBConnection;
 import dao.SubscriptionsDao;

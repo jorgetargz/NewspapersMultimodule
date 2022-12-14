@@ -1,4 +1,4 @@
-package dao.impl.row_mapers;
+package dao.jdbc_impl.row_mapers;
 
 import dao.common.Constantes;
 import modelo.ArticleQuery2;
