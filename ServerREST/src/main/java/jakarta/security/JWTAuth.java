@@ -24,6 +24,7 @@ public class JWTAuth implements HttpAuthenticationMechanism {
     public AuthenticationStatus validateRequest(HttpServletRequest httpServletRequest,
                                                 HttpServletResponse httpServletResponse
             , HttpMessageContext httpMessageContext) {
+
         CredentialValidationResult c = CredentialValidationResult.INVALID_RESULT;
 
         String header = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
@@ -34,11 +35,7 @@ public class JWTAuth implements HttpAuthenticationMechanism {
             if (valores[0].equalsIgnoreCase(Constantes.BASIC)) {
                 c = identity.validate(new BasicAuthenticationCredential(valores[1]));
                 if (c.getStatus() == CredentialValidationResult.Status.VALID) {
-                    //TODO: Preguntar como esta esto
                     httpServletRequest.getSession().setAttribute(Constantes.CREDENTIAL, c);
-                    httpServletRequest.getSession().setAttribute(Constantes.LOGIN, true);
-                } else {
-                    return httpMessageContext.responseNotFound();
                 }
             }
 

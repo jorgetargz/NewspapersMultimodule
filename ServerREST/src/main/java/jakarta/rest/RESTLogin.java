@@ -11,7 +11,10 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.SecurityContext;
+import modelo.BaseError;
 import modelo.Reader;
+
+import java.time.LocalDateTime;
 
 @Path(ConstantesAPI.PATH_LOGIN)
 @Produces(MediaType.APPLICATION_JSON)
@@ -47,14 +50,22 @@ public class RESTLogin {
     }
 
     @GET
-    public Reader login() {
-        return servicesReaders.getReaderByUsername(securityContext.getUserPrincipal().getName());
+    public Response login() {
+        if (securityContext.getUserPrincipal() != null) {
+            return Response.ok()
+                    .entity(servicesReaders.getReaderByUsername(securityContext.getUserPrincipal().getName()))
+                    .build();
+        } else {
+            return Response.status(Response.Status.UNAUTHORIZED)
+                    .entity(new BaseError("No se ha podido autenticar al usuario", LocalDateTime.now()))
+                    .build();
+        }
     }
 
     @GET
     @Path(ConstantesAPI.LOGOUT_PATH)
     public Reader logout() {
-        httpRequest.getSession().removeAttribute(Constantes.LOGIN);
+        httpRequest.getSession().removeAttribute(Constantes.CREDENTIAL);
         return new Reader();
     }
 }

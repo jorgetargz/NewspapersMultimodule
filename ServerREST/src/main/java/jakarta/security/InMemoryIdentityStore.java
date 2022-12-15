@@ -33,18 +33,13 @@ public class InMemoryIdentityStore implements IdentityStore {
         if (credential instanceof BasicAuthenticationCredential basicAuthenticationCredential) {
             Reader loguedUser;
             try {
-                //TODO: Preguntar como esta esto
                 loguedUser = serviciosLogin.login(basicAuthenticationCredential.getCaller(), basicAuthenticationCredential.getPassword().getValue());
-                if (loguedUser != null) {
-                    return new CredentialValidationResult(loguedUser.getLogin().getUsername(), Set.of(loguedUser.getLogin().getRole()));
-                } else {
-                    return INVALID_RESULT;
-                }
+                return new CredentialValidationResult(loguedUser.getLogin().getUsername(), Set.of(loguedUser.getLogin().getRole()));
             } catch (Exception e) {
                 return INVALID_RESULT;
             }
+        } else {
+            return INVALID_RESULT;
         }
-        return INVALID_RESULT;
     }
-
 }
