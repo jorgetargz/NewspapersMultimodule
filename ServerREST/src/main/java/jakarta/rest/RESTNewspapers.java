@@ -2,7 +2,7 @@ package jakarta.rest;
 
 import common.ConstantesAPI;
 import domain.services.ServicesNewspapers;
-import jakarta.filters.Private;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -35,23 +35,23 @@ public class RESTNewspapers {
         return servicesNewspapers.get(Integer.parseInt(id));
     }
 
-    @Private
     @POST
+    @RolesAllowed({ConstantesAPI.ROLE_ADMIN})
     public Response saveNewspaper(Newspaper newspaper) {
         return Response.status(Response.Status.CREATED)
                 .entity(servicesNewspapers.saveNewspaper(newspaper))
                 .build();
     }
 
-    @Private
     @PUT
+    @RolesAllowed({ConstantesAPI.ROLE_ADMIN})
     public Newspaper updateNewspaper(Newspaper newspaper) {
         return servicesNewspapers.updateNewspaper(newspaper);
     }
 
-    @Private
     @DELETE
     @Path(ConstantesAPI.ID_PATH_PARAM)
+    @RolesAllowed({ConstantesAPI.ROLE_ADMIN})
     public Response deleteNewspaper(@PathParam(ConstantesAPI.ID) String id) {
         servicesNewspapers.deleteNewspaper(servicesNewspapers.get(Integer.parseInt(id)));
         return Response.status(Response.Status.NO_CONTENT).build();

@@ -57,7 +57,7 @@ public class RESTLogin {
                     .build();
         } else {
             return Response.status(Response.Status.UNAUTHORIZED)
-                    .entity(new BaseError("No se ha podido autenticar al usuario", LocalDateTime.now()))
+                    .entity(new BaseError(Constantes.NO_SE_HA_PODIDO_AUTENTICAR_AL_USUARIO, LocalDateTime.now()))
                     .build();
         }
     }

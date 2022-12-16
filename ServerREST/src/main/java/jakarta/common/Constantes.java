@@ -2,6 +2,8 @@ package jakarta.common;
 
 public class Constantes {
 
+    public static final String NO_SE_HA_PODIDO_AUTENTICAR_AL_USUARIO = "No se ha podido autenticar al usuario";
+
     private Constantes() {
     }
 
@@ -47,14 +49,7 @@ public class Constantes {
     public static final String ERROR_CHANGING_PASSWORD = "Error changing password";
     public static final String INVALID_VERIFICATION_CODE = "Invalid verification code";
     public static final String VERIFICATION_CODE_EXPIRED = "Verification code expired";
-
-    public static final String LOGIN = "LOGIN";
-    public static final String THIS_ENDPOINT_IS_PRIVATE = "This endpoint is private you must login first";
-    public static final String UNAUTHORIZED = "UNAUTHORIZED";
-
-    public static final String READERS_FILTER = "Readers";
-    public static final String READERS_FILTER_PATH = "/api/readers/*";
-
+    
     public static final String CREDENTIAL = "CREDENTIAL";
     public static final String BASIC = "Basic";
     public static final String WHITE_SPACE = " ";
