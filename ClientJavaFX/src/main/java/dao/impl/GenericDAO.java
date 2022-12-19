@@ -33,7 +33,7 @@ public class GenericDAO {
                 .onErrorReturn(this::getError);
     }
 
-    public Single<Either<String, Boolean>> safeAPICallToDelete(Single<Response<Object>> apiCall) {
+    public Single<Either<String, Boolean>> safeAPICallResponse(Single<Response<Object>> apiCall) {
         return apiCall.map(objectResponse -> objectResponse.isSuccessful() ?
                         Either.right(true).mapLeft(Object::toString) :
                         Either.right(false).mapLeft(Object::toString))

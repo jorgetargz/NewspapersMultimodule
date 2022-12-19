@@ -24,8 +24,8 @@ public class LoginDAOImpl extends GenericDAO implements LoginDAO {
     }
 
     @Override
-    public Single<Either<String, Reader>> logout() {
-        return safeAPICall(newspapersAPI.logout());
+    public Single<Either<String, Boolean>> logout() {
+        return safeAPICallResponse(newspapersAPI.logout());
     }
 
     @Override

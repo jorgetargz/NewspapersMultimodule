@@ -8,7 +8,7 @@ public interface LoginServices {
 
     Single<Either<String, Reader>> getReaderByLogin(String username, String password);
 
-    Single<Either<String, Reader>> logout();
+    Single<Either<String, Boolean>> logout();
 
     Single<Either<String, Reader>> registerReader(Reader reader);
 

@@ -64,8 +64,8 @@ public class RESTLogin {
 
     @GET
     @Path(ConstantesAPI.LOGOUT_PATH)
-    public Reader logout() {
+    public Response logout() {
         httpRequest.getSession().removeAttribute(Constantes.CREDENTIAL);
-        return new Reader();
+        return Response.status(Response.Status.NO_CONTENT).build();
     }
 }
