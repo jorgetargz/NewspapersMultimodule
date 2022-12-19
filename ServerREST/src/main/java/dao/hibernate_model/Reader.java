@@ -21,7 +21,7 @@ public class Reader {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(name = "name_reader")
     private String name;
@@ -29,7 +29,7 @@ public class Reader {
     @Column(name = "birth_reader")
     private LocalDate dateOfBirth;
 
-    @Transient
+    @OneToOne (mappedBy="reader", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private Login login;
 
     public Reader(String nameInput, LocalDate birthdayInput, Login loginInput) {

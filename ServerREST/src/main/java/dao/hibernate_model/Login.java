@@ -1,11 +1,11 @@
 package dao.hibernate_model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@ToString(exclude = { "reader"})
 @AllArgsConstructor
 @NoArgsConstructor
 
@@ -23,8 +23,9 @@ public class Login {
     @Column(name = "mail")
     private String email;
 
-    @Column(name = "id_reader")
-    private int idReader;
+    @OneToOne (fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "id_reader", nullable = false)
+    private Reader reader;
 
     public Login(String username, String password, String email) {
         this.username = username;

@@ -1,7 +1,9 @@
 package dao.hibernate_tests;
 
+import dao.hibernate_impl.LoginDaoImpl;
 import dao.hibernate_impl.NewspaperDaoImpl;
 import dao.hibernate_impl.ReadersDaoImpl;
+import dao.hibernate_model.Login;
 import dao.hibernate_model.Newspaper;
 import dao.hibernate_model.Reader;
 import dao.utils.JPAUtil;
@@ -35,25 +37,26 @@ public class Test {
         System.out.println("GET ALL");
         newspaperDaoImpl.getAll().forEach(System.out::println);
 
-        Reader reader = new Reader("Jacobino", LocalDate.of(1990, 1, 1));
+        Login login = new Login("jacobino", "1234", "mega@server.com", new Reader("Jacobino", LocalDate.of(1990, 1, 1)));
 
         ReadersDaoImpl readersDaoImpl = new ReadersDaoImpl(new JPAUtil());
+        LoginDaoImpl loginDaoImpl = new LoginDaoImpl(new JPAUtil());
 
         System.out.println("READERS DAO");
         System.out.println("GET ALL");
         readersDaoImpl.getAll().forEach(System.out::println);
 
         System.out.println("SAVE");
-        System.out.println(readersDaoImpl.save(reader));
+        System.out.println(loginDaoImpl.save(login));
 
         System.out.println("GET");
-        System.out.println(readersDaoImpl.get(reader.getId()));
+        System.out.println(loginDaoImpl.get(login.getUsername()));
 
         System.out.println("GET ALL");
         readersDaoImpl.getAll().forEach(System.out::println);
 
         System.out.println("DELETE");
-        readersDaoImpl.delete(reader);
+        loginDaoImpl.delete(login);
 
         System.out.println("GET ALL");
         readersDaoImpl.getAll().forEach(System.out::println);
