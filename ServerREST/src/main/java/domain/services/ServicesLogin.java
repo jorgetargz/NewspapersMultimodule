@@ -19,4 +19,6 @@ public interface ServicesLogin {
     void updateSecretByMail(Secret secret);
 
     Secret getSecret(String code);
+
+    void sendVerificationEmail(Reader reader);
 }

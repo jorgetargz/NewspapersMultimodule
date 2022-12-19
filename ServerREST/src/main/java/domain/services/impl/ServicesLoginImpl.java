@@ -3,8 +3,10 @@ package domain.services.impl;
 
 import dao.LoginDao;
 import dao.ReadersDao;
+import domain.common.Constantes;
 import domain.services.ServicesLogin;
 import domain.services.excepciones.ValidationException;
+import jakarta.beans.VerifyEmailBean;
 import jakarta.inject.Inject;
 import jakarta.security.enterprise.identitystore.Pbkdf2PasswordHash;
 import modelo.Login;
@@ -17,25 +19,27 @@ public class ServicesLoginImpl implements ServicesLogin, Serializable {
 
     private final LoginDao daoLogin;
     private final ReadersDao daoReader;
+    private final VerifyEmailBean verifyEmail;
     private final Pbkdf2PasswordHash passwordHash;
 
     @Inject
-    public ServicesLoginImpl(LoginDao daoLogin, ReadersDao daoReader, Pbkdf2PasswordHash passwordHash) {
+    public ServicesLoginImpl(LoginDao daoLogin, ReadersDao daoReader, VerifyEmailBean verifyEmail, Pbkdf2PasswordHash passwordHash) {
         this.daoLogin = daoLogin;
         this.daoReader = daoReader;
+        this.verifyEmail = verifyEmail;
         this.passwordHash = passwordHash;
     }
 
     @Override
     public Reader login(String username, char[] password) {
         if (username == null || password == null) {
-            throw new ValidationException("Username or password empty");
+            throw new ValidationException(Constantes.USERNAME_OR_PASSWORD_EMPTY);
         }
         Login loginDB = daoLogin.getLogin(username);
         if (!passwordHash.verify(password, loginDB.getPassword())) {
-            throw new ValidationException("Username or password incorrect");
+            throw new ValidationException(Constantes.USERNAME_OR_PASSWORD_INCORRECT);
         } else if (loginDB.getEmail() == null){
-            throw new ValidationException("Email is not verified");
+            throw new ValidationException(Constantes.EMAIL_IS_NOT_VERIFIED);
         } else {
             return daoReader.getByUsername(username);
         }
@@ -44,7 +48,7 @@ public class ServicesLoginImpl implements ServicesLogin, Serializable {
     @Override
     public boolean checkCredentials(String username, String password) {
         if (username == null || password == null) {
-            throw new ValidationException("Username or password empty");
+            throw new ValidationException(Constantes.USERNAME_OR_PASSWORD_EMPTY);
         }
         Login loginDB = daoLogin.getLogin(username);
         return passwordHash.verify(password.toCharArray(), loginDB.getPassword());
@@ -74,6 +78,14 @@ public class ServicesLoginImpl implements ServicesLogin, Serializable {
     @Override
     public Secret getSecret(String code) {
         return daoLogin.getSecret(code);
+    }
+
+    @Override
+    public void sendVerificationEmail(Reader reader) {
+        verifyEmail.setEmail(reader.getLogin().getEmail());
+        verifyEmail.setUsername(reader.getLogin().getUsername());
+        verifyEmail.setPassword(reader.getLogin().getPassword());
+        verifyEmail.sendVerificationMail();
     }
 
 }

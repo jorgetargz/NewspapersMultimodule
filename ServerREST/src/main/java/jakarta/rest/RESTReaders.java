@@ -1,9 +1,9 @@
 package jakarta.rest;
 
 import common.ConstantesAPI;
+import domain.services.ServicesLogin;
 import domain.services.ServicesReaders;
 import jakarta.annotation.security.RolesAllowed;
-import jakarta.beans.VerifyEmailBean;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -18,37 +18,37 @@ import java.util.List;
 public class RESTReaders {
 
     private final ServicesReaders servicesReaders;
-    private final VerifyEmailBean verifyEmailBean;
+    private final ServicesLogin servicesLogin;
 
     @Inject
-    public RESTReaders(ServicesReaders servicesReaders, VerifyEmailBean verifyEmailBean) {
+    public RESTReaders(ServicesReaders servicesReaders, ServicesLogin servicesLogin) {
         this.servicesReaders = servicesReaders;
-        this.verifyEmailBean = verifyEmailBean;
+        this.servicesLogin = servicesLogin;
     }
 
     @GET
-    @RolesAllowed({ConstantesAPI.ROLE_READER})
+    @RolesAllowed({ConstantesAPI.ROLE_READER, ConstantesAPI.ROLE_ADMIN})
     public List<Reader> getAllReaders() {
         return servicesReaders.getReaders();
     }
 
     @GET
     @Path(ConstantesAPI.NEWSPAPER_PATH + ConstantesAPI.ID_PATH_PARAM)
-    @RolesAllowed({ConstantesAPI.ROLE_READER})
+    @RolesAllowed({ConstantesAPI.ROLE_READER, ConstantesAPI.ROLE_ADMIN})
     public List<Reader> getReadersByNewspaper(@PathParam(ConstantesAPI.ID) String id) {
         return servicesReaders.getReadersByNewspaper(id);
     }
 
     @GET
     @Path(ConstantesAPI.ARTICLE_TYPE_PATH + ConstantesAPI.ID_PATH_PARAM)
-    @RolesAllowed({ConstantesAPI.ROLE_READER})
+    @RolesAllowed({ConstantesAPI.ROLE_READER, ConstantesAPI.ROLE_ADMIN})
     public List<Reader> getReadersByArticleType(@PathParam(ConstantesAPI.ID) String id) {
         return servicesReaders.getReadersByArticleType(id);
     }
 
     @GET
     @Path(ConstantesAPI.ID_PATH_PARAM)
-    @RolesAllowed({ConstantesAPI.ROLE_READER})
+    @RolesAllowed({ConstantesAPI.ROLE_READER, ConstantesAPI.ROLE_ADMIN})
     public Reader getReader(@PathParam(ConstantesAPI.ID) String id) {
         return servicesReaders.getReader(id);
     }
@@ -56,12 +56,8 @@ public class RESTReaders {
     @POST
     @RolesAllowed({ConstantesAPI.ROLE_ADMIN})
     public Response saveReader(Reader reader) {
-        String password = reader.getLogin().getPassword();
+        servicesLogin.sendVerificationEmail(reader);
         Reader newReader = servicesReaders.saveReader(reader);
-        verifyEmailBean.setEmail(reader.getLogin().getEmail());
-        verifyEmailBean.setUsername(reader.getLogin().getUsername());
-        verifyEmailBean.setPassword(password);
-        verifyEmailBean.sendVerificationMail();
         return Response.status(Response.Status.CREATED)
                 .entity(newReader)
                 .build();
