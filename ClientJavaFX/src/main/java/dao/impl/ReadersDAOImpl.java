@@ -39,7 +39,7 @@ public class ReadersDAOImpl extends GenericDAO implements ReadersDAO {
 
     @Override
     public Single<Either<String, Boolean>> deleteReader(Reader reader) {
-        return safeAPICallToDelete(newspapersAPI.deleteReader(reader.getId()));
+        return safeAPICallResponse(newspapersAPI.deleteReader(reader.getId()));
     }
 
 }

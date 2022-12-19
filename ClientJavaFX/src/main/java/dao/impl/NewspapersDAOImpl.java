@@ -37,6 +37,6 @@ public class NewspapersDAOImpl extends GenericDAO implements NewspapersDAO {
 
     @Override
     public Single<Either<String, Boolean>> deleteNewspaper(Newspaper newspaper) {
-        return safeAPICallToDelete(newspapersAPI.deleteNewspaper(newspaper.getId()));
+        return safeAPICallResponse(newspapersAPI.deleteNewspaper(newspaper.getId()));
     }
 }
