@@ -2,8 +2,12 @@ package domain.services.impl;
 
 
 import dao.LoginDao;
+import dao.ReadersDao;
 import domain.services.ServicesLogin;
+import domain.services.excepciones.ValidationException;
 import jakarta.inject.Inject;
+import jakarta.security.enterprise.identitystore.Pbkdf2PasswordHash;
+import modelo.Login;
 import modelo.Reader;
 import modelo.Secret;
 
@@ -12,33 +16,49 @@ import java.io.Serializable;
 public class ServicesLoginImpl implements ServicesLogin, Serializable {
 
     private final LoginDao daoLogin;
+    private final ReadersDao daoReader;
+    private final Pbkdf2PasswordHash passwordHash;
 
     @Inject
-    public ServicesLoginImpl(LoginDao daoLogin) {
+    public ServicesLoginImpl(LoginDao daoLogin, ReadersDao daoReader, Pbkdf2PasswordHash passwordHash) {
         this.daoLogin = daoLogin;
+        this.daoReader = daoReader;
+        this.passwordHash = passwordHash;
     }
 
     @Override
     public Reader login(String username, char[] password) {
-        return daoLogin.login(username, password);
+        if (username == null || password == null) {
+            throw new ValidationException("Username or password empty");
+        }
+        Login loginDB = daoLogin.getLogin(username);
+        if (!passwordHash.verify(password, loginDB.getPassword())) {
+            throw new ValidationException("Username or password incorrect");
+        } else if (loginDB.getEmail() == null){
+            throw new ValidationException("Email is not verified");
+        } else {
+            return daoReader.getByUsername(username);
+        }
     }
 
     @Override
     public boolean checkCredentials(String username, String password) {
         if (username == null || password == null) {
-            return false;
+            throw new ValidationException("Username or password empty");
         }
-        return daoLogin.checkCredentials(username, password);
+        Login loginDB = daoLogin.getLogin(username);
+        return passwordHash.verify(password.toCharArray(), loginDB.getPassword());
     }
 
     @Override
     public void saveVerifiedMail(String username, String email) {
-       daoLogin.saveVerifiedMail(username, email);
+       daoLogin.updateLoginEmail(username, email);
     }
 
     @Override
     public boolean changePassword(String newPassword, String email) {
-        return daoLogin.changePassword(newPassword, email);
+        newPassword = passwordHash.generate(newPassword.toCharArray());
+        return daoLogin.updateLoginPassword(newPassword, email);
     }
 
     @Override

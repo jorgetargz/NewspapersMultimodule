@@ -1,21 +1,19 @@
 package dao;
 
-import modelo.Reader;
+import modelo.Login;
 import modelo.Secret;
 
 public interface LoginDao {
 
-    Reader login(String username, char[] password);
+    Login getLogin(String username);
 
-    boolean checkCredentials(String username, String password);
+    Secret getSecret(String code);
 
-    void saveVerifiedMail(String username, String email);
+    void updateLoginEmail(String username, String email);
 
-    boolean changePassword(String newPassword, String email);
+    boolean updateLoginPassword(String newPassword, String email);
 
     void updateSecretByUsername(Secret secret);
 
     void updateSecretByMail(Secret secret);
-
-    Secret getSecret(String code);
 }

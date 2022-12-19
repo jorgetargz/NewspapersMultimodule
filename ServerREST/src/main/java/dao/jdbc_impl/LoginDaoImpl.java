@@ -5,13 +5,10 @@ import dao.LoginDao;
 import dao.common.Constantes;
 import dao.excepciones.DatabaseException;
 import dao.excepciones.NotFoundException;
-import dao.excepciones.UnauthorizedException;
 import dao.utils.SQLQueries;
 import jakarta.inject.Inject;
-import jakarta.security.enterprise.identitystore.Pbkdf2PasswordHash;
 import lombok.extern.log4j.Log4j2;
 import modelo.Login;
-import modelo.Reader;
 import modelo.Secret;
 
 import java.sql.Connection;
@@ -23,66 +20,39 @@ import java.time.LocalDateTime;
 @Log4j2
 public class LoginDaoImpl implements LoginDao {
 
-
     private final DBConnection dbConnection;
-    private final Pbkdf2PasswordHash passwordHash;
 
     @Inject
-    public LoginDaoImpl(DBConnection dbConnection, Pbkdf2PasswordHash passwordHash) {
+    public LoginDaoImpl(DBConnection dbConnection) {
         this.dbConnection = dbConnection;
-        this.passwordHash = passwordHash;
     }
 
-    @Override
-    public Reader login(String username, char[] password) {
-        try (Connection con = dbConnection.getConnection()) {
-            con.setAutoCommit(false);
-            try (
-                    PreparedStatement preparedStatementGetReader = con.prepareStatement(SQLQueries.SELECT_READER_BY_USERNAME_QUERY);
-                    PreparedStatement preparedStatementGetLogin = con.prepareStatement(SQLQueries.SELECT_LOGIN_BY_USERNAME_QUERY)
-            ) {
-                preparedStatementGetReader.setString(1, username);
-                ResultSet rsReader = preparedStatementGetReader.executeQuery();
-                if (rsReader.next()) {
-                    preparedStatementGetLogin.setString(1, username);
-                    ResultSet rsLogin = preparedStatementGetLogin.executeQuery();
-                    if (rsLogin.next() && rsLogin.getString(Constantes.MAIL) != null) {
-                        if (passwordHash.verify(password, rsLogin.getString(Constantes.PASSWORD))) {
-                            con.commit();
-                            return getReaderFromResultSets(rsReader, rsLogin);
-                        } else {
-                            throw new UnauthorizedException(Constantes.WRONG_PASSWORD);
-                        }
-                    } else {
-                        con.rollback();
-                        throw new UnauthorizedException(Constantes.VERIFY_YOUR_EMAIL_FIRST);
-                    }
-                } else {
-                    log.info(Constantes.READER_NOT_FOUND);
-                    throw new NotFoundException(Constantes.READER_NOT_FOUND);
-                }
-            } catch (SQLException e) {
-                con.rollback();
-                log.error(e.getMessage(), e);
-                throw new DatabaseException(e.getMessage());
+    public Login getLogin(String username) {
+        try (Connection connection = dbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQLQueries.SELECT_LOGIN_BY_USERNAME_QUERY)) {
+            preparedStatement.setString(1, username);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return getLoginFromResultSet(resultSet);
+            } else {
+                throw new NotFoundException(Constantes.LOGIN_NOT_FOUND);
             }
         } catch (SQLException e) {
-            log.error(e.getMessage(), e);
+            log.error(e.getMessage());
             throw new DatabaseException(e.getMessage());
         }
     }
 
     @Override
-    public boolean checkCredentials(String username, String password) {
-        try (Connection con = dbConnection.getConnection(); PreparedStatement preparedStatement = con.prepareStatement(SQLQueries.SELECT_LOGIN_BY_USERNAME)) {
-            preparedStatement.setString(1, username);
+    public Secret getSecret(String code) {
+        try (Connection con = dbConnection.getConnection(); PreparedStatement preparedStatement = con.prepareStatement(SQLQueries.SELECT_SECRET_CODE_BY_CODE_QUERY)) {
+            preparedStatement.setString(1, code);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
-                String passwordDB = rs.getString(Constantes.PASSWORD);
-                return passwordHash.verify(password.toCharArray(), passwordDB);
+                return getSecretFromRow(rs);
             } else {
-                log.info(Constantes.READER_NOT_FOUND);
-                throw new NotFoundException(Constantes.READER_NOT_FOUND);
+                log.info(Constantes.SECRET_NOT_FOUND);
+                throw new NotFoundException(Constantes.SECRET_NOT_FOUND);
             }
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
@@ -91,7 +61,7 @@ public class LoginDaoImpl implements LoginDao {
     }
 
     @Override
-    public void saveVerifiedMail(String username, String email) {
+    public void updateLoginEmail(String username, String email) {
         try (Connection con = dbConnection.getConnection(); PreparedStatement preparedStatement = con.prepareStatement(SQLQueries.UPDATE_READER_MAIL_QUERY)) {
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, username);
@@ -107,9 +77,9 @@ public class LoginDaoImpl implements LoginDao {
     }
 
     @Override
-    public boolean changePassword(String newPassword, String email) {
+    public boolean updateLoginPassword(String newPassword, String email) {
         try (Connection con = dbConnection.getConnection(); PreparedStatement preparedStatement = con.prepareStatement(SQLQueries.UPDATE_LOGIN_PASSWORD_BY_EMAIL_QUERY)) {
-            preparedStatement.setString(1, passwordHash.generate(newPassword.toCharArray()));
+            preparedStatement.setString(1, newPassword);
             preparedStatement.setString(2, email);
             int rows = preparedStatement.executeUpdate();
             if (rows == 1) {
@@ -159,21 +129,14 @@ public class LoginDaoImpl implements LoginDao {
         }
     }
 
-    @Override
-    public Secret getSecret(String code) {
-        try (Connection con = dbConnection.getConnection(); PreparedStatement preparedStatement = con.prepareStatement(SQLQueries.SELECT_SECRET_CODE_BY_CODE_QUERY)) {
-            preparedStatement.setString(1, code);
-            ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                return getSecretFromRow(rs);
-            } else {
-                log.info(Constantes.SECRET_NOT_FOUND);
-                throw new NotFoundException(Constantes.SECRET_NOT_FOUND);
-            }
-        } catch (SQLException ex) {
-            log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
-        }
+    private Login getLoginFromResultSet(ResultSet resultSet) throws SQLException {
+        Login login = new Login();
+        login.setUsername(resultSet.getString(Constantes.USERNAME));
+        login.setPassword(resultSet.getString(Constantes.PASSWORD));
+        login.setIdReader(resultSet.getInt(Constantes.ID_READER));
+        login.setRole(resultSet.getString(Constantes.ROLE));
+        login.setEmail(resultSet.getString(Constantes.EMAIL));
+        return login;
     }
 
     private Secret getSecretFromRow(ResultSet rs) throws SQLException {
@@ -184,21 +147,4 @@ public class LoginDaoImpl implements LoginDao {
         secret.setEmail(rs.getString(Constantes.EMAIL));
         return secret;
     }
-
-    private Reader getReaderFromResultSets(ResultSet readerRS, ResultSet loginRS) throws SQLException {
-        Reader reader = new Reader();
-        reader.setId(readerRS.getInt(Constantes.ID));
-        reader.setName(readerRS.getString(Constantes.NAME_READER));
-        reader.setDateOfBirth(readerRS.getDate(Constantes.BIRTH_READER).toLocalDate());
-        Login login = new Login();
-        login.setUsername(loginRS.getString(Constantes.USERNAME));
-        login.setPassword(loginRS.getString(Constantes.PASSWORD));
-        login.setIdReader(reader.getId());
-        login.setEmail(loginRS.getString(Constantes.EMAIL));
-        login.setRole(loginRS.getString(Constantes.ROLE));
-        reader.setLogin(login);
-        return reader;
-    }
-
-
 }
