@@ -11,6 +11,7 @@ public class Constantes {
 
     public static final String ERROR_DE_COMUNICACION = "ERROR DE COMUNICACION";
     public static final String ERROR_DE_AUTENTICACION = "This endpoint is private you must login first";
+    public static final String AUTHORIZATION = "Authorization";
 
     private Constantes() {
     }
