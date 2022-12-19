@@ -19,7 +19,6 @@ import java.util.List;
 @Log4j2
 public class ReadersDaoImpl implements ReadersDao {
 
-
     private final DBConnection dbConnection;
 
     @Inject

@@ -49,7 +49,7 @@ public class Constantes {
     public static final String ERROR_CHANGING_PASSWORD = "Error changing password";
     public static final String INVALID_VERIFICATION_CODE = "Invalid verification code";
     public static final String VERIFICATION_CODE_EXPIRED = "Verification code expired";
-    
+
     public static final String CREDENTIAL = "CREDENTIAL";
     public static final String BASIC = "Basic";
     public static final String WHITE_SPACE = " ";
