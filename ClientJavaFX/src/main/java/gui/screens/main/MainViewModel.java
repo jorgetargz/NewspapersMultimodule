@@ -25,11 +25,9 @@ public class MainViewModel {
 
     public void doLogout() {
         loginServices.logout().subscribeOn(Schedulers.single())
-                .subscribe(either -> {
-                    if (either.isLeft())
-                        state.set(new MainState(either.getLeft(), false));
-                    else {
-                        state.set(new MainState(null, true));
+                .subscribe(response -> {
+                    if (response.isRight()) {
+                        Platform.runLater(() -> state.setValue(new MainState(null, true)));
                     }
                 });
     }

@@ -45,6 +45,8 @@ public class MainController {
     @FXML
     private MFXFontIcon alwaysOnTopIcon;
     @FXML
+    public MenuItem menuItemLogin;
+    @FXML
     private MenuItem menuItemLogout;
 
     private Reader reader;
@@ -76,6 +78,7 @@ public class MainController {
         reader = new Reader();
         reader.setName(ScreenConstants.GUEST);
         menuItemLogout.setVisible(false);
+        menuItemLogin.setVisible(true);
         cargarPantalla(Screens.LOGIN);
 
         mainViewModel.getState().addListener((observable, oldValue, newValue) -> {
@@ -85,6 +88,7 @@ public class MainController {
                     reader = new Reader();
                     reader.setName(ScreenConstants.GUEST);
                     menuItemLogout.setVisible(false);
+                    menuItemLogin.setVisible(true);
                     mainViewModel.clearState();
                     cargarPantalla(Screens.LOGIN);
                 });
@@ -193,11 +197,14 @@ public class MainController {
         mainViewModel.doExit();
     }
 
-    //events launched on other screens
     public void onLoginDone() {
         menuItemLogout.setVisible(true);
+        menuItemLogin.setVisible(false);
         cargarPantalla(Screens.WELCOME);
     }
 
+    public void login() {
+        cargarPantalla(Screens.LOGIN);
+    }
 
 }

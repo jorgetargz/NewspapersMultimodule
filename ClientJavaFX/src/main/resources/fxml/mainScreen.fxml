@@ -20,6 +20,7 @@
                 <Menu fx:id="menuSesion" mnemonicParsing="false" text="Sesion">
                     <MenuItem fx:id="menuItemPantallaInicio" mnemonicParsing="false" onAction="#menuOnClick"
                               text="%Main"/>
+                    <MenuItem fx:id="menuItemLogin" mnemonicParsing="false" onAction="#login" text="%IniciarSession"/>
                     <MenuItem fx:id="menuItemLogout" mnemonicParsing="false" onAction="#logout" text="%CloseSession"/>
                     <MenuItem fx:id="menuItemExit" mnemonicParsing="false" onAction="#exit" text="Salir"/>
                     <MenuItem fx:id="menuItemModoOscuro" mnemonicParsing="false" onAction="#cambiarcss"
