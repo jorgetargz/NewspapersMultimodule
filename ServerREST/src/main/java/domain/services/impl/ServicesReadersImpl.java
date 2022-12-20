@@ -1,6 +1,7 @@
 package domain.services.impl;
 
 
+import common.ConstantesAPI;
 import dao.ReadersDao;
 import domain.common.Constantes;
 import domain.services.ServicesReaders;
@@ -29,6 +30,7 @@ public class ServicesReadersImpl implements ServicesReaders {
 
     @Override
     public Reader saveReader(Reader reader) {
+        reader.getLogin().setRole(ConstantesAPI.ROLE_READER);
         return daoReaders.save(hashPassword(reader));
     }
 
