@@ -29,6 +29,11 @@ public class Articletype {
     @ToString.Exclude
     private Set<Article> articles = new LinkedHashSet<>();
 
+    public Articletype(Integer id, String description) {
+        this.id = id;
+        this.description = description;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

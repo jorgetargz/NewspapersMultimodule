@@ -25,12 +25,11 @@ public class Article {
     @Column(name = "name_article")
     private String nameArticle;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_type")
-    @ToString.Exclude
     private Articletype idType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_newspaper")
     @ToString.Exclude
     private Newspaper idNewspaper;
@@ -38,6 +37,17 @@ public class Article {
     @OneToMany(mappedBy = "idArticle")
     @ToString.Exclude
     private Set<Readarticle> readarticles = new LinkedHashSet<>();
+
+    public Article(String nameArticle, Articletype idType) {
+        this.nameArticle = nameArticle;
+        this.idType = idType;
+    }
+
+    public Article(String name, Articletype articletype, Newspaper newspaper) {
+        this.nameArticle = name;
+        this.idType = articletype;
+        this.idNewspaper = newspaper;
+    }
 
     @Override
     public boolean equals(Object o) {

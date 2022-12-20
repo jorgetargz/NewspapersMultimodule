@@ -32,8 +32,7 @@ public class Newspaper {
     @Column(name = "release_date")
     private LocalDate releaseDate;
 
-    @OneToMany(mappedBy = "idNewspaper")
-    @ToString.Exclude
+    @OneToMany(mappedBy = "idNewspaper", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Article> articles = new LinkedHashSet<>();
 
     public Newspaper(String name, LocalDate releaseDate) {
