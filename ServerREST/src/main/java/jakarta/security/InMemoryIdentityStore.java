@@ -6,13 +6,14 @@ import jakarta.security.enterprise.credential.BasicAuthenticationCredential;
 import jakarta.security.enterprise.credential.Credential;
 import jakarta.security.enterprise.identitystore.CredentialValidationResult;
 import jakarta.security.enterprise.identitystore.IdentityStore;
+import lombok.extern.log4j.Log4j2;
 import modelo.Reader;
 
 import java.util.Set;
 
 import static jakarta.security.enterprise.identitystore.CredentialValidationResult.INVALID_RESULT;
 
-
+@Log4j2
 public class InMemoryIdentityStore implements IdentityStore {
 
     private final ServicesLogin serviciosLogin;
@@ -36,6 +37,7 @@ public class InMemoryIdentityStore implements IdentityStore {
                 loguedUser = serviciosLogin.login(basicAuthenticationCredential.getCaller(), basicAuthenticationCredential.getPassword().getValue());
                 return new CredentialValidationResult(loguedUser.getLogin().getUsername(), Set.of(loguedUser.getLogin().getRole()));
             } catch (Exception e) {
+                log.error(e.getMessage(), e);
                 return INVALID_RESULT;
             }
         } else {
