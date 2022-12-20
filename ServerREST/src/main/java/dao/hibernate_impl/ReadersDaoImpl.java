@@ -63,7 +63,6 @@ public class ReadersDaoImpl {
         try {
             em.getTransaction().begin();
             em.persist(reader);
-            reader.getLogin().setReader(reader);
             em.getTransaction().commit();
         } catch (PersistenceException e) {
             em.getTransaction().rollback();

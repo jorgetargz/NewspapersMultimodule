@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -15,38 +14,27 @@ import java.util.Set;
 @RequiredArgsConstructor
 
 @Entity
-@Table(name = "newspaper")
-
-@NamedQuery(name = "HQL_GET_ALL_NEWSPAPERS",
-        query = "from Newspaper")
-
-public class Newspaper {
+@Table(name = "articletype")
+public class Articletype {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "name_newspaper")
-    private String nameNewspaper;
+    @Column(name = "description")
+    private String description;
 
-    @Column(name = "release_date")
-    private LocalDate releaseDate;
-
-    @OneToMany(mappedBy = "idNewspaper")
+    @OneToMany(mappedBy = "idType")
     @ToString.Exclude
     private Set<Article> articles = new LinkedHashSet<>();
-
-    public Newspaper(String name, LocalDate releaseDate) {
-        this.nameNewspaper = name;
-        this.releaseDate = releaseDate;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Newspaper newspaper = (Newspaper) o;
-        return id != null && Objects.equals(id, newspaper.id);
+        Articletype that = (Articletype) o;
+        return id != null && Objects.equals(id, that.id);
     }
 
     @Override

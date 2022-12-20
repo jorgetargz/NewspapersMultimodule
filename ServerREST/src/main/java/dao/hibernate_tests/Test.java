@@ -14,11 +14,12 @@ public class Test {
 
     public static void main(String[] args) {
         System.out.println("Testing Hibernate implementations");
-        NewspaperDaoImpl newspaperDaoImpl = new NewspaperDaoImpl(new JPAUtil());
 
-        Newspaper newspaper = new Newspaper("El País", LocalDate.of(2021, 1, 1));
 
         System.out.println("NEWSPAERS DAO");
+        NewspaperDaoImpl newspaperDaoImpl = new NewspaperDaoImpl(new JPAUtil());
+        Newspaper newspaper = new Newspaper("El País", LocalDate.of(2021, 1, 1));
+
         System.out.println("GET ALL");
         newspaperDaoImpl.getAll().forEach(System.out::println);
 
@@ -37,14 +38,37 @@ public class Test {
         System.out.println("GET ALL");
         newspaperDaoImpl.getAll().forEach(System.out::println);
 
-        Login login = new Login("jacobino", "1234", "mega@server.com", new Reader("Jacobino", LocalDate.of(1990, 1, 1)));
-
-        ReadersDaoImpl readersDaoImpl = new ReadersDaoImpl(new JPAUtil());
-        LoginDaoImpl loginDaoImpl = new LoginDaoImpl(new JPAUtil());
 
         System.out.println("READERS DAO");
+        ReadersDaoImpl readersDaoImpl = new ReadersDaoImpl(new JPAUtil());
+        Reader reader = new Reader("Pepe", LocalDate.of(1990, 1, 1));
+
         System.out.println("GET ALL");
         readersDaoImpl.getAll().forEach(System.out::println);
+
+        System.out.println("SAVE");
+        System.out.println(readersDaoImpl.save(reader));
+
+        System.out.println("GET ALL");
+        readersDaoImpl.getAll().forEach(System.out::println);
+
+        System.out.println("UPDATE");
+        reader.setName("Pepito");
+        System.out.println(readersDaoImpl.update(reader));
+
+        System.out.println("GET ALL");
+        readersDaoImpl.getAll().forEach(System.out::println);
+
+        System.out.println("DELETE");
+        readersDaoImpl.delete(reader);
+
+        System.out.println("GET ALL");
+        readersDaoImpl.getAll().forEach(System.out::println);
+
+
+        System.out.println("LOGIN DAO");
+        LoginDaoImpl loginDaoImpl = new LoginDaoImpl(new JPAUtil());
+        Login login = new Login("jacobino", "1234", "mega@server.com", new Reader("Jacobino", LocalDate.of(1990, 1, 1)));
 
         System.out.println("SAVE");
         System.out.println(loginDaoImpl.save(login));
@@ -52,15 +76,8 @@ public class Test {
         System.out.println("GET");
         System.out.println(loginDaoImpl.get(login.getUsername()));
 
-        System.out.println("GET ALL");
-        readersDaoImpl.getAll().forEach(System.out::println);
-
         System.out.println("DELETE");
         loginDaoImpl.delete(login);
-
-        System.out.println("GET ALL");
-        readersDaoImpl.getAll().forEach(System.out::println);
-
 
     }
 }

@@ -1,15 +1,18 @@
 package dao.hibernate_model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import java.time.LocalDate;
+import java.util.LinkedHashSet;
+import java.util.Objects;
+import java.util.Set;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 
 @Entity
 @Table(name = "reader")
@@ -31,6 +34,11 @@ public class Reader {
 
     @OneToOne (mappedBy="reader", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private Login login;
+
+    @OneToMany(mappedBy = "idReader")
+    @ToString.Exclude
+    private Set<Readarticle> readarticles = new LinkedHashSet<>();
+
 
     public Reader(String nameInput, LocalDate birthdayInput, Login loginInput) {
         this.name = nameInput;
@@ -54,5 +62,18 @@ public class Reader {
         if (this.login != null && login.getPassword() != null) {
             this.login.setPassword(password);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Reader reader = (Reader) o;
+        return id != null && Objects.equals(id, reader.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

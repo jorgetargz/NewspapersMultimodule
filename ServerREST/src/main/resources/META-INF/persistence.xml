@@ -7,6 +7,9 @@
         <class>dao.hibernate_model.Newspaper</class>
         <class>dao.hibernate_model.Reader</class>
         <class>dao.hibernate_model.Login</class>
+        <class>dao.hibernate_model.Article</class>
+        <class>dao.hibernate_model.Articletype</class>
+        <class>dao.hibernate_model.Readarticle</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
