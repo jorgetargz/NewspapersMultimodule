@@ -41,8 +41,8 @@ public class ArticleTypesDaoImpl implements ArticleTypesDao {
                 return list;
             }
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
-            throw new DatabaseException(e.getMessage());
+            log.error(e.getMessage(), e);
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -58,8 +58,8 @@ public class ArticleTypesDaoImpl implements ArticleTypesDao {
                 return list.get(0);
             }
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
-            throw new DatabaseException(e.getMessage());
+            log.error(e.getMessage(), e);
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -83,8 +83,8 @@ public class ArticleTypesDaoImpl implements ArticleTypesDao {
                 return articleType;
             }
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
-            throw new DatabaseException(e.getMessage());
+            log.error(e.getMessage(), e);
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -99,8 +99,8 @@ public class ArticleTypesDaoImpl implements ArticleTypesDao {
                 return articleType;
             }
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
-            throw new DatabaseException(e.getMessage());
+            log.error(e.getMessage(), e);
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -113,8 +113,8 @@ public class ArticleTypesDaoImpl implements ArticleTypesDao {
                 throw new DatabaseException(Constantes.ARTICLE_TYPE_NOT_DELETED);
             }
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
-            throw new DatabaseException(e.getMessage());
+            log.error(e.getMessage(), e);
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 }

@@ -38,7 +38,7 @@ public class RatingsDaoImpl implements RatingsDao {
             }
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -57,7 +57,7 @@ public class RatingsDaoImpl implements RatingsDao {
             }
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -80,7 +80,7 @@ public class RatingsDaoImpl implements RatingsDao {
             }
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -99,7 +99,7 @@ public class RatingsDaoImpl implements RatingsDao {
             return articleRating;
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -114,7 +114,7 @@ public class RatingsDaoImpl implements RatingsDao {
             return articleRating;
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -127,7 +127,7 @@ public class RatingsDaoImpl implements RatingsDao {
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -139,7 +139,7 @@ public class RatingsDaoImpl implements RatingsDao {
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 

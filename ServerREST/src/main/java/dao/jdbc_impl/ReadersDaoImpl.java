@@ -39,7 +39,7 @@ public class ReadersDaoImpl implements ReadersDao {
             }
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -57,7 +57,7 @@ public class ReadersDaoImpl implements ReadersDao {
             }
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -75,7 +75,7 @@ public class ReadersDaoImpl implements ReadersDao {
             }
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -92,8 +92,8 @@ public class ReadersDaoImpl implements ReadersDao {
             }
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
-        return null;
     }
 
     @Override
@@ -109,8 +109,8 @@ public class ReadersDaoImpl implements ReadersDao {
             }
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
-        return null;
     }
 
     @Override
@@ -120,7 +120,7 @@ public class ReadersDaoImpl implements ReadersDao {
             return executeSavingReaderStatements(reader, con);
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
 
     }
@@ -132,7 +132,7 @@ public class ReadersDaoImpl implements ReadersDao {
             return executeUpdatingReaderStatements(reader, con);
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -143,7 +143,7 @@ public class ReadersDaoImpl implements ReadersDao {
             executeDeletingReaderStatements(reader, con);
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -274,7 +274,7 @@ public class ReadersDaoImpl implements ReadersDao {
         if (ex instanceof SQLIntegrityConstraintViolationException) {
             throw new DatabaseException(Constantes.USERNAME_ALREADY_EXISTS);
         } else {
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 

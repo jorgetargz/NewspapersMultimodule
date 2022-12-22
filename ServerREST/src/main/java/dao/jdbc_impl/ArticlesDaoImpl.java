@@ -43,8 +43,8 @@ public class ArticlesDaoImpl implements ArticlesDao {
                 return list;
             }
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
-            throw new DatabaseException(e.getMessage());
+            log.error(e.getMessage(), e);
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -60,8 +60,8 @@ public class ArticlesDaoImpl implements ArticlesDao {
                 return list;
             }
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
-            throw new DatabaseException(e.getMessage());
+            log.error(e.getMessage(), e);
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -77,8 +77,8 @@ public class ArticlesDaoImpl implements ArticlesDao {
                 return list;
             }
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
-            throw new DatabaseException(e.getMessage());
+            log.error(e.getMessage(), e);
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -94,8 +94,8 @@ public class ArticlesDaoImpl implements ArticlesDao {
                 return list;
             }
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
-            throw new DatabaseException(e.getMessage());
+            log.error(e.getMessage(), e);
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -111,8 +111,8 @@ public class ArticlesDaoImpl implements ArticlesDao {
                 return list.get(0);
             }
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
-            throw new DatabaseException(e.getMessage());
+            log.error(e.getMessage(), e);
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -138,8 +138,8 @@ public class ArticlesDaoImpl implements ArticlesDao {
                 return article;
             }
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
-            throw new DatabaseException(e.getMessage());
+            log.error(e.getMessage(), e);
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -154,8 +154,8 @@ public class ArticlesDaoImpl implements ArticlesDao {
                 return article;
             }
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
-            throw new DatabaseException(e.getMessage());
+            log.error(e.getMessage(), e);
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -168,8 +168,8 @@ public class ArticlesDaoImpl implements ArticlesDao {
                 throw new NotFoundException(Constantes.NO_ARTICLE_WITH_THIS_ID);
             }
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
-            throw new DatabaseException(e.getMessage());
+            log.error(e.getMessage(), e);
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -182,8 +182,8 @@ public class ArticlesDaoImpl implements ArticlesDao {
                 throw new NotFoundException(Constantes.NO_ARTICLES_OF_THIS_NEWSPAPER);
             }
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
-            throw new DatabaseException(e.getMessage());
+            log.error(e.getMessage(), e);
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -207,7 +207,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
             }
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -224,7 +224,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
             }
         } catch (DataAccessException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -241,7 +241,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
             }
         } catch (DataAccessException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 }

@@ -36,7 +36,7 @@ public class LoginDaoImpl implements LoginDao {
             }
         } catch (SQLException e) {
             log.error(e.getMessage());
-            throw new DatabaseException(e.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -53,7 +53,7 @@ public class LoginDaoImpl implements LoginDao {
             }
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -69,7 +69,7 @@ public class LoginDaoImpl implements LoginDao {
             }
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -87,7 +87,7 @@ public class LoginDaoImpl implements LoginDao {
             }
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -126,7 +126,7 @@ public class LoginDaoImpl implements LoginDao {
             }
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 

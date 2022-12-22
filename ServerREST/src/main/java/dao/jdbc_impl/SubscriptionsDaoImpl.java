@@ -40,7 +40,7 @@ public class SubscriptionsDaoImpl implements SubscriptionsDao {
             }
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -52,7 +52,7 @@ public class SubscriptionsDaoImpl implements SubscriptionsDao {
             return getSubscriptions(newspaperId, preparedStatement);
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -72,7 +72,7 @@ public class SubscriptionsDaoImpl implements SubscriptionsDao {
             }
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -100,7 +100,7 @@ public class SubscriptionsDaoImpl implements SubscriptionsDao {
             }
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -117,7 +117,7 @@ public class SubscriptionsDaoImpl implements SubscriptionsDao {
             return subscription;
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -133,7 +133,7 @@ public class SubscriptionsDaoImpl implements SubscriptionsDao {
             return subscription;
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -147,7 +147,7 @@ public class SubscriptionsDaoImpl implements SubscriptionsDao {
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -160,7 +160,7 @@ public class SubscriptionsDaoImpl implements SubscriptionsDao {
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -171,7 +171,7 @@ public class SubscriptionsDaoImpl implements SubscriptionsDao {
             return getSubscriptions(newspaperId, preparedStatement);
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 

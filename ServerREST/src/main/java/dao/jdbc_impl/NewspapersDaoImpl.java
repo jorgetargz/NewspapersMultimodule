@@ -48,7 +48,7 @@ public class NewspapersDaoImpl implements NewspapersDao {
             }
         } catch (DataAccessException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -65,7 +65,7 @@ public class NewspapersDaoImpl implements NewspapersDao {
             }
         } catch (DataAccessException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
 
     }
@@ -91,8 +91,8 @@ public class NewspapersDaoImpl implements NewspapersDao {
                 return newspaper;
             }
         } catch (DataAccessException e) {
-            log.error(e.getMessage());
-            throw new DatabaseException(e.getMessage());
+            log.error(e.getMessage(), e);
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -108,7 +108,7 @@ public class NewspapersDaoImpl implements NewspapersDao {
             }
         } catch (DataAccessException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 
@@ -130,7 +130,7 @@ public class NewspapersDaoImpl implements NewspapersDao {
         } catch (DataAccessException e) {
             transactionManager.rollback(transactionStatus);
             log.error(e.getMessage(), e);
-            throw new DatabaseException(e.getMessage());
+            throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
 }
