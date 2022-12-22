@@ -1,6 +1,8 @@
 package jakarta.beans;
 
 
+import dao.excepciones.DatabaseException;
+import dao.excepciones.NotFoundException;
 import domain.services.ServicesLogin;
 import jakarta.beans.utils.MailSender;
 import jakarta.beans.utils.VerificationCode;
@@ -88,7 +90,10 @@ public class VerifyEmailBean implements Serializable {
             try {
                 sendVerificationEmail();
                 return Constantes.EMAIL_SEND_REDIRECT;
-            } catch (Exception e) {
+            } catch (MessagingException e) {
+                log.error(e.getMessage(), e);
+                return Constantes.SERVER_ERROR_REDIRECT;
+            } catch (NotFoundException | DatabaseException e) {
                 return Constantes.SERVER_ERROR_REDIRECT;
             }
         } else {

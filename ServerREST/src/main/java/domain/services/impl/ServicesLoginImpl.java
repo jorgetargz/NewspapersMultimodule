@@ -3,18 +3,23 @@ package domain.services.impl;
 
 import dao.LoginDao;
 import dao.ReadersDao;
+import dao.excepciones.DatabaseException;
+import dao.excepciones.NotFoundException;
 import domain.common.Constantes;
 import domain.services.ServicesLogin;
 import domain.services.excepciones.ValidationException;
 import jakarta.beans.VerifyEmailBean;
 import jakarta.inject.Inject;
+import jakarta.mail.MessagingException;
 import jakarta.security.enterprise.identitystore.Pbkdf2PasswordHash;
+import lombok.extern.log4j.Log4j2;
 import modelo.Login;
 import modelo.Reader;
 import modelo.Secret;
 
 import java.io.Serializable;
 
+@Log4j2
 public class ServicesLoginImpl implements ServicesLogin, Serializable {
 
     private final LoginDao daoLogin;
@@ -86,9 +91,13 @@ public class ServicesLoginImpl implements ServicesLogin, Serializable {
         verifyEmail.setUsername(reader.getLogin().getUsername());
         try {
             verifyEmail.sendVerificationEmail();
-        } catch (Exception e) {
+        } catch (MessagingException e) {
             daoReader.delete(reader);
+            log.error(e.getMessage(), e);
             throw new ValidationException(e.getMessage());
+        } catch (NotFoundException | DatabaseException e) {
+            daoReader.delete(reader);
+            throw e;
         }
 
     }
