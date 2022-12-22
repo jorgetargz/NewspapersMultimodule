@@ -1,6 +1,9 @@
 package jakarta.security;
 
+import dao.excepciones.DatabaseException;
+import dao.excepciones.NotFoundException;
 import domain.services.ServicesLogin;
+import domain.services.excepciones.ValidationException;
 import jakarta.inject.Inject;
 import jakarta.security.enterprise.credential.BasicAuthenticationCredential;
 import jakarta.security.enterprise.credential.Credential;
@@ -12,6 +15,7 @@ import modelo.Reader;
 import java.util.Set;
 
 import static jakarta.security.enterprise.identitystore.CredentialValidationResult.INVALID_RESULT;
+import static jakarta.security.enterprise.identitystore.CredentialValidationResult.NOT_VALIDATED_RESULT;
 
 @Log4j2
 public class InMemoryIdentityStore implements IdentityStore {
@@ -36,8 +40,9 @@ public class InMemoryIdentityStore implements IdentityStore {
             try {
                 loguedUser = serviciosLogin.login(basicAuthenticationCredential.getCaller(), basicAuthenticationCredential.getPassword().getValue());
                 return new CredentialValidationResult(loguedUser.getLogin().getUsername(), Set.of(loguedUser.getLogin().getRole()));
-            } catch (Exception e) {
-                log.error(e.getMessage(), e);
+            } catch (NotFoundException | ValidationException e) {
+                return NOT_VALIDATED_RESULT;
+            } catch (DatabaseException e) {
                 return INVALID_RESULT;
             }
         } else {

@@ -39,12 +39,21 @@ public class JWTAuth implements HttpAuthenticationMechanism {
                 }
             }
 
+            //JWT Authentication
+
+
         } else {
             if (httpServletRequest.getSession().getAttribute(Constantes.CREDENTIAL) != null)
                 c = (CredentialValidationResult) httpServletRequest.getSession().getAttribute(Constantes.CREDENTIAL);
         }
 
-        if (c.getStatus().equals(CredentialValidationResult.Status.INVALID)) {
+        if (c.getStatus() == CredentialValidationResult.Status.INVALID) {
+            httpServletRequest.setAttribute(Constantes.ERROR_LOGIN, Constantes.SERVER_ERROR);
+            return httpMessageContext.doNothing();
+        }
+
+        if (c.getStatus() == CredentialValidationResult.Status.NOT_VALIDATED) {
+            httpServletRequest.setAttribute(Constantes.ERROR_LOGIN, Constantes.NOT_VALID_CREDS);
             return httpMessageContext.doNothing();
         }
 

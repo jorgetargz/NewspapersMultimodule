@@ -2,7 +2,9 @@ package jakarta.common;
 
 public class Constantes {
 
-    public static final String NO_SE_HA_PODIDO_AUTENTICAR_AL_USUARIO = "No se ha podido autenticar al usuario";
+    public static final String ERROR_LOGIN = "LOGIN_ERROR";
+    public static final Object SERVER_ERROR = "Server error";
+    public static final Object NOT_VALID_CREDS = "Not valid credentials or email not verified";
 
     private Constantes() {
     }
