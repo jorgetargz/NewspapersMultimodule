@@ -64,6 +64,10 @@ public class MainController {
         return reader;
     }
 
+    public BorderPane getRootPane() {
+        return root;
+    }
+
     public void setReader(Reader reader) {
         this.reader = reader;
     }

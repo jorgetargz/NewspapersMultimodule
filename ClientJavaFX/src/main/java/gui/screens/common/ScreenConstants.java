@@ -62,11 +62,11 @@ public class ScreenConstants {
     public static final String NAME_NEWSPAPER = "nameNewspaper";
     public static final String RELEASE_DATE = "releaseDate";
     public static final String VERIFY_EMAIL = "Verification email send";
-    public static final String LOGOUT = "Logout";
     public static final String LOGOUT_SUCCESS = "Logout success";
     public static final String GUEST = "Guest";
     public static final String SEND_VERIFICATION_EMAIL_XHTML = "http://localhost:8080/NewspapersREST/sendVerificationEmail.xhtml";
     public static final String FORGOT_PASSWORD_XHTML = "http://localhost:8080/NewspapersREST/forgotPassword.xhtml";
+    public static final String GO_TO_VERIFY_EMAIL_WEB = "Go to verify email web";
 
 
     private ScreenConstants() {

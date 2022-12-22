@@ -8,6 +8,7 @@ import io.github.palexdev.materialfx.controls.MFXTextField;
 import jakarta.inject.Inject;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
@@ -72,16 +73,22 @@ public class LoginController extends BaseScreenController {
                     loginViewModel.clenState();
                 });
             }
+            if (newState.isLoading()) {
+                this.getPrincipalController().getRootPane().setCursor(javafx.scene.Cursor.WAIT);
+            }
+            if (newState.isLoaded()) {
+                this.getPrincipalController().getRootPane().setCursor(Cursor.DEFAULT);
+            }
         });
     }
 
     private static void showEmailVerificationAlert() {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(ScreenConstants.USER_REGISTERED);
         alert.setHeaderText(ScreenConstants.USER_REGISTERED);
         alert.setContentText(ScreenConstants.VERIFY_EMAIL);
         alert.getButtonTypes().clear();
-        ButtonType buttonResend = new ButtonType("Go to verify email web");
+        ButtonType buttonResend = new ButtonType(ScreenConstants.GO_TO_VERIFY_EMAIL_WEB);
         alert.getButtonTypes().add(buttonResend);
         alert.getButtonTypes().add(ButtonType.OK);
         alert.showAndWait().ifPresent(buttonType -> {

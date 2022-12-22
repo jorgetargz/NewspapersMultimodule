@@ -20,7 +20,7 @@ public class LoginViewModel {
     @Inject
     public LoginViewModel(LoginServices loginServices) {
         this.loginServices = loginServices;
-        state = new SimpleObjectProperty<>(new LoginState(null, null, false));
+        state = new SimpleObjectProperty<>(new LoginState(null, null, false, false, false));
     }
 
     public ReadOnlyObjectProperty<LoginState> getState() {
@@ -28,13 +28,14 @@ public class LoginViewModel {
     }
 
     public void doLogin(String username, String password) {
+        state.set(new LoginState(null, null, false,true, false));
         loginServices.getReaderByLogin(username, password)
                 .observeOn(Schedulers.single())
                 .subscribe(either -> {
                     if (either.isLeft())
-                        state.set(new LoginState(null, either.getLeft(), false));
+                        state.set(new LoginState(null, either.getLeft(), false,false, true));
                     else {
-                        state.set(new LoginState(either.get(), null, false));
+                        state.set(new LoginState(either.get(), null, false,false, true));
                     }
                 });
     }
@@ -46,21 +47,22 @@ public class LoginViewModel {
                 && inputUsername != null && !inputUsername.isEmpty()
                 && inputPassword != null && !inputPassword.isEmpty()) {
             Reader reader = new Reader(inputName, inputBirthday, new Login(inputUsername, inputPassword, email));
+            state.set(new LoginState(null, null, false,true, false));
             loginServices.registerReader(reader)
                     .subscribeOn(Schedulers.single())
                     .subscribe(either -> {
                         if (either.isLeft())
-                            state.set(new LoginState(null, either.getLeft(), false));
+                            state.set(new LoginState(null, either.getLeft(), false, false, true));
                         else {
-                            state.set(new LoginState(null, null, true));
+                            state.set(new LoginState(null, null, true, false, true));
                         }
                     });
         } else {
-            state.set(new LoginState(null, ScreenConstants.FILL_ALL_THE_INPUTS, false));
+            state.set(new LoginState(null, ScreenConstants.FILL_ALL_THE_INPUTS, false, false, true));
         }
     }
 
     public void clenState() {
-        state.setValue(new LoginState(null, null, false));
+        state.setValue(new LoginState(null, null, false, false, false));
     }
 }
