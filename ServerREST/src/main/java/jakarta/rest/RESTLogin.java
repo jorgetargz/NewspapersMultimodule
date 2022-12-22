@@ -38,10 +38,8 @@ public class RESTLogin {
 
     @POST
     public Response register(Reader reader) {
-        String password = reader.getLogin().getPassword();
         Reader newReader = servicesReaders.saveReader(reader);
-        reader.getLogin().setPassword(password);
-        servicesLogin.sendVerificationEmail(reader);
+        servicesLogin.sendVerificationEmail(newReader);
         return Response.status(Response.Status.CREATED)
                 .entity(newReader)
                 .build();

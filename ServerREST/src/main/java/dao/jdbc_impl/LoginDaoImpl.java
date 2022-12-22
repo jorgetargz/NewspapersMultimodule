@@ -11,10 +11,7 @@ import lombok.extern.log4j.Log4j2;
 import modelo.Login;
 import modelo.Secret;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDateTime;
 
 @Log4j2
@@ -108,7 +105,11 @@ public class LoginDaoImpl implements LoginDao {
             }
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            if (ex instanceof SQLIntegrityConstraintViolationException) {
+                throw new DatabaseException(Constantes.EMAIL_ALREADY_EXISTS);
+            } else {
+                throw new DatabaseException(Constantes.DATABASE_ERROR);
+            }
         }
     }
 

@@ -165,6 +165,7 @@ public class ReadersDaoImpl implements ReadersDao {
             preparedStatementInsertCredentials.setString(1, reader.getLogin().getUsername());
             preparedStatementInsertCredentials.setString(2, reader.getLogin().getPassword());
             preparedStatementInsertCredentials.setInt(3, reader.getId());
+            preparedStatementInsertCredentials.setString(4, reader.getLogin().getRole());
             preparedStatementInsertCredentials.executeUpdate();
 
             preparedStatementInsertSecret.setString(1, reader.getLogin().getUsername());
@@ -228,9 +229,9 @@ public class ReadersDaoImpl implements ReadersDao {
             Login login = new Login(usernameReader, passwordReader, emailReader, inputReader.getId(), roleReader);
             return new Reader(inputReader.getId(), nameReader, birthReader, login);
         } catch (SQLException ex) {
-            log.error(ex.getMessage(), ex);
-            throw new DatabaseException(ex.getMessage());
+            transactionFailed(con, ex);
         }
+        return null;
     }
 
 
@@ -267,10 +268,14 @@ public class ReadersDaoImpl implements ReadersDao {
             con.rollback();
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
-            throw new DatabaseException(ex.getMessage());
+            throw new DatabaseException(e.getMessage());
         }
         log.error(ex.getMessage(), ex);
-        throw new DatabaseException(ex.getMessage());
+        if (ex instanceof SQLIntegrityConstraintViolationException) {
+            throw new DatabaseException(Constantes.USERNAME_ALREADY_EXISTS);
+        } else {
+            throw new DatabaseException(ex.getMessage());
+        }
     }
 
     private List<Reader> getReadersFromRS(ResultSet rs) throws SQLException {

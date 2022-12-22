@@ -24,7 +24,7 @@
             <p:outputLabel for="email" value="Email:"/>
             <p:inputText id="email" type="email" value="#{verifyEmailBean.email}" required="true" size="50"/>
             <p:message for="email"/>
-            <p:commandButton value="Send mail" ajax="false" validateClient="true" action="#{verifyEmailBean.sendVerificationMail()}"/>
+            <p:commandButton value="Send mail" ajax="false" validateClient="true" action="#{verifyEmailBean.sendVerificationMailWebForm()}"/>
         </p:panelGrid>
     </h:form>
 

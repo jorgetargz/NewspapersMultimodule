@@ -84,8 +84,13 @@ public class ServicesLoginImpl implements ServicesLogin, Serializable {
     public void sendVerificationEmail(Reader reader) {
         verifyEmail.setEmail(reader.getLogin().getEmail());
         verifyEmail.setUsername(reader.getLogin().getUsername());
-        verifyEmail.setPassword(reader.getLogin().getPassword());
-        verifyEmail.sendVerificationMail();
+        try {
+            verifyEmail.sendVerificationEmail();
+        } catch (Exception e) {
+            daoReader.delete(reader);
+            throw new ValidationException(e.getMessage());
+        }
+
     }
 
 }

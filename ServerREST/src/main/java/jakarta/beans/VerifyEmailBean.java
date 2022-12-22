@@ -8,6 +8,7 @@ import jakarta.common.Constantes;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import jakarta.mail.MessagingException;
 import lombok.extern.log4j.Log4j2;
 import modelo.Secret;
 
@@ -77,7 +78,7 @@ public class VerifyEmailBean implements Serializable {
         this.verifyEmailError = verifyEmailError;
     }
 
-    public String sendVerificationMail() {
+    public String sendVerificationMailWebForm() {
         if (email == null) {
             Secret secretDB = servicesLogin.getSecret(code);
             email = secretDB.getEmail();
@@ -85,21 +86,24 @@ public class VerifyEmailBean implements Serializable {
         }
         if (servicesLogin.checkCredentials(username, password)) {
             try {
-                String secretCode = verificationCode.generate();
-                LocalDateTime codeExpirationDate = LocalDateTime.now().plusMinutes(5);
-                Secret secret = new Secret(secretCode, codeExpirationDate, username, email);
-                servicesLogin.updateSecretByUsername(secret);
-                mailSender.generateAndSendEmail(email,
-                        String.format(Constantes.VERIFICATION_MAIL_CONTENT, secretCode),
-                        Constantes.VERIFICATION_MAIL);
+                sendVerificationEmail();
                 return Constantes.EMAIL_SEND_REDIRECT;
             } catch (Exception e) {
-                log.error(e.getMessage(), e);
                 return Constantes.SERVER_ERROR_REDIRECT;
             }
         } else {
             return Constantes.SERVER_ERROR_REDIRECT;
         }
+    }
+
+    public void sendVerificationEmail() throws MessagingException {
+        String secretCode = verificationCode.generate();
+        LocalDateTime codeExpirationDate = LocalDateTime.now().plusMinutes(5);
+        Secret secret = new Secret(secretCode, codeExpirationDate, username, email);
+        servicesLogin.updateSecretByUsername(secret);
+        mailSender.generateAndSendEmail(email,
+                String.format(Constantes.VERIFICATION_MAIL_CONTENT, secretCode),
+                Constantes.VERIFICATION_MAIL);
     }
 
     public String verifyEmail() {

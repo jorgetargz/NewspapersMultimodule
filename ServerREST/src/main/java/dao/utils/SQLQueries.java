@@ -14,7 +14,6 @@ public class SQLQueries {
     public static final String DELETE_SUBSCRIPTIONS_BY_NEWSPAPER = "DELETE FROM subscribe WHERE id_newspaper = ?";
     public static final String DELETE_SUBSCRIPTIONS_BY_READER_ID = "delete from subscribe where id_reader = ?";
     public static final String SELECT_READERS_QUERY = "select * from reader";
-    public static final String SELECT_LOGIN_BY_USERNAME = "SELECT * FROM login WHERE username = ?";
     public static final String SELECT_READERS_BY_ARTICLE_TYPE_QUERY = "SELECT * FROM reader WHERE id IN (SELECT id_reader FROM readarticle WHERE id_article IN (SELECT id_article FROM article WHERE id_type = ?))";
     public static final String SELECT_READERS_BY_NEWSPAPER_QUERY = "select * from reader where id in (select id_reader from subscribe where id_newspaper = ?)";
     public static final String SELECT_READER_BY_USERNAME_QUERY = "select * from reader where id in (select id_reader from login where username = ?)";
@@ -23,7 +22,7 @@ public class SQLQueries {
     public static final String UPDATE_READER = "update reader set name_reader = ?, birth_reader = ? where id = ?";
     public static final String DELETE_READER = "delete from reader where id = ?";
     public static final String SELECT_LOGIN_FROM_ID_QUERY = "SELECT * FROM login WHERE id_reader = ?";
-    public static final String INSERT_LOGIN_QUERY = "INSERT INTO login (username, password, id_reader) VALUES (?, ?, ?)";
+    public static final String INSERT_LOGIN_QUERY = "INSERT INTO login (username, password, id_reader, role) VALUES (?, ?, ?, ?)";
     public static final String UPDATE_LOGIN_QUERY = "UPDATE login SET password = ? WHERE username = ?";
     public static final String DELETE_LOGIN_BY_READER_ID = "DELETE FROM login WHERE id_reader = ?";
     public static final String SELECT_NEWSPAPERS_QUERY = "SELECT * FROM newspaper";

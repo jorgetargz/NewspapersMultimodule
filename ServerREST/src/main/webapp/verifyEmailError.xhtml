@@ -21,7 +21,7 @@
                         feedback="true" inline="true"/>
             <p:message for="pass"/>
             <p:commandButton value="Resend email" ajax="false" validateClient="true"
-                             action="#{verifyEmailBean.sendVerificationMail()}"/>
+                             action="#{verifyEmailBean.sendVerificationMailWebForm()}"/>
         </p:panelGrid>
     </h:form>
     <ui:include src="resources/layout/footer.xhtml"/>
