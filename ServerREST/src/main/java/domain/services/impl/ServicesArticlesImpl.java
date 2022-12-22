@@ -7,11 +7,13 @@ import domain.common.Constantes;
 import domain.services.ServicesArticles;
 import domain.services.excepciones.ValidationException;
 import jakarta.inject.Inject;
+import lombok.extern.log4j.Log4j2;
 import modelo.*;
 
 import java.util.List;
 
 
+@Log4j2
 public class ServicesArticlesImpl implements ServicesArticles {
 
     private final ArticlesDao daoArticles;
@@ -35,6 +37,7 @@ public class ServicesArticlesImpl implements ServicesArticles {
         try {
             return daoArticles.getAllByArticleTypeId(Integer.parseInt(typeId));
         } catch (NumberFormatException e) {
+            log.warn(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
             throw new ValidationException(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
         }
     }
@@ -44,6 +47,7 @@ public class ServicesArticlesImpl implements ServicesArticles {
         try {
             return daoArticles.getAllByNewspaperId(Integer.parseInt(idNewspaper));
         } catch (NumberFormatException e) {
+            log.warn(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
             throw new ValidationException(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
         }
     }
@@ -53,6 +57,7 @@ public class ServicesArticlesImpl implements ServicesArticles {
         try {
             return daoArticles.getAllByReaderId(Integer.parseInt(idReader));
         } catch (NumberFormatException e) {
+            log.warn(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
             throw new ValidationException(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
         }
     }
@@ -67,6 +72,7 @@ public class ServicesArticlesImpl implements ServicesArticles {
         try {
             return daoArticles.get(Integer.parseInt(id));
         } catch (NumberFormatException e) {
+            log.warn(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
             throw new ValidationException(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
         }
     }
@@ -76,6 +82,7 @@ public class ServicesArticlesImpl implements ServicesArticles {
         try {
             return daoArticleTypes.get(Integer.parseInt(id));
         } catch (NumberFormatException e) {
+            log.warn(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
             throw new ValidationException(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
         }
     }
@@ -125,6 +132,7 @@ public class ServicesArticlesImpl implements ServicesArticles {
         try {
             return daoArticles.getArticleQuery1(Integer.parseInt(id));
         } catch (NumberFormatException e) {
+            log.warn(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
             throw new ValidationException(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
         }
     }
@@ -134,6 +142,7 @@ public class ServicesArticlesImpl implements ServicesArticles {
         try {
             return daoArticles.getArticlesQuery2(Integer.parseInt(articleTypeId));
         } catch (NumberFormatException e) {
+            log.warn(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
             throw new ValidationException(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
         }
     }
@@ -143,6 +152,7 @@ public class ServicesArticlesImpl implements ServicesArticles {
         try {
             return daoArticles.getArticlesQuery3(Integer.parseInt(newspaperId));
         } catch (NumberFormatException e) {
+            log.warn(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
             throw new ValidationException(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
         }
     }

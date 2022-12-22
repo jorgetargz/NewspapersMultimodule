@@ -33,7 +33,7 @@ public class SubscriptionsDaoImpl implements SubscriptionsDao {
             ResultSet rs = preparedStatement.executeQuery();
             List<Subscription> list = getSubscriptionsFromRS(rs);
             if (list.isEmpty()) {
-                log.info(Constantes.NO_SUBSCRIPTIONS);
+                log.warn(Constantes.NO_SUBSCRIPTIONS);
                 throw new NotFoundException(Constantes.NO_SUBSCRIPTIONS);
             } else {
                 return list;
@@ -65,7 +65,7 @@ public class SubscriptionsDaoImpl implements SubscriptionsDao {
             ResultSet rs = preparedStatement.executeQuery();
             List<Subscription> list = getSubscriptionsFromRS(rs);
             if (list.isEmpty()) {
-                log.info(Constantes.NO_SUBSCRIPTIONS_OF_THIS_READER);
+                log.warn(Constantes.NO_SUBSCRIPTIONS_OF_THIS_READER);
                 throw new NotFoundException(Constantes.NO_SUBSCRIPTIONS_OF_THIS_READER);
             } else {
                 return list;
@@ -95,7 +95,7 @@ public class SubscriptionsDaoImpl implements SubscriptionsDao {
                 }
                 return subscription;
             } else {
-                log.info(Constantes.SUBSCRIPTION_NOT_FOUND);
+                log.warn(Constantes.SUBSCRIPTION_NOT_FOUND);
                 throw new NotFoundException(Constantes.SUBSCRIPTION_NOT_FOUND);
             }
         } catch (SQLException ex) {
@@ -180,7 +180,7 @@ public class SubscriptionsDaoImpl implements SubscriptionsDao {
         ResultSet rs = preparedStatement.executeQuery();
         List<Subscription> list = getSubscriptionsFromRS(rs);
         if (list.isEmpty()) {
-            log.info(Constantes.NO_SUBSCRIPTIONS_OF_THIS_NEWSPAPER);
+            log.warn(Constantes.NO_SUBSCRIPTIONS_OF_THIS_NEWSPAPER);
             throw new NotFoundException(Constantes.NO_SUBSCRIPTIONS_OF_THIS_NEWSPAPER);
         } else {
             return list;

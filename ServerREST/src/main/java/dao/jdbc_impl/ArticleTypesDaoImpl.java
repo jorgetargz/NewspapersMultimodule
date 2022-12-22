@@ -35,7 +35,7 @@ public class ArticleTypesDaoImpl implements ArticleTypesDao {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(dbConnection.getDataSource());
             List<ArticleType> list = jdbcTemplate.query(SQLQueries.SELECT_ARTICLE_TYPES_QUERY, new BeanPropertyRowMapper<>(ArticleType.class));
             if (list.isEmpty()) {
-                log.error(Constantes.NO_ARTICLE_TYPES_FOUND);
+                log.warn(Constantes.NO_ARTICLE_TYPES_FOUND);
                 throw new DatabaseException(Constantes.NO_ARTICLE_TYPES_FOUND);
             } else {
                 return list;
@@ -52,7 +52,7 @@ public class ArticleTypesDaoImpl implements ArticleTypesDao {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(dbConnection.getDataSource());
             List<ArticleType> list = jdbcTemplate.query(SQLQueries.SELECT_ARTICLE_TYPE_BY_ID_QUERY, new BeanPropertyRowMapper<>(ArticleType.class), id);
             if (list.isEmpty()) {
-                log.error(Constantes.ARTICLE_TYPE_NOT_FOUND);
+                log.warn(Constantes.ARTICLE_TYPE_NOT_FOUND);
                 throw new DatabaseException(Constantes.ARTICLE_TYPE_NOT_FOUND);
             } else {
                 return list.get(0);
@@ -76,7 +76,7 @@ public class ArticleTypesDaoImpl implements ArticleTypesDao {
                 return ps;
             }, keyHolder);
             if (rowsAffected == 0) {
-                log.info(Constantes.ARTICLE_TYPE_NOT_SAVED);
+                log.error(Constantes.ARTICLE_TYPE_NOT_SAVED);
                 throw new DatabaseException(Constantes.ARTICLE_TYPE_NOT_SAVED);
             } else {
                 articleType.setId(Objects.requireNonNull(keyHolder.getKey()).intValue());

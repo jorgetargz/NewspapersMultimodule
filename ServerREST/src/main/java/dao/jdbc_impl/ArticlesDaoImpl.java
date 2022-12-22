@@ -37,7 +37,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(dbConnection.getDataSource());
             List<Article> list = jdbcTemplate.query(SQLQueries.SELECT_ARTICLES_WITH_TYPE_QUERY, new ArticleRowMapper());
             if (list.isEmpty()) {
-                log.info(Constantes.THERE_ARE_NO_ARTICLES);
+                log.warn(Constantes.THERE_ARE_NO_ARTICLES);
                 throw new NotFoundException(Constantes.THERE_ARE_NO_ARTICLES);
             } else {
                 return list;
@@ -54,7 +54,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(dbConnection.getDataSource());
             List<Article> list = jdbcTemplate.query(SQLQueries.SELECT_ARTICLES_BY_NEWSPAPER_WITH_TYPE_QUERY, new ArticleRowMapper(), newspaperId);
             if (list.isEmpty()) {
-                log.info(Constantes.NO_ARTICLES_OF_THIS_NEWSPAPER);
+                log.warn(Constantes.NO_ARTICLES_OF_THIS_NEWSPAPER);
                 throw new NotFoundException(Constantes.NO_ARTICLES_OF_THIS_NEWSPAPER);
             } else {
                 return list;
@@ -71,7 +71,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(dbConnection.getDataSource());
             List<Article> list = jdbcTemplate.query(SQLQueries.SELECT_ARTICLES_BY_TYPE_WITH_TYPE_QUERY, new ArticleRowMapper(), articleTypeId);
             if (list.isEmpty()) {
-                log.info(Constantes.NO_ARTICLES_OF_THIS_TYPE);
+                log.warn(Constantes.NO_ARTICLES_OF_THIS_TYPE);
                 throw new NotFoundException(Constantes.NO_ARTICLES_OF_THIS_TYPE);
             } else {
                 return list;
@@ -88,7 +88,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(dbConnection.getDataSource());
             List<Article> list = jdbcTemplate.query(SQLQueries.SELECT_ARTICLES_BY_READER_WITH_TYPE_FROM_SUSCRIBE_QUERY, new ArticleRowMapper(), readerId);
             if (list.isEmpty()) {
-                log.info(Constantes.NO_ARTICLES_OF_THIS_READER);
+                log.warn(Constantes.NO_ARTICLES_OF_THIS_READER);
                 throw new NotFoundException(Constantes.NO_ARTICLES_OF_THIS_READER);
             } else {
                 return list;
@@ -105,7 +105,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(dbConnection.getDataSource());
             List<Article> list = jdbcTemplate.query(SQLQueries.SELECT_ARTICLE_BY_ID_WITH_TYPE_QUERY, new ArticleRowMapper(), id);
             if (list.isEmpty()) {
-                log.info(Constantes.NO_ARTICLE_WITH_THIS_ID);
+                log.warn(Constantes.NO_ARTICLE_WITH_THIS_ID);
                 throw new NotFoundException(Constantes.NO_ARTICLE_WITH_THIS_ID);
             } else {
                 return list.get(0);
@@ -131,7 +131,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
                 return ps;
             }, keyHolder);
             if (rowsAffected == 0) {
-                log.info(Constantes.ARTICLE_COULD_NOT_BE_SAVED);
+                log.error(Constantes.ARTICLE_COULD_NOT_BE_SAVED);
                 throw new DatabaseException(Constantes.ARTICLE_COULD_NOT_BE_SAVED);
             } else {
                 article.setId(Objects.requireNonNull(keyHolder.getKey()).intValue());
@@ -148,7 +148,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
         try {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(dbConnection.getDataSource());
             if (jdbcTemplate.update(SQLQueries.UPDATE_ARTICLE_QUERY, article.getName(), article.getArticleType().getId(), article.getNewspaperId(), article.getId()) == 0) {
-                log.info(Constantes.NO_ARTICLE_WITH_THIS_ID);
+                log.error(Constantes.NO_ARTICLE_WITH_THIS_ID);
                 throw new NotFoundException(Constantes.NO_ARTICLE_WITH_THIS_ID);
             } else {
                 return article;
@@ -164,7 +164,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
         try {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(dbConnection.getDataSource());
             if (jdbcTemplate.update(SQLQueries.DELETE_ARTICLE_QUERY, article.getId()) == 0) {
-                log.info(Constantes.NO_ARTICLE_WITH_THIS_ID);
+                log.error(Constantes.NO_ARTICLE_WITH_THIS_ID);
                 throw new NotFoundException(Constantes.NO_ARTICLE_WITH_THIS_ID);
             }
         } catch (DataAccessException e) {
@@ -178,7 +178,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
         try {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(dbConnection.getDataSource());
             if (jdbcTemplate.update(SQLQueries.DELETE_ARTICLES_BY_NEWSPAPER_QUERY, newspaper.getId()) == 0) {
-                log.info(Constantes.NO_ARTICLES_OF_THIS_NEWSPAPER);
+                log.warn(Constantes.NO_ARTICLES_OF_THIS_NEWSPAPER);
                 throw new NotFoundException(Constantes.NO_ARTICLES_OF_THIS_NEWSPAPER);
             }
         } catch (DataAccessException e) {
@@ -202,7 +202,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
                         rs.getInt(Constantes.READERS)
                 );
             } else {
-                log.info(Constantes.NO_ARTICLE_WITH_THIS_ID);
+                log.warn(Constantes.NO_ARTICLE_WITH_THIS_ID);
                 throw new NotFoundException(Constantes.NO_ARTICLE_WITH_THIS_ID);
             }
         } catch (SQLException ex) {
@@ -217,7 +217,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(dbConnection.getDataSource());
             List<ArticleQuery2> list = jdbcTemplate.query(SQLQueries.SELECT_ARTICLES_BY_TYPE_WITH_NEWSPAPER_QUERY, new ArticleQuery2RowMapper(), articleTypeId);
             if (list.isEmpty()) {
-                log.info(Constantes.NO_ARTICLES_OF_THIS_TYPE);
+                log.warn(Constantes.NO_ARTICLES_OF_THIS_TYPE);
                 throw new NotFoundException(Constantes.NO_ARTICLES_OF_THIS_TYPE);
             } else {
                 return list;
@@ -234,7 +234,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(dbConnection.getDataSource());
             List<ArticleQuery3> list = jdbcTemplate.query(SQLQueries.SELECT_ARTICLES_BY_NEWSPAPER_WITH_BAD_RATING_QUERY, new ArticleQuery3RowMapper(), newspaperId);
             if (list.isEmpty()) {
-                log.info(Constantes.NO_ARTICLES_OF_THIS_NEWSPAPER);
+                log.warn(Constantes.NO_ARTICLES_OF_THIS_NEWSPAPER);
                 throw new NotFoundException(Constantes.NO_ARTICLES_OF_THIS_NEWSPAPER);
             } else {
                 return list;

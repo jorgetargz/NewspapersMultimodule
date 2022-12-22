@@ -41,7 +41,7 @@ public class NewspapersDaoImpl implements NewspapersDao {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(dbConnection.getDataSource());
             List<Newspaper> list = jdbcTemplate.query(SQLQueries.SELECT_NEWSPAPERS_QUERY, new NewspaperRowMapper());
             if (list.isEmpty()) {
-                log.error(Constantes.NO_NEWSPAPERS_FOUND);
+                log.warn(Constantes.NO_NEWSPAPERS_FOUND);
                 throw new NotFoundException(Constantes.NO_NEWSPAPERS_FOUND);
             } else {
                 return list;
@@ -58,7 +58,7 @@ public class NewspapersDaoImpl implements NewspapersDao {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(dbConnection.getDataSource());
             List<Newspaper> list = jdbcTemplate.query(SQLQueries.SELECT_NEWSPAPER_BY_ID_QUERY, new NewspaperRowMapper(), id);
             if (list.isEmpty()) {
-                log.error(Constantes.NEWSPAPER_NOT_FOUND);
+                log.warn(Constantes.NEWSPAPER_NOT_FOUND);
                 throw new NotFoundException(Constantes.NEWSPAPER_NOT_FOUND);
             } else {
                 return list.get(0);
@@ -84,7 +84,7 @@ public class NewspapersDaoImpl implements NewspapersDao {
                 return ps;
             }, keyHolder);
             if (rowsAffected == 0) {
-                log.info(Constantes.NEWSPAPER_NOT_SAVED);
+                log.error(Constantes.NEWSPAPER_NOT_SAVED);
                 throw new NotFoundException(Constantes.NEWSPAPER_NOT_SAVED);
             } else {
                 newspaper.setId(Objects.requireNonNull(keyHolder.getKey()).intValue());
@@ -124,6 +124,7 @@ public class NewspapersDaoImpl implements NewspapersDao {
             jtm.update(SQLQueries.DELETE_ARTICLES_BY_NEWSPAPER_QUERY, newspaper.getId());
             int rowsAffected = jtm.update(SQLQueries.DELETE_NEWSPAPER_QUERY, newspaper.getId());
             if (rowsAffected == 0) {
+                log.error(Constantes.NEWSPAPER_NOT_FOUND);
                 throw new NotFoundException(Constantes.NEWSPAPER_NOT_FOUND);
             }
             transactionManager.commit(transactionStatus);

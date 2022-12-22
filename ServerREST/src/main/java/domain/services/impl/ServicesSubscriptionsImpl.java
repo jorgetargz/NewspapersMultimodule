@@ -5,10 +5,12 @@ import domain.common.Constantes;
 import domain.services.ServicesSubscriptions;
 import domain.services.excepciones.ValidationException;
 import jakarta.inject.Inject;
+import lombok.extern.log4j.Log4j2;
 import modelo.Subscription;
 
 import java.util.List;
 
+@Log4j2
 public class ServicesSubscriptionsImpl implements ServicesSubscriptions {
 
     private final SubscriptionsDao daoSubscriptions;
@@ -29,6 +31,7 @@ public class ServicesSubscriptionsImpl implements ServicesSubscriptions {
         try {
             return daoSubscriptions.getAllByNewspaper(Integer.parseInt(newspaperId));
         } catch (NumberFormatException e) {
+            log.warn(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
             throw new ValidationException(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
         }
     }
@@ -38,6 +41,7 @@ public class ServicesSubscriptionsImpl implements ServicesSubscriptions {
         try {
             return daoSubscriptions.getOldestSubscriptionsByNewspaper(Integer.parseInt(newspaperId));
         } catch (NumberFormatException e) {
+            log.warn(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
             throw new ValidationException(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
         }
     }
@@ -47,6 +51,7 @@ public class ServicesSubscriptionsImpl implements ServicesSubscriptions {
         try {
             return daoSubscriptions.getAllByReader(Integer.parseInt(readerId));
         } catch (NumberFormatException e) {
+            log.warn(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
             throw new ValidationException(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
         }
     }
@@ -56,6 +61,7 @@ public class ServicesSubscriptionsImpl implements ServicesSubscriptions {
         try {
             return daoSubscriptions.get(Integer.parseInt(idNewspaper), Integer.parseInt(idReader));
         } catch (NumberFormatException e) {
+            log.warn(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
             throw new ValidationException(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
         }
     }

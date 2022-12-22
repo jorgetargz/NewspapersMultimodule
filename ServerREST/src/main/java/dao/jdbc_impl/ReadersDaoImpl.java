@@ -32,7 +32,7 @@ public class ReadersDaoImpl implements ReadersDao {
             ResultSet rs = preparedStatement.executeQuery();
             List<Reader> list = getReadersFromRS(rs);
             if (list.isEmpty()) {
-                log.info(Constantes.NO_READERS);
+                log.warn(Constantes.NO_READERS);
                 throw new NotFoundException(Constantes.NO_READERS);
             } else {
                 return list;
@@ -50,7 +50,7 @@ public class ReadersDaoImpl implements ReadersDao {
             ResultSet rs = preparedStatement.executeQuery();
             List<Reader> list = getReadersFromRS(rs);
             if (list.isEmpty()) {
-                log.info(Constantes.NO_READERS_OF_THIS_NEWSPAPER);
+                log.warn(Constantes.NO_READERS_OF_THIS_NEWSPAPER);
                 throw new NotFoundException(Constantes.NO_READERS_OF_THIS_NEWSPAPER);
             } else {
                 return list;
@@ -68,7 +68,7 @@ public class ReadersDaoImpl implements ReadersDao {
             ResultSet rs = preparedStatement.executeQuery();
             List<Reader> list = getReadersFromRS(rs);
             if (list.isEmpty()) {
-                log.info(Constantes.NO_READERS_OF_THIS_ARTICLE_TYPE);
+                log.warn(Constantes.NO_READERS_OF_THIS_ARTICLE_TYPE);
                 throw new NotFoundException(Constantes.NO_READERS_OF_THIS_ARTICLE_TYPE);
             } else {
                 return list;
@@ -87,7 +87,7 @@ public class ReadersDaoImpl implements ReadersDao {
             if (rs.next()) {
                 return getReaderFromRow(rs);
             } else {
-                log.info(Constantes.READER_NOT_FOUND);
+                log.warn(Constantes.READER_NOT_FOUND);
                 throw new NotFoundException(Constantes.READER_NOT_FOUND);
             }
         } catch (SQLException ex) {
@@ -104,7 +104,7 @@ public class ReadersDaoImpl implements ReadersDao {
             if (rs.next()) {
                 return getReaderFromRow(rs);
             } else {
-                log.info(Constantes.READER_NOT_FOUND);
+                log.warn(Constantes.READER_NOT_FOUND);
                 throw new NotFoundException(Constantes.READER_NOT_FOUND);
             }
         } catch (SQLException ex) {

@@ -42,8 +42,10 @@ public class ServicesLoginImpl implements ServicesLogin, Serializable {
         }
         Login loginDB = daoLogin.getLogin(username);
         if (!passwordHash.verify(password, loginDB.getPassword())) {
+            log.warn(Constantes.USERNAME_OR_PASSWORD_INCORRECT);
             throw new ValidationException(Constantes.USERNAME_OR_PASSWORD_INCORRECT);
         } else if (loginDB.getEmail() == null){
+            log.warn(Constantes.EMAIL_IS_NOT_VERIFIED);
             throw new ValidationException(Constantes.EMAIL_IS_NOT_VERIFIED);
         } else {
             return daoReader.getByUsername(username);
@@ -53,6 +55,7 @@ public class ServicesLoginImpl implements ServicesLogin, Serializable {
     @Override
     public boolean checkCredentials(String username, String password) {
         if (username == null || password == null) {
+            log.warn(Constantes.USERNAME_OR_PASSWORD_EMPTY);
             throw new ValidationException(Constantes.USERNAME_OR_PASSWORD_EMPTY);
         }
         Login loginDB = daoLogin.getLogin(username);

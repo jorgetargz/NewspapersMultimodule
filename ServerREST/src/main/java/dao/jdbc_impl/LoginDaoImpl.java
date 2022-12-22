@@ -32,6 +32,7 @@ public class LoginDaoImpl implements LoginDao {
             if (resultSet.next()) {
                 return getLoginFromResultSet(resultSet);
             } else {
+                log.warn(Constantes.LOGIN_NOT_FOUND);
                 throw new NotFoundException(Constantes.LOGIN_NOT_FOUND);
             }
         } catch (SQLException e) {
@@ -48,7 +49,7 @@ public class LoginDaoImpl implements LoginDao {
             if (rs.next()) {
                 return getSecretFromRow(rs);
             } else {
-                log.info(Constantes.SECRET_NOT_FOUND);
+                log.warn(Constantes.SECRET_NOT_FOUND);
                 throw new NotFoundException(Constantes.SECRET_NOT_FOUND);
             }
         } catch (SQLException ex) {
@@ -64,7 +65,7 @@ public class LoginDaoImpl implements LoginDao {
             preparedStatement.setString(2, username);
             int rows = preparedStatement.executeUpdate();
             if (rows != 1) {
-                log.info(Constantes.READER_NOT_FOUND);
+                log.warn(Constantes.READER_NOT_FOUND);
                 throw new NotFoundException(Constantes.READER_NOT_FOUND);
             }
         } catch (SQLException ex) {
@@ -82,7 +83,7 @@ public class LoginDaoImpl implements LoginDao {
             if (rows == 1) {
                 return true;
             } else {
-                log.info(Constantes.READER_NOT_FOUND);
+                log.warn(Constantes.READER_NOT_FOUND);
                 throw new NotFoundException(Constantes.READER_NOT_FOUND);
             }
         } catch (SQLException ex) {
@@ -100,7 +101,7 @@ public class LoginDaoImpl implements LoginDao {
             preparedStatement.setString(4, secret.getUsername());
             int rows = preparedStatement.executeUpdate();
             if (rows != 1) {
-                log.info(Constantes.SECRET_NOT_FOUND);
+                log.warn(Constantes.SECRET_NOT_FOUND);
                 throw new NotFoundException(Constantes.SECRET_NOT_FOUND);
             }
         } catch (SQLException ex) {
@@ -121,7 +122,7 @@ public class LoginDaoImpl implements LoginDao {
             preparedStatement.setString(3, secret.getEmail());
             int rows = preparedStatement.executeUpdate();
             if (rows != 1) {
-                log.info(Constantes.SECRET_NOT_FOUND);
+                log.warn(Constantes.SECRET_NOT_FOUND);
                 throw new NotFoundException(Constantes.SECRET_NOT_FOUND);
             }
         } catch (SQLException ex) {

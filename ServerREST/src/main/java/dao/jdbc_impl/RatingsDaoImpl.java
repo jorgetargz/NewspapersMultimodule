@@ -31,7 +31,7 @@ public class RatingsDaoImpl implements RatingsDao {
             ResultSet rs = preparedStatement.executeQuery();
             List<ArticleRating> list = getArticleRatingsFromRS(rs);
             if (list.isEmpty()) {
-                log.info(Constantes.THERE_ARE_NO_RATINGS_IN_THE_DATABASE);
+                log.warn(Constantes.THERE_ARE_NO_RATINGS_IN_THE_DATABASE);
                 throw new NotFoundException(Constantes.THERE_ARE_NO_RATINGS_IN_THE_DATABASE);
             } else {
                 return list;
@@ -50,7 +50,7 @@ public class RatingsDaoImpl implements RatingsDao {
             ResultSet rs = preparedStatement.executeQuery();
             List<ArticleRating> list = getArticleRatingsFromRS(rs);
             if (list.isEmpty()) {
-                log.info(Constantes.NO_RATINGS_MADE_BY_THIS_READER);
+                log.warn(Constantes.NO_RATINGS_MADE_BY_THIS_READER);
                 throw new NotFoundException(Constantes.NO_RATINGS_MADE_BY_THIS_READER);
             } else {
                 return list;
@@ -75,7 +75,7 @@ public class RatingsDaoImpl implements RatingsDao {
                 articleRating.setReaderId(rs.getInt(Constantes.ID_READER));
                 return articleRating;
             } else {
-                log.info(Constantes.NO_RATING_WITH_THIS_ID_IN_THE_DATABASE);
+                log.warn(Constantes.NO_RATING_WITH_THIS_ID_IN_THE_DATABASE);
                 throw new NotFoundException(Constantes.NO_RATING_WITH_THIS_ID_IN_THE_DATABASE);
             }
         } catch (SQLException ex) {

@@ -8,10 +8,12 @@ import domain.services.ServicesReaders;
 import domain.services.excepciones.ValidationException;
 import jakarta.inject.Inject;
 import jakarta.security.enterprise.identitystore.Pbkdf2PasswordHash;
+import lombok.extern.log4j.Log4j2;
 import modelo.Reader;
 
 import java.util.List;
 
+@Log4j2
 public class ServicesReadersImpl implements ServicesReaders {
 
     private final ReadersDao daoReaders;
@@ -49,6 +51,7 @@ public class ServicesReadersImpl implements ServicesReaders {
         try {
             return daoReaders.getAllByNewspaperId(Integer.parseInt(newspaper));
         } catch (NumberFormatException e) {
+            log.warn(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
             throw new ValidationException(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
         }
     }
@@ -58,6 +61,7 @@ public class ServicesReadersImpl implements ServicesReaders {
         try {
             return daoReaders.getAllByArticleTypeId(Integer.parseInt(articleType));
         } catch (NumberFormatException e) {
+            log.warn(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
             throw new ValidationException(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
         }
     }
@@ -67,6 +71,7 @@ public class ServicesReadersImpl implements ServicesReaders {
         try {
             return daoReaders.get(Integer.parseInt(id));
         } catch (NumberFormatException e) {
+            log.warn(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
             throw new ValidationException(Constantes.PARAMETER_ID_MUST_BE_A_NUMBER);
         }
     }
