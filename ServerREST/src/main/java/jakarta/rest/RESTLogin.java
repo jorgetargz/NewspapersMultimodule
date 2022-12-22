@@ -53,7 +53,7 @@ public class RESTLogin {
                     .build();
         } else {
             return Response.status(Response.Status.UNAUTHORIZED)
-                    .entity(new BaseError(Constantes.NO_SE_HA_PODIDO_AUTENTICAR_AL_USUARIO, LocalDateTime.now()))
+                    .entity(new BaseError((String) httpRequest.getAttribute(Constantes.ERROR_LOGIN), LocalDateTime.now()))
                     .build();
         }
     }
