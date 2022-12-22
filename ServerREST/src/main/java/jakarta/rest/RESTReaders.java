@@ -56,8 +56,10 @@ public class RESTReaders {
     @POST
     @RolesAllowed({ConstantesAPI.ROLE_ADMIN})
     public Response saveReader(Reader reader) {
-        servicesLogin.sendVerificationEmail(reader);
+        String password = reader.getLogin().getPassword();
         Reader newReader = servicesReaders.saveReader(reader);
+        reader.getLogin().setPassword(password);
+        servicesLogin.sendVerificationEmail(reader);
         return Response.status(Response.Status.CREATED)
                 .entity(newReader)
                 .build();
