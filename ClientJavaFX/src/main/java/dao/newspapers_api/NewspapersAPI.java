@@ -15,9 +15,6 @@ public interface NewspapersAPI {
     @GET(ConstantesAPI.ENDPOINT_LOGIN)
     Single<Reader> getReaderByLogin();
 
-    @GET(ConstantesAPI.ENDPOINT_LOGOUT)
-    Single<Response<Object>> logout();
-
     @POST(ConstantesAPI.ENDPOINT_LOGIN)
     Single<Reader> registerReader(@Body Reader reader);
 

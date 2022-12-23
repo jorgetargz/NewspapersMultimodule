@@ -27,8 +27,10 @@ public class LoginServicesImpl implements LoginServices {
     }
 
     @Override
-    public Single<Either<String, Boolean>> logout() {
-        return loginDAO.logout();
+    public void logout() {
+        cache.setUser(null);
+        cache.setPassword(null);
+        cache.setJwtAuth(null);
     }
 
     @Override

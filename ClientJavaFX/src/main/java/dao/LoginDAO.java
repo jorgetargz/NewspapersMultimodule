@@ -9,7 +9,5 @@ public interface LoginDAO {
 
     Single<Either<String, Reader>> getReaderByLogin();
 
-    Single<Either<String, Boolean>> logout();
-
     Single<Either<String, Reader>> registerReader(Reader reader);
 }

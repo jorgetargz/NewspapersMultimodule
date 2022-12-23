@@ -1,7 +1,6 @@
 package gui.screens.main;
 
 import domain.services.LoginServices;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 import jakarta.inject.Inject;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
@@ -24,12 +23,8 @@ public class MainViewModel {
     }
 
     public void doLogout() {
-        loginServices.logout().subscribeOn(Schedulers.single())
-                .subscribe(response -> {
-                    if (response.isRight()) {
-                        Platform.runLater(() -> state.setValue(new MainState(null, true)));
-                    }
-                });
+        loginServices.logout();
+        state.setValue(new MainState(null, true));
     }
 
     public void doExit() {

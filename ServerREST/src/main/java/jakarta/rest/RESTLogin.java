@@ -58,10 +58,4 @@ public class RESTLogin {
         }
     }
 
-    @GET
-    @Path(ConstantesAPI.LOGOUT_PATH)
-    public Response logout() {
-        httpRequest.getSession().removeAttribute(Constantes.CREDENTIAL);
-        return Response.status(Response.Status.NO_CONTENT).build();
-    }
 }
