@@ -41,7 +41,9 @@ public class InMemoryIdentityStore implements IdentityStore {
             try {
                 loguedUser = serviciosLogin.login(basicAuthenticationCredential.getCaller(), basicAuthenticationCredential.getPassword().getValue());
                 return new CredentialValidationResult(loguedUser.getLogin().getUsername(), Set.of(loguedUser.getLogin().getRole()));
-            } catch (DatabaseException | NotFoundException | ValidationException e) {
+            } catch (DatabaseException | NotFoundException e) {
+                return INVALID_RESULT;
+            } catch (ValidationException e) {
                 if (e.getMessage().equals(Constantes.EMAIL_IS_NOT_VERIFIED)) {
                     return NOT_VALIDATED_RESULT;
                 } else {
