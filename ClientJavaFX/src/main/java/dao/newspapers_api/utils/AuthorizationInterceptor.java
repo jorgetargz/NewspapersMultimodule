@@ -37,6 +37,7 @@ public class AuthorizationInterceptor implements Interceptor {
         if (response.header(Constantes.AUTHORIZATION) != null)
             ca.setJwtAuth(response.header(Constantes.AUTHORIZATION));
 
+        // Re-authenticate if the token is expired
         String tokenExpiredHeader = response.header(Constantes.TOKEN_EXPIRED);
         if (tokenExpiredHeader != null && tokenExpiredHeader.equals(Constantes.TRUE)) {
             response.close();
