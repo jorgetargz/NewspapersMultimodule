@@ -72,8 +72,8 @@ public class Constantes {
     public static final String SECRET_NOT_FOUND = "Secret not found";
     public static final String LOGIN_NOT_FOUND = "Login not found";
     public static final String EMAIL_ALREADY_EXISTS = "Email is already registered";
-    public static final String DATABASE_ERROR = "Database error";
     public static final String USERNAME_ALREADY_EXISTS = "Username is already in use";
+    public static final String DATABASE_ERROR = "Database error";
 
     private Constantes() {
     }

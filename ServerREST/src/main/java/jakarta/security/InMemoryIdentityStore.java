@@ -2,6 +2,7 @@ package jakarta.security;
 
 import dao.excepciones.DatabaseException;
 import dao.excepciones.NotFoundException;
+import domain.common.Constantes;
 import domain.services.ServicesLogin;
 import domain.services.excepciones.ValidationException;
 import jakarta.inject.Inject;
@@ -40,13 +41,15 @@ public class InMemoryIdentityStore implements IdentityStore {
             try {
                 loguedUser = serviciosLogin.login(basicAuthenticationCredential.getCaller(), basicAuthenticationCredential.getPassword().getValue());
                 return new CredentialValidationResult(loguedUser.getLogin().getUsername(), Set.of(loguedUser.getLogin().getRole()));
-            } catch (NotFoundException | ValidationException e) {
-                return NOT_VALIDATED_RESULT;
-            } catch (DatabaseException e) {
-                return INVALID_RESULT;
+            } catch (DatabaseException | NotFoundException | ValidationException e) {
+                if (e.getMessage().equals(Constantes.EMAIL_IS_NOT_VERIFIED)) {
+                    return NOT_VALIDATED_RESULT;
+                } else {
+                    return INVALID_RESULT;
+                }
             }
         } else {
-            return INVALID_RESULT;
+            return null;
         }
     }
 }

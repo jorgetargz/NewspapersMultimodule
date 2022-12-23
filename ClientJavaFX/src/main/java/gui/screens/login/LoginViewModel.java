@@ -28,6 +28,10 @@ public class LoginViewModel {
     }
 
     public void doLogin(String username, String password) {
+        if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+            state.set(new LoginState(null, ScreenConstants.FILL_ALL_THE_INPUTS, false, false, true));
+            return;
+        }
         state.set(new LoginState(null, null, false,true, false));
         loginServices.getReaderByLogin(username, password)
                 .observeOn(Schedulers.single())

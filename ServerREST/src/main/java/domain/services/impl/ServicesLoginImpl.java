@@ -38,6 +38,7 @@ public class ServicesLoginImpl implements ServicesLogin, Serializable {
     @Override
     public Reader login(String username, char[] password) {
         if (username == null || password == null) {
+            log.warn(Constantes.USERNAME_OR_PASSWORD_EMPTY);
             throw new ValidationException(Constantes.USERNAME_OR_PASSWORD_EMPTY);
         }
         Login loginDB = daoLogin.getLogin(username);

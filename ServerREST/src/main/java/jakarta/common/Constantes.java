@@ -3,8 +3,9 @@ package jakarta.common;
 public class Constantes {
 
     public static final String ERROR_LOGIN = "LOGIN_ERROR";
-    public static final Object SERVER_ERROR = "Server error";
-    public static final Object NOT_VALID_CREDS = "Not valid credentials or email not verified";
+    public static final String EMAIL_IS_NOT_VERIFIED = "Email is not verified";
+    public static final String INVALID_CREDENTIALS = "Invalid credentials";
+    public static final String LOGIN_REQUIRED = "Login required";
 
     private Constantes() {
     }
