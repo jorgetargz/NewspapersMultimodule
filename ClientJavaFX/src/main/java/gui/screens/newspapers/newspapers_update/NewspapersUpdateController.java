@@ -87,6 +87,7 @@ public class NewspapersUpdateController extends BaseScreenController {
 
     @FXML
     private void updateNewspaper() {
-        newspapersUpdateViewModel.updateNewspaper(nameTxt.getText(), releaseDatePicker.getValue());
+        Newspaper newspaper = tableNewspapers.getSelectionModel().getSelectedItem();
+        newspapersUpdateViewModel.updateNewspaper(nameTxt.getText(), releaseDatePicker.getValue(), newspaper);
     }
 }

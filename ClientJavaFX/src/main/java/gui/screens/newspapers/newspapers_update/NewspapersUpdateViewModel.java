@@ -39,10 +39,11 @@ public class NewspapersUpdateViewModel {
                 });
     }
 
-    public void updateNewspaper(String nameText, LocalDate releaseDatePickerValue) {
+    public void updateNewspaper(String nameText, LocalDate releaseDatePickerValue, Newspaper newspaper) {
         if (nameText != null && !nameText.isEmpty()
                 && releaseDatePickerValue != null) {
-            Newspaper newspaper = new Newspaper(nameText, releaseDatePickerValue);
+            newspaper.setNameNewspaper(nameText);
+            newspaper.setReleaseDate(releaseDatePickerValue);
             servicesNewspapers.updateNewspaper(newspaper)
                     .subscribeOn(Schedulers.single())
                     .subscribe(either -> {
@@ -52,6 +53,7 @@ public class NewspapersUpdateViewModel {
                             state.set(new NewspapersUpdateState(null, ScreenConstants.OPERATION_DONE, null, either.get()));
                         }
                     });
+            loadNewspapers();
         } else {
             state.set(new NewspapersUpdateState(ScreenConstants.FILL_ALL_THE_INPUTS, null, null, null));
         }
