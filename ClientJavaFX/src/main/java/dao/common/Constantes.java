@@ -12,6 +12,8 @@ public class Constantes {
     public static final String ERROR_DE_COMUNICACION = "ERROR DE COMUNICACION";
     public static final String ERROR_DE_AUTENTICACION = "This endpoint is private.\nLogin with an account authorized to access it";
     public static final String AUTHORIZATION = "Authorization";
+    public static final String TOKEN_EXPIRED = "Token expired";
+    public static final String TRUE = "true";
 
     private Constantes() {
     }

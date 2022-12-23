@@ -1,28 +1,29 @@
 package domain.services.impl;
 
 import dao.LoginDAO;
+import dao.newspapers_api.utils.CacheAuthorization;
 import domain.services.LoginServices;
 import io.reactivex.rxjava3.core.Single;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import modelo.Reader;
 
-import java.util.Base64;
-
 public class LoginServicesImpl implements LoginServices {
 
     private final LoginDAO loginDAO;
+    private final CacheAuthorization cache;
 
     @Inject
-    public LoginServicesImpl(LoginDAO loginDAO) {
+    public LoginServicesImpl(LoginDAO loginDAO, CacheAuthorization cache) {
         this.loginDAO = loginDAO;
+        this.cache = cache;
     }
 
     @Override
     public Single<Either<String, Reader>> getReaderByLogin(String username, String password) {
-        String credentials = Base64.getEncoder().encodeToString((username + ":" + password).getBytes());
-        String basicAuthCredential = "BASIC " + credentials;
-        return loginDAO.getReaderByLogin(basicAuthCredential);
+        cache.setUser(username);
+        cache.setPassword(password);
+        return loginDAO.getReaderByLogin();
     }
 
     @Override

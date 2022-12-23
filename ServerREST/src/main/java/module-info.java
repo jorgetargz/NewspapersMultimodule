@@ -8,4 +8,5 @@ module ServerRest {
     requires spring.tx;
     requires spring.jdbc;
     requires jakarta.mail;
+    requires org.jose4j;
 }

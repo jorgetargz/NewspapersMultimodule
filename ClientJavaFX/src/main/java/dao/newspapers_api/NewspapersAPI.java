@@ -1,7 +1,6 @@
 package dao.newspapers_api;
 
 import common.ConstantesAPI;
-import dao.common.Constantes;
 import io.reactivex.rxjava3.core.Single;
 import modelo.Newspaper;
 import modelo.Reader;
@@ -14,7 +13,7 @@ public interface NewspapersAPI {
 
     //ENDPOINTS_LOGIN
     @GET(ConstantesAPI.ENDPOINT_LOGIN)
-    Single<Reader> getReaderByLogin(@Header(Constantes.AUTHORIZATION) String basicAuthCredential);
+    Single<Reader> getReaderByLogin();
 
     @GET(ConstantesAPI.ENDPOINT_LOGOUT)
     Single<Response<Object>> logout();

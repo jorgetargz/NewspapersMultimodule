@@ -26,6 +26,7 @@ module ClientJavaFX {
     exports dao.di;
     exports dao.impl;
     exports dao.newspapers_api;
+    exports dao.newspapers_api.utils;
     exports dao.common;
     exports dao.newspapers_api.di;
     exports dao.newspapers_api.config;
