@@ -20,16 +20,27 @@ public class AuthorizationInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        Request original = chain.request();
+        Request original = chain.request().newBuilder()
+                .addHeader(Constantes.PROTOCOL_REQUEST, Constantes.HTTP_2_0)
+                .addHeader(Constantes.ACCEPT, Constantes.APPLICATION_JSON)
+                .method(chain.request().method(), chain.request().body())
+                .build();
         Request request;
 
-        // Send request with bearer auth if we have a token cached or with basic auth if we don't have a token cached
+        // Send request with the cached credentials if present
         if (ca.getJwtAuth() == null) {
-            request = original.newBuilder()
-                    .header(Constantes.AUTHORIZATION, Credentials.basic(ca.getUser(), ca.getPassword())).build();
+            if (ca.getUser() == null || ca.getPassword() == null) {
+                request = original;
+            } else {
+                String basicAuth = Credentials.basic(ca.getUser(), ca.getPassword());
+                request = original.newBuilder()
+                        .header(Constantes.AUTHORIZATION, basicAuth)
+                        .build();
+            }
         } else {
             request = original.newBuilder()
-                    .header(Constantes.AUTHORIZATION, ca.getJwtAuth()).build();
+                    .header(Constantes.AUTHORIZATION, ca.getJwtAuth())
+                    .build();
         }
 
         // Save the JWT in the cache
