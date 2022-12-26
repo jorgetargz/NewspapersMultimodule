@@ -32,14 +32,14 @@ public class LoginViewModel {
             state.set(new LoginState(null, ScreenConstants.FILL_ALL_THE_INPUTS, false, false, true));
             return;
         }
-        state.set(new LoginState(null, null, false,true, false));
+        state.set(new LoginState(null, null, false, true, false));
         loginServices.getReaderByLogin(username, password)
                 .observeOn(Schedulers.single())
                 .subscribe(either -> {
                     if (either.isLeft())
-                        state.set(new LoginState(null, either.getLeft(), false,false, true));
+                        state.set(new LoginState(null, either.getLeft(), false, false, true));
                     else {
-                        state.set(new LoginState(either.get(), null, false,false, true));
+                        state.set(new LoginState(either.get(), null, false, false, true));
                     }
                 });
     }
@@ -51,7 +51,7 @@ public class LoginViewModel {
                 && inputUsername != null && !inputUsername.isEmpty()
                 && inputPassword != null && !inputPassword.isEmpty()) {
             Reader reader = new Reader(inputName, inputBirthday, new Login(inputUsername, inputPassword, email));
-            state.set(new LoginState(null, null, false,true, false));
+            state.set(new LoginState(null, null, false, true, false));
             loginServices.registerReader(reader)
                     .subscribeOn(Schedulers.single())
                     .subscribe(either -> {

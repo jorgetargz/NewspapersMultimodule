@@ -45,7 +45,7 @@ public class ServicesLoginImpl implements ServicesLogin, Serializable {
         if (!passwordHash.verify(password, loginDB.getPassword())) {
             log.warn(Constantes.USERNAME_OR_PASSWORD_INCORRECT);
             throw new ValidationException(Constantes.USERNAME_OR_PASSWORD_INCORRECT);
-        } else if (loginDB.getEmail() == null){
+        } else if (loginDB.getEmail() == null) {
             log.warn(Constantes.EMAIL_IS_NOT_VERIFIED);
             throw new ValidationException(Constantes.EMAIL_IS_NOT_VERIFIED);
         } else {
@@ -65,7 +65,7 @@ public class ServicesLoginImpl implements ServicesLogin, Serializable {
 
     @Override
     public void saveVerifiedMail(String username, String email) {
-       daoLogin.updateLoginEmail(username, email);
+        daoLogin.updateLoginEmail(username, email);
     }
 
     @Override

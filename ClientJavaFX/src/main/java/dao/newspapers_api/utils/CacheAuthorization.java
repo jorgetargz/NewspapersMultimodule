@@ -4,7 +4,6 @@ import jakarta.inject.Singleton;
 import lombok.Data;
 
 
-
 @Data
 @Singleton
 public class CacheAuthorization {

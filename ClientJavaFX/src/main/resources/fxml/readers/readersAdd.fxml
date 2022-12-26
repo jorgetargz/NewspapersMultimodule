@@ -1,32 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
-<?import io.github.palexdev.materialfx.controls.MFXPasswordField?>
-<?import io.github.palexdev.materialfx.controls.MFXTextField?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
-
-<AnchorPane prefHeight="700.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.screens.readers.readers_add.ReadersAddController">
-    <Label fx:id="title" layoutX="89.0" layoutY="34.0" prefHeight="82.0" prefWidth="801.0" styleClass="title" />
+<AnchorPane prefHeight="700.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gui.screens.readers.readers_add.ReadersAddController">
+    <Label fx:id="title" layoutX="89.0" layoutY="34.0" prefHeight="82.0" prefWidth="801.0" styleClass="title"/>
     <TableView fx:id="tableReaders" layoutX="89.0" layoutY="117.0" prefHeight="486.0" prefWidth="510.0">
         <columns>
-            <TableColumn fx:id="columnId" prefWidth="104.0" text="%ID" />
-            <TableColumn fx:id="columnName" prefWidth="208.79998779296875" text="%Name" />
-            <TableColumn fx:id="columnDateOfBirth" prefWidth="177.60003662109375" text="%Birthday" />
+            <TableColumn fx:id="columnId" prefWidth="104.0" text="%ID"/>
+            <TableColumn fx:id="columnName" prefWidth="208.79998779296875" text="%Name"/>
+            <TableColumn fx:id="columnDateOfBirth" prefWidth="177.60003662109375" text="%Birthday"/>
         </columns>
     </TableView>
-    <MFXButton layoutX="641.0" layoutY="586.0" onAction="#addReader" prefHeight="46.0" prefWidth="213.0" text="%AddReader" />
-    <MFXTextField fx:id="nameTxt" layoutX="643.0" layoutY="148.0" prefHeight="65.0" prefWidth="200.0" />
-    <MFXDatePicker fx:id="datePicker" layoutX="641.0" layoutY="247.0" />
-    <MFXPasswordField fx:id="passwordTxt" layoutX="641.0" layoutY="514.0" prefHeight="65.0" prefWidth="200.0" />
-    <MFXTextField fx:id="usernameTxt" layoutX="641.0" layoutY="414.0" prefHeight="65.0" prefWidth="200.0" />
-    <Label layoutX="646.0" layoutY="123.0" text="%Name" />
-    <Label layoutX="642.0" layoutY="222.0" text="%Birthday" />
-    <Label layoutX="642.0" layoutY="391.0" prefHeight="18.0" prefWidth="103.0" text="%Username" />
-    <Label layoutX="642.0" layoutY="490.0" prefHeight="18.0" prefWidth="128.0" text="%PasswordRequired" />
-   <MFXTextField fx:id="emailTxt" layoutX="641.0" layoutY="313.0" prefHeight="65.0" prefWidth="200.0" />
-   <Label layoutX="642.0" layoutY="290.0" prefHeight="18.0" prefWidth="103.0" text="%Email" />
+    <MFXButton layoutX="641.0" layoutY="586.0" onAction="#addReader" prefHeight="46.0" prefWidth="213.0"
+               text="%AddReader"/>
+    <MFXTextField fx:id="nameTxt" layoutX="643.0" layoutY="148.0" prefHeight="65.0" prefWidth="200.0"/>
+    <MFXDatePicker fx:id="datePicker" layoutX="641.0" layoutY="247.0"/>
+    <MFXPasswordField fx:id="passwordTxt" layoutX="641.0" layoutY="514.0" prefHeight="65.0" prefWidth="200.0"/>
+    <MFXTextField fx:id="usernameTxt" layoutX="641.0" layoutY="414.0" prefHeight="65.0" prefWidth="200.0"/>
+    <Label layoutX="646.0" layoutY="123.0" text="%Name"/>
+    <Label layoutX="642.0" layoutY="222.0" text="%Birthday"/>
+    <Label layoutX="642.0" layoutY="391.0" prefHeight="18.0" prefWidth="103.0" text="%Username"/>
+    <Label layoutX="642.0" layoutY="490.0" prefHeight="18.0" prefWidth="128.0" text="%PasswordRequired"/>
+    <MFXTextField fx:id="emailTxt" layoutX="641.0" layoutY="313.0" prefHeight="65.0" prefWidth="200.0"/>
+    <Label layoutX="642.0" layoutY="290.0" prefHeight="18.0" prefWidth="103.0" text="%Email"/>
 </AnchorPane>
