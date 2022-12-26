@@ -3,6 +3,7 @@ package domain.services.impl;
 
 import dao.LoginDao;
 import dao.ReadersDao;
+import dao.SecretsDao;
 import dao.excepciones.DatabaseException;
 import dao.excepciones.NotFoundException;
 import domain.common.Constantes;
@@ -23,13 +24,15 @@ import java.io.Serializable;
 public class ServicesLoginImpl implements ServicesLogin, Serializable {
 
     private final LoginDao daoLogin;
+    private final SecretsDao daoSecrets;
     private final ReadersDao daoReader;
     private final VerifyEmailBean verifyEmail;
     private final Pbkdf2PasswordHash passwordHash;
 
     @Inject
-    public ServicesLoginImpl(LoginDao daoLogin, ReadersDao daoReader, VerifyEmailBean verifyEmail, Pbkdf2PasswordHash passwordHash) {
+    public ServicesLoginImpl(LoginDao daoLogin, SecretsDao daoSecrets, ReadersDao daoReader, VerifyEmailBean verifyEmail, Pbkdf2PasswordHash passwordHash) {
         this.daoLogin = daoLogin;
+        this.daoSecrets = daoSecrets;
         this.daoReader = daoReader;
         this.verifyEmail = verifyEmail;
         this.passwordHash = passwordHash;
@@ -76,17 +79,17 @@ public class ServicesLoginImpl implements ServicesLogin, Serializable {
 
     @Override
     public void updateSecretByUsername(Secret secret) {
-        daoLogin.updateSecretByUsername(secret);
+        daoSecrets.updateSecretByUsername(secret);
     }
 
     @Override
     public void updateSecretByMail(Secret secret) {
-        daoLogin.updateSecretByMail(secret);
+        daoSecrets.updateSecretByMail(secret);
     }
 
     @Override
     public Secret getSecret(String code) {
-        return daoLogin.getSecret(code);
+        return daoSecrets.getSecret(code);
     }
 
     @Override

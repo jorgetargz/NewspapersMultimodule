@@ -9,10 +9,11 @@ import dao.utils.SQLQueries;
 import jakarta.inject.Inject;
 import lombok.extern.log4j.Log4j2;
 import modelo.Login;
-import modelo.Secret;
 
-import java.sql.*;
-import java.time.LocalDateTime;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 @Log4j2
 public class LoginDaoImpl implements LoginDao {
@@ -37,23 +38,6 @@ public class LoginDaoImpl implements LoginDao {
             }
         } catch (SQLException e) {
             log.error(e.getMessage());
-            throw new DatabaseException(Constantes.DATABASE_ERROR);
-        }
-    }
-
-    @Override
-    public Secret getSecret(String code) {
-        try (Connection con = dbConnection.getConnection(); PreparedStatement preparedStatement = con.prepareStatement(SQLQueries.SELECT_SECRET_CODE_BY_CODE_QUERY)) {
-            preparedStatement.setString(1, code);
-            ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                return getSecretFromRow(rs);
-            } else {
-                log.warn(Constantes.SECRET_NOT_FOUND);
-                throw new NotFoundException(Constantes.SECRET_NOT_FOUND);
-            }
-        } catch (SQLException ex) {
-            log.error(ex.getMessage(), ex);
             throw new DatabaseException(Constantes.DATABASE_ERROR);
         }
     }
@@ -92,45 +76,6 @@ public class LoginDaoImpl implements LoginDao {
         }
     }
 
-    @Override
-    public void updateSecretByUsername(Secret secret) {
-        try (Connection con = dbConnection.getConnection(); PreparedStatement preparedStatement = con.prepareStatement(SQLQueries.UPDATE_SECRET_CODE_BY_USERNAME_QUERY)) {
-            preparedStatement.setString(1, secret.getCode());
-            preparedStatement.setString(2, secret.getCodeExpirationDate().toString());
-            preparedStatement.setString(3, secret.getEmail());
-            preparedStatement.setString(4, secret.getUsername());
-            int rows = preparedStatement.executeUpdate();
-            if (rows != 1) {
-                log.warn(Constantes.SECRET_NOT_FOUND);
-                throw new NotFoundException(Constantes.SECRET_NOT_FOUND);
-            }
-        } catch (SQLException ex) {
-            log.error(ex.getMessage(), ex);
-            if (ex instanceof SQLIntegrityConstraintViolationException) {
-                throw new DatabaseException(Constantes.EMAIL_ALREADY_EXISTS);
-            } else {
-                throw new DatabaseException(Constantes.DATABASE_ERROR);
-            }
-        }
-    }
-
-    @Override
-    public void updateSecretByMail(Secret secret) {
-        try (Connection con = dbConnection.getConnection(); PreparedStatement preparedStatement = con.prepareStatement(SQLQueries.UPDATE_SECRET_CODE_BY_MAIL_QUERY)) {
-            preparedStatement.setString(1, secret.getCode());
-            preparedStatement.setString(2, secret.getCodeExpirationDate().toString());
-            preparedStatement.setString(3, secret.getEmail());
-            int rows = preparedStatement.executeUpdate();
-            if (rows != 1) {
-                log.warn(Constantes.SECRET_NOT_FOUND);
-                throw new NotFoundException(Constantes.SECRET_NOT_FOUND);
-            }
-        } catch (SQLException ex) {
-            log.error(ex.getMessage(), ex);
-            throw new DatabaseException(Constantes.DATABASE_ERROR);
-        }
-    }
-
     private Login getLoginFromResultSet(ResultSet resultSet) throws SQLException {
         Login login = new Login();
         login.setUsername(resultSet.getString(Constantes.USERNAME));
@@ -141,12 +86,4 @@ public class LoginDaoImpl implements LoginDao {
         return login;
     }
 
-    private Secret getSecretFromRow(ResultSet rs) throws SQLException {
-        Secret secret = new Secret();
-        secret.setCode(rs.getString(Constantes.CODE));
-        secret.setCodeExpirationDate(LocalDateTime.parse(rs.getString(Constantes.CODE_EXPIRATION_DATE)));
-        secret.setUsername(rs.getString(Constantes.USERNAME));
-        secret.setEmail(rs.getString(Constantes.EMAIL));
-        return secret;
-    }
 }
