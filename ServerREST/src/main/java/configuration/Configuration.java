@@ -5,6 +5,7 @@ import jakarta.inject.Singleton;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 
+import java.time.Duration;
 import java.util.Properties;
 
 @Singleton
@@ -24,6 +25,8 @@ public class Configuration {
     private String mailUsername;
     private String mailPassword;
 
+    private int maxPetitionsPerPeriod;
+    private Duration petitionsPeriod;
 
     public Configuration() {
         try {
@@ -41,6 +44,10 @@ public class Configuration {
             this.mailStarttls = properties.getProperty(Constantes.SMTP_STARTTLS);
             this.mailUsername = properties.getProperty(Constantes.SMTP_USERNAME);
             this.mailPassword = properties.getProperty(Constantes.SMTP_PASSWORD);
+
+            this.maxPetitionsPerPeriod = Integer.parseInt(properties.getProperty(Constantes.MAX_PETITIONS_PER_PERIOD));
+            this.petitionsPeriod = Duration.parse(properties.getProperty(Constantes.PETITIONS_PERIOD));
+
         } catch (Exception ex) {
             log.error(ex.getMessage(), ex);
         }

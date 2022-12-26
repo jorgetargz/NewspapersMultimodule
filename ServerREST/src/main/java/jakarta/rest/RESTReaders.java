@@ -4,6 +4,7 @@ import common.ConstantesAPI;
 import domain.services.ServicesLogin;
 import domain.services.ServicesReaders;
 import jakarta.annotation.security.RolesAllowed;
+import jakarta.filters.LimitedAccess;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -12,6 +13,7 @@ import modelo.Reader;
 
 import java.util.List;
 
+@LimitedAccess
 @Path(ConstantesAPI.PATH_READERS)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)

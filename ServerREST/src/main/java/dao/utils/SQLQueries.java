@@ -63,6 +63,8 @@ public class SQLQueries {
     public static final String SELECT_SECRET_CODE_BY_CODE_QUERY = "select * from secrets where code = ?";
     public static final String DELETE_SECRET_QUERY = "delete from secrets where username = ?";
     public static final String UPDATE_SECRET_CODE_BY_MAIL_QUERY = "update secrets set code = ?, expiration_date = ? where mail = ?";
+    public static final String INSERT_PETITION_QUERY = "insert into petitions (username, time, path, method) values (?, ?, ?, ?)";
+    public static final String SELECT_PETITIONS_BY_USERNAME_AND_TIME_QUERY = "select * from petitions where username = ? and time > ?";
 
     private SQLQueries() {
     }
