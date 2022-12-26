@@ -31,5 +31,4 @@ public class ServicesPetitionsImpl implements ServicesPetitions {
         return petitionsDao.getPetitionsByUsernameAndPeriod(username, petitionsPeriod);
     }
 
-
 }
