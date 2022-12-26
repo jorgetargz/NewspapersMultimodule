@@ -5,5 +5,6 @@ import modelo.Newspaper;
 import java.util.List;
 
 public record NewspapersDeleteState(String error, String message, List<Newspaper> newspapers,
-                                    Newspaper newspaperDeleted) {
+                                    Newspaper newspaperDeleted, boolean isLoading,
+                                    boolean isLoaded) {
 }

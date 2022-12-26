@@ -4,5 +4,6 @@ import modelo.Newspaper;
 
 import java.util.List;
 
-public record NewspapersListState(String error, List<Newspaper> newspapers) {
+public record NewspapersListState(String error, List<Newspaper> newspapers, boolean isLoading,
+                                  boolean isLoaded) {
 }

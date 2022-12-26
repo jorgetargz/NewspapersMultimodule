@@ -16,7 +16,7 @@ public class ReadersDeleteViewModel {
     @Inject
     public ReadersDeleteViewModel(ReaderServices servicesReaders) {
         this.servicesReaders = servicesReaders;
-        state = new SimpleObjectProperty<>(new ReadersDeleteState(null, null, null, null));
+        state = new SimpleObjectProperty<>(new ReadersDeleteState(null, null, null, null, false, false));
     }
 
     public ObjectProperty<ReadersDeleteState> getState() {
@@ -25,34 +25,36 @@ public class ReadersDeleteViewModel {
 
 
     public void loadReaders() {
+        state.set(new ReadersDeleteState(null, null, null, null, true, false));
         servicesReaders.getReaders()
                 .observeOn(Schedulers.single())
                 .subscribe(either -> {
-                    if (either.isLeft())
-                        state.set(new ReadersDeleteState(either.getLeft(), null, null, null));
-                    else {
-                        state.set(new ReadersDeleteState(null, null, either.get(), null));
+                    if (either.isLeft()) {
+                        state.set(new ReadersDeleteState(either.getLeft(), null, null, null, false, true));
+                    } else {
+                        state.set(new ReadersDeleteState(null, null, either.get(), null, false, true));
                     }
                 });
     }
 
     public void deleteReader(Reader reader) {
         if (reader != null) {
+            state.set(new ReadersDeleteState(null, null, null, null, true, false));
             servicesReaders.deleteReader(reader)
                     .subscribeOn(Schedulers.single())
                     .subscribe(either -> {
                         if (either.isLeft()) {
-                            state.set(new ReadersDeleteState(either.getLeft(), null, null, null));
+                            state.set(new ReadersDeleteState(either.getLeft(), null, null, null, false, true));
                         } else if (Boolean.TRUE.equals(either.get())) {
-                            state.set(new ReadersDeleteState(null, ScreenConstants.OPERATION_DONE, null, reader));
+                            state.set(new ReadersDeleteState(null, ScreenConstants.OPERATION_DONE, null, reader, false, true));
                         }
                     });
         } else {
-            state.set(new ReadersDeleteState(ScreenConstants.CHOOSE_READER, null, null, null));
+            state.set(new ReadersDeleteState(ScreenConstants.CHOOSE_READER, null, null, null, false, true));
         }
     }
 
     public void cleanState() {
-        state.set(new ReadersDeleteState(null, null, null, null));
+        state.set(new ReadersDeleteState(null, null, null, null, false, false));
     }
 }

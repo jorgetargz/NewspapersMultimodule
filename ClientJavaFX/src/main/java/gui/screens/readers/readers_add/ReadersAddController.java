@@ -8,6 +8,7 @@ import io.github.palexdev.materialfx.controls.MFXTextField;
 import jakarta.inject.Inject;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -77,6 +78,12 @@ public class ReadersAddController extends BaseScreenController {
                     tableReaders.getItems().clear();
                     tableReaders.getItems().addAll(newState.readers());
                 });
+            }
+            if (newState.isLoading()) {
+                this.getPrincipalController().getRootPane().setCursor(Cursor.WAIT);
+            }
+            if (newState.isLoaded()) {
+                this.getPrincipalController().getRootPane().setCursor(Cursor.DEFAULT);
             }
         });
     }

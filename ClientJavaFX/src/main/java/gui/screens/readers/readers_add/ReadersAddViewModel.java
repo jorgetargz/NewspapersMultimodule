@@ -19,7 +19,7 @@ public class ReadersAddViewModel {
     @Inject
     public ReadersAddViewModel(ReaderServices servicesReaders) {
         this.servicesReaders = servicesReaders;
-        state = new SimpleObjectProperty<>(new ReadersAddState(null, null, null, null));
+        state = new SimpleObjectProperty<>(new ReadersAddState(null, null, null, null, false, false));
     }
 
     public ObjectProperty<ReadersAddState> getState() {
@@ -28,13 +28,14 @@ public class ReadersAddViewModel {
 
 
     public void loadReaders() {
+        state.set(new ReadersAddState(null, null, null, null, true, false));
         servicesReaders.getReaders()
                 .observeOn(Schedulers.single())
                 .subscribe(either -> {
-                    if (either.isLeft())
-                        state.set(new ReadersAddState(either.getLeft(), null, null, null));
-                    else {
-                        state.set(new ReadersAddState(null, null, either.get(), null));
+                    if (either.isLeft()) {
+                        state.set(new ReadersAddState(either.getLeft(), null, null, null, false, true));
+                    } else {
+                        state.set(new ReadersAddState(null, null, either.get(), null, false, true));
                     }
                 });
     }
@@ -46,22 +47,23 @@ public class ReadersAddViewModel {
                 && inputPassword != null && !inputPassword.isEmpty()
                 && inputEmail != null && !inputEmail.isEmpty()) {
             Reader reader = new Reader(inputName, inputBirthday, new Login(inputUsername, inputPassword, inputEmail));
+            state.set(new ReadersAddState(null, null, null, null, true, false));
             servicesReaders.saveReader(reader)
                     .subscribeOn(Schedulers.single())
                     .subscribe(either -> {
                         if (either.isLeft())
-                            state.set(new ReadersAddState(either.getLeft(), null, null, null));
+                            state.set(new ReadersAddState(either.getLeft(), null, null, null, false, true));
                         else {
-                            state.set(new ReadersAddState(null, ScreenConstants.OPERATION_DONE, null, either.get()));
+                            state.set(new ReadersAddState(null, ScreenConstants.OPERATION_DONE, null, either.get(), false, true));
                         }
                     });
         } else {
-            state.set(new ReadersAddState(ScreenConstants.FILL_ALL_THE_INPUTS, null, null, null));
+            state.set(new ReadersAddState(ScreenConstants.FILL_ALL_THE_INPUTS, null, null, null, false, true));
         }
 
     }
 
     public void cleanState() {
-        state.set(new ReadersAddState(null, null, null, null));
+        state.set(new ReadersAddState(null, null, null, null, false, false));
     }
 }

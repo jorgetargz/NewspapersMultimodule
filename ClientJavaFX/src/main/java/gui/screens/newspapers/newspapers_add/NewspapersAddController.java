@@ -6,8 +6,8 @@ import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import jakarta.inject.Inject;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -71,11 +71,17 @@ public class NewspapersAddController extends BaseScreenController {
             if (newState.newNewspaper() != null) {
                 Platform.runLater(() -> tableNewspapers.getItems().add(newState.newNewspaper()));
             }
+            if (newState.isLoading()) {
+                this.getPrincipalController().getRootPane().setCursor(javafx.scene.Cursor.WAIT);
+            }
+            if (newState.isLoaded()) {
+                this.getPrincipalController().getRootPane().setCursor(Cursor.DEFAULT);
+            }
         });
     }
 
     @FXML
-    private void addNewspaper(ActionEvent actionEvent) {
+    private void addNewspaper() {
         newspapersAddViewModel.addNewspaper(nameTxt.getText(), releaseDatePicker.getValue());
     }
 }

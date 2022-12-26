@@ -15,7 +15,7 @@ public class NewspapersListViewModel {
     @Inject
     public NewspapersListViewModel(NewspaperServices servicesNewspapers) {
         this.servicesNewspapers = servicesNewspapers;
-        state = new SimpleObjectProperty<>(new NewspapersListState(null, null));
+        state = new SimpleObjectProperty<>(new NewspapersListState(null, null, false, false));
     }
 
     public ReadOnlyObjectProperty<NewspapersListState> getState() {
@@ -24,18 +24,19 @@ public class NewspapersListViewModel {
 
 
     public void loadNewspapers() {
+        state.set(new NewspapersListState(null, null, true, false));
         servicesNewspapers.getNewspapers()
                 .observeOn(Schedulers.single())
                 .subscribe(either -> {
-                    if (either.isLeft())
-                        state.set(new NewspapersListState(either.getLeft(), null));
-                    else {
-                        state.set(new NewspapersListState(null, either.get()));
+                    if (either.isLeft()) {
+                        state.set(new NewspapersListState(either.getLeft(), null, false, true));
+                    } else {
+                        state.set(new NewspapersListState(null, either.get(), false, true));
                     }
                 });
     }
 
     public void cleanState() {
-        state.set(new NewspapersListState(null, null));
+        state.set(new NewspapersListState(null, null, false, false));
     }
 }

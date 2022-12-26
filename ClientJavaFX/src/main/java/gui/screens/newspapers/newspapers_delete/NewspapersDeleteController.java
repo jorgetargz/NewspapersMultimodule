@@ -4,8 +4,8 @@ import gui.screens.common.BaseScreenController;
 import gui.screens.common.ScreenConstants;
 import jakarta.inject.Inject;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -65,11 +65,17 @@ public class NewspapersDeleteController extends BaseScreenController {
             if (newState.newspaperDeleted() != null) {
                 Platform.runLater(() -> tableNewspapers.getItems().remove(newState.newspaperDeleted()));
             }
+            if (newState.isLoading()) {
+                this.getPrincipalController().getRootPane().setCursor(javafx.scene.Cursor.WAIT);
+            }
+            if (newState.isLoaded()) {
+                this.getPrincipalController().getRootPane().setCursor(Cursor.DEFAULT);
+            }
         });
     }
 
     @FXML
-    private void deleteNewspaper(ActionEvent actionEvent) {
+    private void deleteNewspaper() {
         Newspaper newspaper = tableNewspapers.getSelectionModel().getSelectedItem();
         newspapersDeleteViewModel.deleteNewspaper(newspaper);
     }

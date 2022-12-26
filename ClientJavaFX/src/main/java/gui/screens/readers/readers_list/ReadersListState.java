@@ -5,5 +5,6 @@ import modelo.Reader;
 import java.util.List;
 
 
-public record ReadersListState(String error, List<Reader> readers) {
+public record ReadersListState(String error, List<Reader> readers, boolean isLoading,
+                               boolean isLoaded) {
 }

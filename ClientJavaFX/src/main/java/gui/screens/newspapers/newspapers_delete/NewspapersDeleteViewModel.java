@@ -17,7 +17,7 @@ public class NewspapersDeleteViewModel {
     @Inject
     public NewspapersDeleteViewModel(NewspaperServices servicesNewspapers) {
         this.servicesNewspapers = servicesNewspapers;
-        state = new SimpleObjectProperty<>(new NewspapersDeleteState(null, null, null, null));
+        state = new SimpleObjectProperty<>(new NewspapersDeleteState(null, null, null, null, false, false));
     }
 
     public ReadOnlyObjectProperty<NewspapersDeleteState> getState() {
@@ -26,34 +26,36 @@ public class NewspapersDeleteViewModel {
 
 
     public void loadNewspapers() {
+        state.set(new NewspapersDeleteState(null, null, null, null, true, false));
         servicesNewspapers.getNewspapers()
                 .observeOn(Schedulers.single())
                 .subscribe(either -> {
                     if (either.isLeft())
-                        state.set(new NewspapersDeleteState(either.getLeft(), null, null, null));
+                        state.set(new NewspapersDeleteState(either.getLeft(), null, null, null, false, true));
                     else {
-                        state.set(new NewspapersDeleteState(null, null, either.get(), null));
+                        state.set(new NewspapersDeleteState(null, null, either.get(), null, false, true));
                     }
                 });
     }
 
     public void deleteNewspaper(Newspaper newspaper) {
         if (newspaper != null) {
+            state.set(new NewspapersDeleteState(null, null, null, null, true, false));
             servicesNewspapers.deleteNewspaper(newspaper)
                     .subscribeOn(Schedulers.single())
                     .subscribe(either -> {
                         if (either.isLeft()) {
-                            state.set(new NewspapersDeleteState(either.getLeft(), null, null, null));
+                            state.set(new NewspapersDeleteState(either.getLeft(), null, null, null, false, true));
                         } else if (Boolean.TRUE.equals(either.get())) {
-                            state.set(new NewspapersDeleteState(null, ScreenConstants.OPERATION_DONE, null, newspaper));
+                            state.set(new NewspapersDeleteState(null, ScreenConstants.OPERATION_DONE, null, newspaper, false, true));
                         }
                     });
         } else {
-            state.set(new NewspapersDeleteState(ScreenConstants.CHOOSE_NEWSPAPER, null, null, null));
+            state.set(new NewspapersDeleteState(ScreenConstants.CHOOSE_NEWSPAPER, null, null, null, false, true));
         }
     }
 
     public void cleanState() {
-        state.set(new NewspapersDeleteState(null, null, null, null));
+        state.set(new NewspapersDeleteState(null, null, null, null, false, false));
     }
 }

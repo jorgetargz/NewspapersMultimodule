@@ -7,14 +7,13 @@ import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import jakarta.inject.Inject;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import modelo.Reader;
 
 import java.time.LocalDate;
@@ -82,11 +81,17 @@ public class ReadersUpdateController extends BaseScreenController {
                     tableReaders.getItems().addAll(newState.readers());
                 });
             }
+            if (newState.isLoading()) {
+                this.getPrincipalController().getRootPane().setCursor(Cursor.WAIT);
+            }
+            if (newState.isLoaded()) {
+                this.getPrincipalController().getRootPane().setCursor(Cursor.DEFAULT);
+            }
         });
     }
 
     @FXML
-    private void updateFields(MouseEvent mouseEvent) {
+    private void updateFields() {
         Reader reader = tableReaders.getSelectionModel().getSelectedItem();
         if (reader != null) {
             usernameTxt.setText(reader.getLogin().getUsername());
@@ -97,7 +102,7 @@ public class ReadersUpdateController extends BaseScreenController {
     }
 
     @FXML
-    private void updateReader(ActionEvent actionEvent) {
+    private void updateReader() {
         Reader reader = tableReaders.getSelectionModel().getSelectedItem();
         readersUpdateViewModel.updateRedaer(reader, nameTxt.getText(), datePicker.getValue(), passwordTxt.getText());
     }

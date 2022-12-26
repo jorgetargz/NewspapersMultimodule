@@ -19,7 +19,7 @@ public class NewspapersUpdateViewModel {
     @Inject
     public NewspapersUpdateViewModel(NewspaperServices servicesNewspapers) {
         this.servicesNewspapers = servicesNewspapers;
-        state = new SimpleObjectProperty<>(new NewspapersUpdateState(null, null, null, null));
+        state = new SimpleObjectProperty<>(new NewspapersUpdateState(null, null, null, null, false, false));
     }
 
     public ReadOnlyObjectProperty<NewspapersUpdateState> getState() {
@@ -28,13 +28,14 @@ public class NewspapersUpdateViewModel {
 
 
     public void loadNewspapers() {
+        state.set(new NewspapersUpdateState(null, null, null, null, true, false));
         servicesNewspapers.getNewspapers()
                 .observeOn(Schedulers.single())
                 .subscribe(either -> {
-                    if (either.isLeft())
-                        state.set(new NewspapersUpdateState(either.getLeft(), null, null, null));
-                    else {
-                        state.set(new NewspapersUpdateState(null, null, either.get(), null));
+                    if (either.isLeft()) {
+                        state.set(new NewspapersUpdateState(either.getLeft(), null, null, null, false, true));
+                    } else {
+                        state.set(new NewspapersUpdateState(null, null, either.get(), null, false, true));
                     }
                 });
     }
@@ -44,23 +45,24 @@ public class NewspapersUpdateViewModel {
                 && releaseDatePickerValue != null) {
             newspaper.setNameNewspaper(nameText);
             newspaper.setReleaseDate(releaseDatePickerValue);
+            state.set(new NewspapersUpdateState(null, null, null, null, true, false));
             servicesNewspapers.updateNewspaper(newspaper)
                     .subscribeOn(Schedulers.single())
                     .subscribe(either -> {
                         if (either.isLeft()) {
-                            state.set(new NewspapersUpdateState(either.getLeft(), null, null, null));
+                            state.set(new NewspapersUpdateState(either.getLeft(), null, null, null, false, true));
                         } else {
-                            state.set(new NewspapersUpdateState(null, ScreenConstants.OPERATION_DONE, null, either.get()));
+                            state.set(new NewspapersUpdateState(null, ScreenConstants.OPERATION_DONE, null, either.get(), false, true));
                         }
                     });
             loadNewspapers();
         } else {
-            state.set(new NewspapersUpdateState(ScreenConstants.FILL_ALL_THE_INPUTS, null, null, null));
+            state.set(new NewspapersUpdateState(ScreenConstants.FILL_ALL_THE_INPUTS, null, null, null, false, true));
         }
     }
 
     public void cleanState() {
-        state.set(new NewspapersUpdateState(null, null, null, null));
+        state.set(new NewspapersUpdateState(null, null, null, null, false, false));
     }
 }
 

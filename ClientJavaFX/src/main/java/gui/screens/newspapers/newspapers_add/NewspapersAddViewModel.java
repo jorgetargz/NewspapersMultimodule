@@ -19,7 +19,7 @@ public class NewspapersAddViewModel {
     @Inject
     public NewspapersAddViewModel(NewspaperServices servicesNewspapers) {
         this.servicesNewspapers = servicesNewspapers;
-        state = new SimpleObjectProperty<>(new NewspapersAddState(null, null, null, null));
+        state = new SimpleObjectProperty<>(new NewspapersAddState(null, null, null, null, false, false));
     }
 
     public ReadOnlyObjectProperty<NewspapersAddState> getState() {
@@ -28,13 +28,14 @@ public class NewspapersAddViewModel {
 
 
     public void loadNewspapers() {
+        state.set(new NewspapersAddState(null, null, null, null, true, false));
         servicesNewspapers.getNewspapers()
                 .observeOn(Schedulers.single())
                 .subscribe(either -> {
                     if (either.isLeft())
-                        state.set(new NewspapersAddState(either.getLeft(), null, null, null));
+                        state.set(new NewspapersAddState(either.getLeft(), null, null, null, false, true));
                     else {
-                        state.set(new NewspapersAddState(null, null, either.get(), null));
+                        state.set(new NewspapersAddState(null, null, either.get(), null, false, true));
                     }
                 });
     }
@@ -43,22 +44,23 @@ public class NewspapersAddViewModel {
         if (nameText != null && !nameText.isEmpty()
                 && releaseDatePickerValue != null) {
             Newspaper newspaper = new Newspaper(nameText, releaseDatePickerValue);
+            state.set(new NewspapersAddState(null, null, null, null, true, false));
             servicesNewspapers.saveNewspaper(newspaper)
                     .subscribeOn(Schedulers.single())
                     .subscribe(either -> {
                         if (either.isLeft()) {
-                            state.set(new NewspapersAddState(either.getLeft(), null, null, null));
+                            state.set(new NewspapersAddState(either.getLeft(), null, null, null, false, true));
                         } else {
-                            state.set(new NewspapersAddState(null, ScreenConstants.OPERATION_DONE, null, either.get()));
+                            state.set(new NewspapersAddState(null, ScreenConstants.OPERATION_DONE, null, either.get(), false, true));
                         }
                     });
         } else {
-            state.set(new NewspapersAddState(ScreenConstants.FILL_ALL_THE_INPUTS, null, null, null));
+            state.set(new NewspapersAddState(ScreenConstants.FILL_ALL_THE_INPUTS, null, null, null, false, true));
         }
     }
 
     public void cleanState() {
-        state.set(new NewspapersAddState(null, null, null, null));
+        state.set(new NewspapersAddState(null, null, null, null, false, false));
     }
 }
 

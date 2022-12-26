@@ -4,8 +4,8 @@ import gui.screens.common.BaseScreenController;
 import gui.screens.common.ScreenConstants;
 import jakarta.inject.Inject;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -66,11 +66,17 @@ public class ReadersDeleteController extends BaseScreenController {
             if (newState.readerDeleted() != null) {
                 Platform.runLater(() -> tableReaders.getItems().remove(newState.readerDeleted()));
             }
+            if (newState.isLoading()) {
+                this.getPrincipalController().getRootPane().setCursor(Cursor.WAIT);
+            }
+            if (newState.isLoaded()) {
+                this.getPrincipalController().getRootPane().setCursor(Cursor.DEFAULT);
+            }
         });
     }
 
     @FXML
-    private void deleteReader(ActionEvent actionEvent) {
+    private void deleteReader() {
         Reader reader = tableReaders.getSelectionModel().getSelectedItem();
         readersListViewModel.deleteReader(reader);
     }
