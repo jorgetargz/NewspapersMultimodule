@@ -66,7 +66,7 @@ public class NewspapersDeleteController extends BaseScreenController {
                 Platform.runLater(() -> tableNewspapers.getItems().remove(newState.newspaperDeleted()));
             }
             if (newState.isLoading()) {
-                this.getPrincipalController().getRootPane().setCursor(javafx.scene.Cursor.WAIT);
+                this.getPrincipalController().getRootPane().setCursor(Cursor.WAIT);
             }
             if (newState.isLoaded()) {
                 this.getPrincipalController().getRootPane().setCursor(Cursor.DEFAULT);

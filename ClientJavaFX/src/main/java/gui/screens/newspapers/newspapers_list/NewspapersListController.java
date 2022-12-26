@@ -57,7 +57,7 @@ public class NewspapersListController extends BaseScreenController {
                 });
             }
             if (newState.isLoading()) {
-                this.getPrincipalController().getRootPane().setCursor(javafx.scene.Cursor.WAIT);
+                this.getPrincipalController().getRootPane().setCursor(Cursor.WAIT);
             }
             if (newState.isLoaded()) {
                 this.getPrincipalController().getRootPane().setCursor(Cursor.DEFAULT);
