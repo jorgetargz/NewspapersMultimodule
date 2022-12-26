@@ -59,6 +59,7 @@ public class Constantes {
     public static final String INVALID_CREDENTIALS = "Invalid credentials";
     public static final String LOGIN_REQUIRED = "Login required probably because of expired jwt";
     public static final String BEARER = "Bearer";
+    public static final String BEARER_AUTH = "Bearer %s";
     public static final String TOKEN_EXPIRED = "Token expired";
     public static final String TRUE = "true";
     public static final String NEWSPAPERS_API = "NewspapersAPI";

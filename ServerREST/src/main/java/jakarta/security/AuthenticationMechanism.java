@@ -48,11 +48,7 @@ public class AuthenticationMechanism implements HttpAuthenticationMechanism {
                 String tipo = headerFields[0];
                 String valor = headerFields[1];
                 if (tipo.equals(Constantes.BASIC)) {
-                    credentialValidationResult = identity.validate(new BasicAuthenticationCredential(valor));
-                    if (credentialValidationResult.getStatus() == CredentialValidationResult.Status.VALID) {
-                        String jwt = createJWT(credentialValidationResult);
-                        httpServletResponse.addHeader(HttpHeaders.AUTHORIZATION, Constantes.BEARER + jwt);
-                    }
+                    credentialValidationResult = basicAuthentication(httpServletResponse, valor);
                 } else if (tipo.equals(Constantes.BEARER)) {
                     credentialValidationResult = jwtAuthentication(httpServletResponse, valor);
                 }
@@ -60,6 +56,16 @@ public class AuthenticationMechanism implements HttpAuthenticationMechanism {
         }
 
         return getAuthenticationStatus(httpServletRequest, httpMessageContext, credentialValidationResult);
+    }
+
+    private CredentialValidationResult basicAuthentication(HttpServletResponse httpServletResponse, String valor) {
+        CredentialValidationResult credentialValidationResult;
+        credentialValidationResult = identity.validate(new BasicAuthenticationCredential(valor));
+        if (credentialValidationResult.getStatus() == CredentialValidationResult.Status.VALID) {
+            String jwt = createJWT(credentialValidationResult);
+            httpServletResponse.addHeader(HttpHeaders.AUTHORIZATION, String.format(Constantes.BEARER_AUTH, jwt));
+        }
+        return credentialValidationResult;
     }
 
     private String createJWT(CredentialValidationResult credentialValidationResult) {
