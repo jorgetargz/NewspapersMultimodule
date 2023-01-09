@@ -7,6 +7,7 @@ import io.reactivex.rxjava3.core.Single;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import modelo.Reader;
+import okhttp3.Credentials;
 
 public class LoginServicesImpl implements LoginServices {
 
@@ -23,7 +24,7 @@ public class LoginServicesImpl implements LoginServices {
     public Single<Either<String, Reader>> getReaderByLogin(String username, String password) {
         cache.setUser(username);
         cache.setPassword(password);
-        return loginDAO.getReaderByLogin();
+        return loginDAO.getReaderByLogin(Credentials.basic(username, password));
     }
 
     @Override

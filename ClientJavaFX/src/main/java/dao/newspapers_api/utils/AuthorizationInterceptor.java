@@ -27,20 +27,13 @@ public class AuthorizationInterceptor implements Interceptor {
                 .build();
         Request request;
 
-        // Send request with the cached credentials if present
-        if (ca.getJwtAuth() == null) {
-            if (ca.getUser() == null || ca.getPassword() == null) {
-                request = original;
-            } else {
-                String basicAuth = Credentials.basic(ca.getUser(), ca.getPassword());
-                request = original.newBuilder()
-                        .header(Constantes.AUTHORIZATION, basicAuth)
-                        .build();
-            }
-        } else {
+        // Send request with the cached JWT if present
+        if (ca.getJwtAuth() != null) {
             request = original.newBuilder()
                     .header(Constantes.AUTHORIZATION, ca.getJwtAuth())
                     .build();
+        } else {
+            request = original;
         }
 
         // Save the JWT in the cache
