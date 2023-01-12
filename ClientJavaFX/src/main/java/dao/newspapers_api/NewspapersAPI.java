@@ -1,10 +1,8 @@
 package dao.newspapers_api;
 
 import common.ConstantesAPI;
-import dao.common.Constantes;
 import io.reactivex.rxjava3.core.Single;
 import modelo.Newspaper;
-import modelo.Reader;
 import retrofit2.Response;
 import retrofit2.http.*;
 
@@ -12,27 +10,6 @@ import java.util.List;
 
 public interface NewspapersAPI {
 
-    //ENDPOINTS_LOGIN
-    @GET(ConstantesAPI.ENDPOINT_LOGIN)
-    Single<Reader> getReaderByLogin(@Header(Constantes.AUTHORIZATION) String authorization);
-
-    @POST(ConstantesAPI.ENDPOINT_LOGIN)
-    Single<Reader> registerReader(@Body Reader reader);
-
-    //ENDPOINTS_READERS
-    @GET(ConstantesAPI.ENDPOINT_READERS)
-    Single<List<Reader>> getReaders();
-
-    @POST(ConstantesAPI.ENDPOINT_READERS)
-    Single<Reader> saveReader(@Body Reader reader);
-
-    @PUT(ConstantesAPI.ENDPOINT_READERS)
-    Single<Reader> updateReader(@Body Reader reader);
-
-    @DELETE(ConstantesAPI.ENDPOINT_READER_BY_ID)
-    Single<Response<Object>> deleteReader(@Path(ConstantesAPI.ID) int id);
-
-    //ENDPOINTS_NEWSPAPERS
     @GET(ConstantesAPI.ENDPOINT_NEWSPAPERS)
     Single<List<Newspaper>> getNewspapers();
 
@@ -43,6 +20,6 @@ public interface NewspapersAPI {
     Single<Newspaper> updateNewspaper(@Body Newspaper newspaper);
 
     @DELETE(ConstantesAPI.ENDPOINT_NEWSPAPER_BY_ID)
-    Single<Response<Object>> deleteNewspaper(@Path(ConstantesAPI.ID) int id);
+    Single<Response<Void>> deleteNewspaper(@Path(ConstantesAPI.ID) int id);
 
 }

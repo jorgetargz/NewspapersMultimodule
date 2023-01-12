@@ -2,7 +2,7 @@ package dao.impl;
 
 import com.google.gson.Gson;
 import dao.ReadersDAO;
-import dao.newspapers_api.NewspapersAPI;
+import dao.newspapers_api.ReadersAPI;
 import io.reactivex.rxjava3.core.Single;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
@@ -14,32 +14,32 @@ import java.util.List;
 @Log4j2
 public class ReadersDAOImpl extends GenericDAO implements ReadersDAO {
 
-    private final NewspapersAPI newspapersAPI;
+    private final ReadersAPI readersAPI;
 
     @Inject
-    public ReadersDAOImpl(NewspapersAPI newspapersAPI, Gson gson) {
+    public ReadersDAOImpl(ReadersAPI readersAPI, Gson gson) {
         super(gson);
-        this.newspapersAPI = newspapersAPI;
+        this.readersAPI = readersAPI;
     }
 
     @Override
     public Single<Either<String, List<Reader>>> getReaders() {
-        return safeAPICall(newspapersAPI.getReaders());
+        return safeAPICall(readersAPI.getReaders());
     }
 
     @Override
     public Single<Either<String, Reader>> saveReader(Reader reader) {
-        return safeAPICall(newspapersAPI.saveReader(reader));
+        return safeAPICall(readersAPI.saveReader(reader));
     }
 
     @Override
     public Single<Either<String, Reader>> updateReader(Reader reader) {
-        return safeAPICall(newspapersAPI.updateReader(reader));
+        return safeAPICall(readersAPI.updateReader(reader));
     }
 
     @Override
     public Single<Either<String, Boolean>> deleteReader(Reader reader) {
-        return safeAPICallResponse(newspapersAPI.deleteReader(reader.getId()));
+        return safeAPICallResponseVoid(readersAPI.deleteReader(reader.getId()));
     }
 
 }

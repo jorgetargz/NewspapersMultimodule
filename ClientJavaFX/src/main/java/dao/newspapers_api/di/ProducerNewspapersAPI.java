@@ -1,7 +1,9 @@
 package dao.newspapers_api.di;
 
 import com.google.gson.Gson;
+import dao.newspapers_api.LoginAPI;
 import dao.newspapers_api.NewspapersAPI;
+import dao.newspapers_api.ReadersAPI;
 import dao.newspapers_api.config.ConfigNewspapersAPI;
 import dao.newspapers_api.utils.AuthorizationInterceptor;
 import dao.newspapers_api.utils.CacheAuthorization;
@@ -34,6 +36,18 @@ public class ProducerNewspapersAPI {
                 .client(clientOK)
                 .build();
 
+    }
+
+    @Produces
+    @Singleton
+    public LoginAPI getLoginAPI(Retrofit retrofit) {
+        return retrofit.create(LoginAPI.class);
+    }
+
+    @Produces
+    @Singleton
+    public ReadersAPI getReadersAPI(Retrofit retrofit) {
+        return retrofit.create(ReadersAPI.class);
     }
 
     @Produces

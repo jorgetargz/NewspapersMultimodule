@@ -33,13 +33,29 @@ public class GenericDAO {
                 .onErrorReturn(this::getError);
     }
 
-    public Single<Either<String, Boolean>> safeAPICallResponse(Single<Response<Object>> apiCall) {
-        return apiCall.map(objectResponse -> objectResponse.isSuccessful() ?
-                        Either.right(true).mapLeft(Object::toString) :
-                        Either.right(false).mapLeft(Object::toString))
+    public Single<Either<String, Boolean>> safeAPICallResponseVoid(Single<Response<Void>> apiCall) {
+        return apiCall.map(objectResponse -> {
+                    if (objectResponse.isSuccessful()) {
+                        return Either.right(true).mapLeft(Object::toString);
+                    } else {
+                        Either<String, Boolean> result;
+                        ResponseBody responseBody = Objects.requireNonNull(objectResponse.errorBody());
+                        if (Objects.equals(responseBody.contentType(), MediaType.get(APPLICATION_JSON))) {
+                            BaseError apierror = gson.fromJson(responseBody.string(), BaseError.class);
+                            result = Either.left(apierror.getMessage());
+                        } else {
+                            result = Either.left(objectResponse.message());
+                            if (objectResponse.code() == 401 || objectResponse.code() == 403) {
+                                result = Either.left(Constantes.ERROR_DE_AUTENTICACION);
+                            }
+                        }
+                        return result;
+                    }
+                })
                 .subscribeOn(Schedulers.io())
                 .onErrorReturn(this::getError);
     }
+
 
     private <T> Either<String, T> getError(Throwable throwable) {
         Either<String, T> error = Either.left(Constantes.ERROR_DE_COMUNICACION);
