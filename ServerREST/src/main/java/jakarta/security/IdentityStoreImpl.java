@@ -19,7 +19,7 @@ import static jakarta.security.enterprise.identitystore.CredentialValidationResu
 import static jakarta.security.enterprise.identitystore.CredentialValidationResult.NOT_VALIDATED_RESULT;
 
 @Log4j2
-public class InMemoryIdentityStore implements IdentityStore {
+public class IdentityStoreImpl implements IdentityStore {
 
     private final ServicesLogin serviciosLogin;
 
@@ -29,7 +29,7 @@ public class InMemoryIdentityStore implements IdentityStore {
     }
 
     @Inject
-    public InMemoryIdentityStore(ServicesLogin serviciosLogin) {
+    public IdentityStoreImpl(ServicesLogin serviciosLogin) {
         this.serviciosLogin = serviciosLogin;
     }
 

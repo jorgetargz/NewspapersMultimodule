@@ -2,7 +2,7 @@ package dao.impl;
 
 import com.google.gson.Gson;
 import dao.LoginDAO;
-import dao.newspapers_api.NewspapersAPI;
+import dao.newspapers_api.LoginAPI;
 import io.reactivex.rxjava3.core.Single;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
@@ -10,21 +10,26 @@ import modelo.Reader;
 
 public class LoginDAOImpl extends GenericDAO implements LoginDAO {
 
-    private final NewspapersAPI newspapersAPI;
+    private final LoginAPI loginAPI;
 
     @Inject
-    public LoginDAOImpl(Gson gson, NewspapersAPI newspapersAPI) {
+    public LoginDAOImpl(Gson gson, LoginAPI loginAPI) {
         super(gson);
-        this.newspapersAPI = newspapersAPI;
+        this.loginAPI = loginAPI;
     }
 
     @Override
     public Single<Either<String, Reader>> getReaderByLogin(String authorization) {
-        return safeAPICall(newspapersAPI.getReaderByLogin(authorization));
+        return safeAPICall(loginAPI.getReaderByLogin(authorization));
+    }
+
+    @Override
+    public Single<Either<String, Boolean>> logout(String authorization) {
+        return safeAPICallResponseVoid(loginAPI.logout(authorization));
     }
 
     @Override
     public Single<Either<String, Reader>> registerReader(Reader reader) {
-        return safeAPICall(newspapersAPI.registerReader(reader));
+        return safeAPICall(loginAPI.registerReader(reader));
     }
 }

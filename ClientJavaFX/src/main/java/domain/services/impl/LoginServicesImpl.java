@@ -28,10 +28,12 @@ public class LoginServicesImpl implements LoginServices {
     }
 
     @Override
-    public void logout() {
+    public Single<Either<String, Boolean>> logout() {
+        String jwtAuth = cache.getJwtAuth();
         cache.setUser(null);
         cache.setPassword(null);
         cache.setJwtAuth(null);
+        return loginDAO.logout(jwtAuth);
     }
 
     @Override

@@ -21,4 +21,6 @@ public interface ServicesLogin {
     Secret getSecret(String code);
 
     void sendVerificationEmail(Reader reader);
+
+    void logout(String authorization);
 }

@@ -23,8 +23,13 @@ public class MainViewModel {
     }
 
     public void doLogout() {
-        loginServices.logout();
-        state.setValue(new MainState(null, true));
+        loginServices.logout().subscribe(either -> {
+            if (either.isLeft()) {
+                state.set(new MainState(either.getLeft(), false));
+            } else {
+                state.set(new MainState(null, true));
+            }
+        });
     }
 
     public void doExit() {

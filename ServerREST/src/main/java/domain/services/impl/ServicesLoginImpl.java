@@ -12,6 +12,7 @@ import domain.services.excepciones.ValidationException;
 import jakarta.beans.VerifyEmailBean;
 import jakarta.inject.Inject;
 import jakarta.mail.MessagingException;
+import jakarta.security.JWTBlackList;
 import jakarta.security.enterprise.identitystore.Pbkdf2PasswordHash;
 import lombok.extern.log4j.Log4j2;
 import modelo.Login;
@@ -107,6 +108,15 @@ public class ServicesLoginImpl implements ServicesLogin, Serializable {
             throw e;
         }
 
+    }
+
+    @Override
+    public void logout(String authorization) {
+        String[] headerFields = authorization.split(jakarta.common.Constantes.WHITE_SPACE);
+        if (headerFields.length == 2) {
+            String token = headerFields[1];
+            JWTBlackList.getInstance().addToken(token);
+        }
     }
 
 }

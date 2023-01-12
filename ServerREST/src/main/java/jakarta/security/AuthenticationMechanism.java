@@ -1,5 +1,6 @@
 package jakarta.security;
 
+import dao.excepciones.UnauthorizedException;
 import jakarta.common.Constantes;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -31,7 +32,7 @@ import java.util.Set;
 public class AuthenticationMechanism implements HttpAuthenticationMechanism {
 
     @Inject
-    private InMemoryIdentityStore identity;
+    private IdentityStoreImpl identity;
 
 
     @Override
@@ -99,13 +100,15 @@ public class AuthenticationMechanism implements HttpAuthenticationMechanism {
     }
 
     private CredentialValidationResult jwtAuthentication(HttpServletResponse httpServletResponse, String jwt) {
-        CredentialValidationResult credentialValidationResult = null;
+        CredentialValidationResult credentialValidationResult = CredentialValidationResult.INVALID_RESULT;
         try {
             credentialValidationResult = getCredentialFromJWT(jwt);
         } catch (InvalidJwtException e) {
             if (e.hasExpired()) {
                 httpServletResponse.addHeader(Constantes.TOKEN_EXPIRED, Constantes.TRUE);
             }
+        } catch (UnauthorizedException e) {
+            httpServletResponse.addHeader(Constantes.TOKEN_IN_BLACK_LIST, Constantes.TRUE);
         }
         return credentialValidationResult;
     }
@@ -114,6 +117,10 @@ public class AuthenticationMechanism implements HttpAuthenticationMechanism {
         CredentialValidationResult credentialValidationResult = null;
         RsaJsonWebKeyProducer rsaJsonWebKeyProducer = RsaJsonWebKeyProducer.getInstance();
         RsaJsonWebKey rsaJsonWebKey = rsaJsonWebKeyProducer.getRSAKey();
+
+        if (JWTBlackList.getInstance().isTokenInBlackList(jwt)) {
+            throw new UnauthorizedException(Constantes.TOKEN_IN_BLACK_LIST);
+        }
 
         JwtConsumer jwtConsumer = new JwtConsumerBuilder()
                 .setRequireExpirationTime()

@@ -5,6 +5,7 @@ public class Constantes {
     private Constantes() {
     }
 
+
     public static final String MAIL_SMTP_PORT = "mail.smtp.port";
     public static final String MAIL_SMTP_AUTH = "mail.smtp.auth";
     public static final String MAIL_SMTP_SSL_TRUST = "mail.smtp.ssl.trust";
@@ -48,6 +49,7 @@ public class Constantes {
     public static final String INVALID_VERIFICATION_CODE = "Invalid verification code";
     public static final String VERIFICATION_CODE_EXPIRED = "Verification code expired";
     public static final String SUPERADO_EL_MAXIMO_DE_PETICIONES = "Se ha superado el número máximo de peticiones permitidas \nen el periodo de tiempo";
+    public static final String TOKEN_IN_BLACK_LIST = "Token in black list";
 
     public static final int EXPIRATION_TIME_MINUTES_IN_THE_FUTURE = 5;
     public static final int NOT_BEFORE_MINUTES_IN_THE_PAST = 2;

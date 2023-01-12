@@ -97,6 +97,9 @@ public class MainController {
                     cargarPantalla(Screens.LOGIN);
                 });
             }
+            if (newValue.error() != null) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, ScreenConstants.ERROR, newValue.error()));
+            }
         });
     }
 
