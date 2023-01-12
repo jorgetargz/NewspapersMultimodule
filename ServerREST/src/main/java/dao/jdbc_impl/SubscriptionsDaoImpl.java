@@ -85,15 +85,7 @@ public class SubscriptionsDaoImpl implements SubscriptionsDao {
             preparedStatement.setInt(2, readerId);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
-                Subscription subscription = new Subscription();
-                subscription.setReaderId(rs.getInt(Constantes.ID_READER));
-                subscription.setNewspaperId(rs.getInt(Constantes.ID_NEWSPAPER));
-                subscription.setSigningDate(rs.getDate(Constantes.SIGNING_DATE).toLocalDate());
-                Date cancellationDate = rs.getDate(Constantes.CANCELLATION_DATE);
-                if (cancellationDate != null) {
-                    subscription.setCancellationDate(cancellationDate.toLocalDate());
-                }
-                return subscription;
+                return getSuscriptionFromRSRow(rs);
             } else {
                 log.warn(Constantes.SUBSCRIPTION_NOT_FOUND);
                 throw new NotFoundException(Constantes.SUBSCRIPTION_NOT_FOUND);
@@ -190,17 +182,22 @@ public class SubscriptionsDaoImpl implements SubscriptionsDao {
     private List<Subscription> getSubscriptionsFromRS(ResultSet rs) throws SQLException {
         List<Subscription> subscriptions = new ArrayList<>();
         while (rs.next()) {
-            Subscription subscription = new Subscription();
-            subscription.setReaderId(rs.getInt(Constantes.ID_READER));
-            subscription.setNewspaperId(rs.getInt(Constantes.ID_NEWSPAPER));
-            subscription.setSigningDate(rs.getDate(Constantes.SIGNING_DATE).toLocalDate());
-            Date cancellationDate = rs.getDate(Constantes.CANCELLATION_DATE);
-            if (cancellationDate != null) {
-                subscription.setCancellationDate(cancellationDate.toLocalDate());
-            }
+            Subscription subscription = getSuscriptionFromRSRow(rs);
             subscriptions.add(subscription);
         }
         return subscriptions;
+    }
+
+    private Subscription getSuscriptionFromRSRow(ResultSet rs) throws SQLException {
+        Subscription subscription = new Subscription();
+        subscription.setReaderId(rs.getInt(Constantes.ID_READER));
+        subscription.setNewspaperId(rs.getInt(Constantes.ID_NEWSPAPER));
+        subscription.setSigningDate(rs.getDate(Constantes.SIGNING_DATE).toLocalDate());
+        Date cancellationDate = rs.getDate(Constantes.CANCELLATION_DATE);
+        if (cancellationDate != null) {
+            subscription.setCancellationDate(cancellationDate.toLocalDate());
+        }
+        return subscription;
     }
 
 

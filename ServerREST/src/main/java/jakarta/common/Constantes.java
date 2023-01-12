@@ -13,14 +13,14 @@ public class Constantes {
     public static final String TEXT_HTML = "text/html";
     public static final String SMTP = "smtp";
 
-    public static final int VERIFICATION_CODE_LENGHT = 32;
+    public static final int VERIFICATION_CODE_LENGTH = 32;
     public static final String FORGOT_PASSWORD = "Forgot Password";
     public static final String FORGOT_PASSWORD_MAIL_CONTENT = """
             <html>
                 <body>
                     <h1>Forgot password</h1>
                     <img src="http://localhost:8080/NewspapersREST/resources/images/logo.gif" alt="Logo" width="200" height="200">
-                    <p>Click on the link below to reccover your account</p>
+                    <p>Click on the link below to recover your account</p>
                     <a href="http://localhost:8080/NewspapersREST/changePassword.xhtml?code=%s">Change password</a>
                 </body>
             </html>

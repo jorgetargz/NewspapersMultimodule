@@ -10,7 +10,7 @@ public class VerificationCode implements Serializable {
 
     public String generate() {
         SecureRandom sr = new SecureRandom();
-        byte[] bits = new byte[Constantes.VERIFICATION_CODE_LENGHT];
+        byte[] bits = new byte[Constantes.VERIFICATION_CODE_LENGTH];
         sr.nextBytes(bits);
         return Base64.getUrlEncoder().encodeToString(bits);
     }

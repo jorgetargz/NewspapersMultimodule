@@ -43,10 +43,10 @@ public class RatingsDaoImpl implements RatingsDao {
     }
 
     @Override
-    public List<ArticleRating> getAllByReaderId(int readerid) {
+    public List<ArticleRating> getAllByReaderId(int readerId) {
         try (Connection con = dbConnection.getConnection();
              PreparedStatement preparedStatement = con.prepareStatement(SQLQueries.SELECT_RATINGS_BY_READER_QUERY)) {
-            preparedStatement.setInt(1, readerid);
+            preparedStatement.setInt(1, readerId);
             ResultSet rs = preparedStatement.executeQuery();
             List<ArticleRating> list = getArticleRatingsFromRS(rs);
             if (list.isEmpty()) {

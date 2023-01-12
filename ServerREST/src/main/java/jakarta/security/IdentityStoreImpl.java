@@ -37,10 +37,10 @@ public class IdentityStoreImpl implements IdentityStore {
     public CredentialValidationResult validate(Credential credential) {
 
         if (credential instanceof BasicAuthenticationCredential basicAuthenticationCredential) {
-            Reader loguedUser;
+            Reader loggedUser;
             try {
-                loguedUser = serviciosLogin.login(basicAuthenticationCredential.getCaller(), basicAuthenticationCredential.getPassword().getValue());
-                return new CredentialValidationResult(loguedUser.getLogin().getUsername(), Set.of(loguedUser.getLogin().getRole()));
+                loggedUser = serviciosLogin.login(basicAuthenticationCredential.getCaller(), basicAuthenticationCredential.getPassword().getValue());
+                return new CredentialValidationResult(loggedUser.getLogin().getUsername(), Set.of(loggedUser.getLogin().getRole()));
             } catch (DatabaseException | NotFoundException e) {
                 return INVALID_RESULT;
             } catch (ValidationException e) {
